@@ -57,33 +57,56 @@ export async function initPlayer(onStateChange) {
   return readyPromise
 }
 
-export async function playTrack(uri) {
+/**
+ * Helper to call Spotify player API for the current target device.
+ * This ensures that playback controls (play/pause/resume) work for BOTH
+ * the local browser player AND remote Spotify Connect devices.
+ */
+async function playerApiCall(endpoint, method = 'PUT', body = null) {
   const targetDevice = state.activeDeviceId || deviceId
-  if (!targetDevice) throw new Error('No device available for playback')
-  
+  if (!targetDevice) throw new Error('No active Spotify device selected')
+
   if (isTokenExpired()) await refreshToken()
   const token = getAccessToken()
 
-  const res = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${targetDevice}`, {
-    method: 'PUT',
+  const res = await fetch(`https://api.spotify.com/v1/me/player/${endpoint}?device_id=${targetDevice}`, {
+    method,
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ uris: [uri] }),
+    body: body ? JSON.stringify(body) : undefined,
   })
 
   if (!res.ok && res.status !== 204) {
-    throw new Error(`playTrack failed: ${res.status}`)
+    throw new Error(`Spotify Player API (${endpoint}) failed: ${res.status}`)
   }
+  return res
+}
+
+export async function playTrack(uri) {
+  // Always use the API for starting a track to support Connect
+  return playerApiCall('play', 'PUT', { uris: [uri] })
 }
 
 export async function pausePlayback() {
-  if (player) await player.pause()
+  // 1. Fast-path: pause local SDK immediately if playing locally
+  if (player && !state.activeDeviceId) {
+    try { await player.pause() } catch (e) { console.warn('Local pause failed', e) }
+  }
+  
+  // 2. Definitive: tell Spotify API to pause the target device (SDK or Connect)
+  return playerApiCall('pause', 'PUT')
 }
 
 export async function resumePlayback() {
-  if (player) await player.resume()
+  // 1. Fast-path: resume local SDK immediately if playing locally
+  if (player && !state.activeDeviceId) {
+    try { await player.resume() } catch (e) { console.warn('Local resume failed', e) }
+  }
+
+  // 2. Definitive: tell Spotify API to resume the target device (SDK or Connect)
+  return playerApiCall('play', 'PUT')
 }
 
 export async function getCurrentState() {

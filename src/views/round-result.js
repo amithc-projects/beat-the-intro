@@ -22,8 +22,15 @@ export function renderRoundResult() {
   const verdictWord  = isCorrect ? 'Correct!' : isPartial ? 'Close!' : 'Wrong!'
 
   app.innerHTML = `
-    <div class="view">
-      <div class="lscape-result">
+    <div class="view view--centered">
+      <div class="lscape-result view__inner view__inner--wide">
+
+        <!-- HEADER ROW -->
+        <div class="lscape-row-header">
+          <h2 class="display-heading">REVEAL</h2>
+          <span class="badge">Round ${state.currentRound} of ${state.totalRounds}</span>
+          <span class="timer">${secs}s</span>
+        </div>
 
         <!-- LEFT: verdict + breakdown + score -->
         <div class="result-left">
@@ -32,7 +39,6 @@ export function renderRoundResult() {
               ${verdictIcon}
             </span>
             <span class="result-verdict__word">${verdictWord}</span>
-            <span class="result-verdict__time">${secs}s</span>
           </div>
 
           <div class="result-breakdown">
@@ -52,7 +58,7 @@ export function renderRoundResult() {
             </div>
           </div>
 
-          <p class="section-label">${score} correct — Round ${state.currentRound} of ${state.totalRounds}</p>
+          <p class="section-label">${score} correct</p>
         </div>
 
         <!-- RIGHT: track reveal -->

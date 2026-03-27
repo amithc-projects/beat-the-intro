@@ -40,7 +40,13 @@ export async function renderPlaying() {
 
   app.innerHTML = `
     <div class="view view--centered">
-      <div class="lscape-playing">
+      <div class="lscape-playing view__inner view__inner--wide">
+        <div class="lscape-row-header">
+          <h2 class="display-heading">LISTEN</h2>
+          <span class="badge">Round ${state.currentRound} of ${state.totalRounds}</span>
+          <span class="timer" id="timer">00<span class="timer__dot">.</span>00</span>
+        </div>
+
         <div class="album-art">
           <img class="album-art__img" src="${coverUrl}" alt="Album art">
           <div class="album-art__lock">
@@ -49,12 +55,7 @@ export async function renderPlaying() {
         </div>
 
         <div class="playing-right" style="text-align:center">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <span class="badge">Round ${state.currentRound} of ${state.totalRounds}</span>
-            <span class="section-label" id="sdk-status"></span>
-          </div>
-
-          <div class="timer" id="timer">00<span class="timer__dot">.</span>00</div>
+          <span class="section-label" id="sdk-status"></span>
 
           <div class="waveform" id="waveform">
             ${waveformBars()}
