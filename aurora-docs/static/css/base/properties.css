@@ -1,0 +1,42 @@
+/* css/base/properties.css */
+@layer base {
+
+  /* --- MOTION REFERENCE LAYER (Global Primitives) --- */
+  /* Durations */
+  --ds-ref-motion-duration-fast: 150ms;
+  --ds-ref-motion-duration-norm: 300ms;
+  --ds-ref-motion-duration-slow: 500ms;
+
+  /* Easings (Physics) */
+  --ds-ref-motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ds-ref-motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ds-ref-motion-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  /* 1. Dimensions: Allows columns to slide when width changes */
+  @property --table-fixed-col-width {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 150px;
+  }
+
+  /* 2. Colors: Allows smooth theme interpolation (e.g., Casual -> Corporate) */
+  @property --ds-sys-color-primary {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: black; /* Fallback */
+  }
+
+  @property --ds-sys-color-surface {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: white;
+  }
+  
+  /* 3. Table Header Background (For smooth sticky state changes) */
+  @property --table-header-bg {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: white;
+  }
+
+}

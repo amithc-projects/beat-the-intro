@@ -1,0 +1,38 @@
+/* css/components/callout.css */
+@layer components {
+  .callout {
+    /* 1. Layout & Spacing (Universal) */
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: calc(var(--space-md) * var(--ds-sys-density));
+    margin-bottom: var(--space-lg);
+    
+    /* 2. Paint (Driven by Component Tokens) */
+    /* If the theme doesn't define these, we provide sensible defaults */
+    
+    background: var(--ds-cmp-callout-bg, var(--ds-sys-color-surface));
+    color: var(--ds-sys-color-on-surface);
+    
+    border: var(--ds-cmp-callout-border, 1px solid var(--ds-sys-color-border));
+    /* Allow specific override for the left border (Corporate style) */
+    border-left: var(--ds-cmp-callout-border-left, var(--ds-cmp-callout-border));
+    
+    border-radius: var(--ds-sys-radius-card);
+    
+    /* 3. Transform & Effects (Casual style) */
+    box-shadow: var(--ds-cmp-callout-shadow, none);
+    transform: var(--ds-cmp-callout-transform, none);
+  }
+
+  .callout__title {
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--ds-sys-color-primary);
+    line-height: 1.2;
+  }
+  
+  .callout__text {
+    opacity: 0.9;
+  }
+}

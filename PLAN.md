@@ -147,6 +147,8 @@ The `stitch/` folder contains per-view HTML mockups and screen images for **conc
 - Button (primary — "Start Game")
 - Button (ghost — "Back to Playlists" → PLS)
 
+**Round count cap:** `effectiveRounds = Math.min(userChoice, playableTracks.length)`. If `playableTracks.length < userChoice`, show an inline note: e.g. "Only 8 playable tracks available — game will use 8 rounds." Never allow 0 rounds (redirect back to PLS with a Toast if the playlist has no playable tracks).
+
 ---
 
 ### PLY — Playing
@@ -155,8 +157,8 @@ The `stitch/` folder contains per-view HTML mockups and screen images for **conc
 **Aurora components:**
 - Badge (round indicator — "Round 2 of 5")
 - Card (track info hidden — blurred/placeholder album art)
-- Progress Bar (determinate — playback position)
-- Timer display (elapsed seconds — custom styled `<time>` element)
+- **Animated waveform visualizer** — CSS-only animated equalizer bars (no Web Audio API). The Spotify SDK gives no access to the audio stream, so the Aurora canvas cannot be driven by real frequency data. Instead: a row of `<span>` bars animated with CSS `@keyframes` that run when a `.is-playing` class is present on the container and pause otherwise. Styled volt-green bars on dark background, varying heights and animation delays to simulate a live waveform.
+- Timer display (elapsed seconds — custom styled `<time>` element, driven by Aurora's timecode readout)
 - Button (primary — "Pause & Guess")
 
 ---
@@ -171,6 +173,11 @@ The `stitch/` folder contains per-view HTML mockups and screen images for **conc
 - Text Field (Song Title)
 - Button (primary — "Submit Guess")
 - Button (ghost — "Resume Listening" → PLY, resumes playback)
+
+**Fuzzy matching (src/game/game-engine.js):** Use [Fuse.js](https://fusejs.io/) for guess comparison. Before comparing, normalise both sides: lowercase, strip `(feat. ...)`, ` - Remastered`, ` - Radio Edit`, and similar suffixes via a shared `normaliseTitle(str)` helper. Fuse threshold `0.35` (lower = stricter). Scoring:
+- Both artist + title fuzzy-match → `isCorrect: true`, full point
+- Title matches but not artist (or vice versa) → `isCorrect: false`, still show what was right in RND
+- Neither matches → `isCorrect: false`
 
 ---
 
@@ -268,6 +275,12 @@ beat-the-intro/
 │   ├── player/
 │   │   └── playback.js       ← SDK init, play(uri), pause(), resume(),
 │   │                            onStateChange(cb), getCurrentPosition()
+│   │                            (see Mobile Playback section below)
+│   │                            NOTE: window.onSpotifyWebPlaybackSDKReady must be
+│   │                            set at module top-level (not inside initPlayer).
+│   │                            Use a playerReadyPromise so initPlayer can await
+│   │                            device_id regardless of when the SDK fires ready.
+│   │                            Token refresh is handled inside getOAuthToken callback.
 │   │
 │   ├── game/
 │   │   └── game-engine.js    ← state machine, round logic, score tracking,
@@ -324,8 +337,8 @@ The app must work across three layouts with no horizontal scrolling and minimal 
 **CFG** — Single centred column on all breakpoints. Segmented control full-width on mobile.
 
 **PLY** *(most critical for TV mode)*
-- Landscape mobile: album art (blurred) fills left ~40% of viewport height; progress bar + timer stacked on right; "Pause & Guess" button large, bottom-right, thumb-reachable. Zero scrolling.
-- Portrait: stacked vertically, art on top, controls below.
+- Landscape mobile: album art (blurred) fills left ~40% of viewport height; Aurora audio player canvas sits above the controls on the right; "Pause & Guess" button large, bottom-right, thumb-reachable. Zero scrolling.
+- Portrait: stacked vertically, blurred art on top, Aurora audio player (canvas + controls) below art, "Pause & Guess" at the bottom.
 
 **GSS** — Landscape mobile: Artist + Song Title fields side-by-side in one row; Submit + Resume buttons on same row below. Entire view fits in one screen.
 
@@ -446,13 +459,17 @@ The visual language is defined in `stitch/voltage_zine/DESIGN.md`. Aurora provid
 
 ## src/auth/spotify-auth.js — PKCE Flow
 
+**Storage:** All auth state goes in `localStorage` (not `sessionStorage`) so the user stays logged in across page refreshes. This is what makes the "already logged in" fast-path work.
+
 **PKCE steps:**
-1. `generateCodeVerifier()` → 128-char random string → store in `sessionStorage`
-2. `generateCodeChallenge(verifier)` → SHA-256 → base64url
-3. `redirectToSpotify()` → `https://accounts.spotify.com/authorize?...&code_challenge=...`
-4. Spotify redirects to `VITE_REDIRECT_URI?code=xxx&state=yyy`
-5. `handleCallback()` → POST to `https://accounts.spotify.com/api/token` → store tokens
-6. `logout()` → clear sessionStorage → navigate to LGN
+1. `generateCodeVerifier()` → 128-char random string using `crypto.getRandomValues` (not `Math.random`) → store in `localStorage` as `spotify_code_verifier`
+2. `generateCodeChallenge(verifier)` → SHA-256 via `crypto.subtle.digest` → base64url
+3. Before `redirectToSpotify()`: if `window.location.hash` starts with `#/play?tracks=`, save it to `localStorage` as `pendingShareRoute`
+4. `redirectToSpotify()` → `https://accounts.spotify.com/authorize?...&code_challenge=...`
+5. Spotify redirects to `VITE_REDIRECT_URI?code=xxx&state=yyy`
+6. `handleCallback()` → POST to `https://accounts.spotify.com/api/token` → store `access_token`, `refresh_token`, and `expiry` timestamp in `localStorage`
+7. After tokens stored: check `localStorage.getItem('pendingShareRoute')` — if present, remove it and navigate there; otherwise navigate to `#/playlists`
+8. `logout()` → clear all `spotify_*` keys from `localStorage` → navigate to LGN
 
 **Scopes:** `streaming user-read-private user-read-email playlist-read-private user-modify-playback-state`
 
@@ -472,7 +489,11 @@ async function fetchAll(url, token) {
   return items
 }
 ```
-`getPlaylistTracks` additionally filters: `item => item.track && !item.track.is_local`
+`getPlaylistTracks` additionally filters:
+- `item => item.track && !item.track.is_local` — skip local files
+- `item => item.track.is_playable !== false` — skip regionally unavailable tracks
+
+Pass `market` query param (from `getUser().country`) to both `getPlaylistTracks` and `startPlayback` so Spotify returns correct `is_playable` values. Without `market`, `is_playable` is absent and filtering has no effect.
 
 ---
 
@@ -494,6 +515,41 @@ async function fetchAll(url, token) {
 https://[app-url]/#/play?playlist={playlistId}&tracks={id1,id2,id3,...}
 ```
 Recipient clicking the link loads the app, after auth they are taken directly to PLY with the same tracks in the same order.
+
+### Share Link + OAuth Flow (deferred game state)
+The OAuth redirect wipes the URL fragment, so the share params must be preserved manually:
+
+1. On app load, before any auth check: if `window.location.hash` starts with `#/play?tracks=`, save it to `localStorage` as `pendingShareRoute`.
+2. `redirectToSpotify()` proceeds normally (no change needed).
+3. After `handleCallback()` succeeds and tokens are stored, check `localStorage.getItem('pendingShareRoute')`. If present, remove it and navigate to that route instead of the default `#/playlists`.
+
+This is handled in `src/main.js` at bootstrap, not inside the auth module.
+
+---
+
+## Mobile Playback Strategy
+
+**Tested result:** The Spotify Web Playback SDK works on **Android Chrome** (confirmed in proof-of-concept). The primary concern is **iOS Safari**, which does not support the SDK.
+
+**Detection:** Attempt SDK init normally. If `ready` never fires within 5s, set `sdkReady = false`.
+
+**Fallback strategy for iOS (Web API Bridge):**
+- When `sdkReady = false`, use the Spotify REST API `PUT /me/player/play` to trigger playback on the user's **active Spotify app** instead of the in-browser player.
+- `getAvailableDevices()` → `GET /me/player/devices` — if no devices found, show a Toast: "Open Spotify on another device to enable playback."
+- `transferPlayback(deviceId)` → `PUT /me/player` — switch playback to chosen device.
+- Playback state polling: use `setInterval` calling `GET /me/player` every 1s to update the progress bar (SDK state change callback won't fire).
+
+**PLY view on iOS fallback:** Hide the Aurora audio player canvas and show a compact status line: "Playing on: [device name]" with the progress bar driven by polling.
+
+---
+
+## Dependencies
+
+| Package | Purpose |
+|---------|---------|
+| `fuse.js` | Fuzzy string matching for guess evaluation |
+
+Install: `npm install fuse.js`
 
 ---
 

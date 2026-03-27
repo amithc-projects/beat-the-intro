@@ -1,0 +1,84 @@
+/* static/css/components/alert-banner.css */
+@layer components {
+
+    /* --- STICKY BANNER WRAPPER --- */
+    .alert-banner {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        /* Sit above most content but below modals */
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-sm) var(--space-md);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: #fff;
+        background: var(--ds-sys-color-surface-variant);
+        box-shadow: var(--ds-sys-shadow-md);
+        transform: translateY(0);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
+    }
+
+    /* When Dismissed */
+    .alert-banner.is-hidden {
+        transform: translateY(-100%);
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        /* Remove from flow after animation */
+        visibility: hidden;
+    }
+
+    .alert-banner__content {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        flex: 1;
+    }
+
+    /* Optional leading icon */
+    .alert-banner__content .material-symbols-outlined {
+        font-size: 1.25rem;
+    }
+
+    /* Dismiss Button */
+    .alert-banner__close {
+        background: transparent;
+        border: none;
+        color: inherit;
+        opacity: 0.8;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 50%;
+        display: inline-flex;
+        transition: opacity 0.2s, background 0.2s;
+    }
+
+    .alert-banner__close:hover {
+        opacity: 1;
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* --- VARIANTS --- */
+    .alert-banner--news {
+        background: var(--ds-sys-color-primary);
+        color: var(--ds-sys-color-on-primary);
+    }
+
+    .alert-banner--critical {
+        background: var(--ds-sys-color-error);
+        color: var(--ds-sys-color-on-error);
+    }
+
+    .alert-banner--warning {
+        background: var(--ds-sys-color-warning);
+        /* Ensure dark text on bright yellow backgrounds for a11y */
+        color: #000;
+    }
+
+    .alert-banner--warning .alert-banner__close:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
+}

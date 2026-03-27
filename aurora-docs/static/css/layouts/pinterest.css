@@ -1,0 +1,53 @@
+/* PINTEREST MASONRY LAYOUT 
+   Uses CSS Multi-column layout for true variable-height stacking.
+   Note: Tab order goes down the column, not across the row.
+*/
+
+.l-pinterest {
+  /* Default: 1 column (Mobile) */
+  column-count: 1;
+  column-gap: 1.5rem;
+  width: 100%;
+}
+
+/* Tablet: 2 Columns */
+@media (min-width: 600px) {
+  .l-pinterest {
+    column-count: 2;
+  }
+}
+
+/* Desktop: 3 Columns */
+@media (min-width: 900px) {
+  .l-pinterest {
+    column-count: 3;
+  }
+}
+
+/* Wide: 4 Columns */
+@media (min-width: 1200px) {
+  .l-pinterest {
+    column-count: 4;
+  }
+}
+
+/* THE CARDS */
+.l-pinterest .card {
+  /* Prevent the card from being sliced between columns */
+  break-inside: avoid;
+  page-break-inside: avoid;
+  
+  /* Add bottom margin to simulate gap (since column-gap only handles width) */
+  margin-bottom: 1.5rem;
+  
+  /* Ensure images block properly */
+  display: inline-block; 
+  width: 100%;
+}
+
+/* Image styling for this layout */
+.l-pinterest .card__media {
+  width: 100%;
+  height: auto; /* Let height be defined by the image aspect ratio */
+  display: block;
+}

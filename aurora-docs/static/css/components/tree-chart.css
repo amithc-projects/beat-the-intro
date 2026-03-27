@@ -1,0 +1,33 @@
+/* static/css/components/tree-chart.css */
+
+.aurora-tree-chart-wrapper {
+  width: 100%;
+  border: 1px solid var(--ds-sys-color-border);
+  border-radius: var(--ds-sys-radius-m);
+  background-color: var(--ds-sys-color-surface);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.aurora-tree-chart-scroll-area {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Smooth touch scrolling */
+  -webkit-overflow-scrolling: touch; 
+}
+
+.aurora-tree-chart-canvas {
+  /* Establish a healthy minimum width so bracket trees don't squish */
+  min-width: 800px;
+  width: 100%;
+  height: 600px; /* Default height */
+  position: relative;
+}
+
+/* Modifiers for extra wide tournament brackets */
+.aurora-tree-chart-canvas.is-wide {
+  min-width: 1200px;
+}

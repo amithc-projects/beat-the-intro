@@ -1,0 +1,267 @@
+/* css/components/smart-date-range.css */
+
+@layer components {
+
+    /* Use Aurora's structural grid layout internally */
+    .smart-input-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    input.smart-date-range {
+        width: 100%;
+        height: var(--ds-cmp-input-height, 3rem);
+        padding-inline: var(--ds-cmp-input-padding-x, 1rem);
+        padding-right: calc(var(--ds-ref-space-base) * 4) !important;
+        border: var(--ds-sys-border-width) solid var(--ds-sys-color-border);
+        border-radius: var(--ds-sys-radius-input);
+        background: var(--ds-sys-color-surface);
+        color: var(--ds-sys-color-on-surface);
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input.smart-date-range::placeholder {
+        color: var(--ds-sys-color-on-surface-variant);
+        opacity: 0.6;
+    }
+
+    input.smart-date-range:focus {
+        border-color: var(--ds-sys-color-primary);
+        box-shadow: 0 0 0 2px var(--ds-sys-color-primary-container);
+        outline: none;
+    }
+
+    /* Live Output Hint Box Below Input */
+    .smart-date-range-hint {
+        margin-top: calc(var(--ds-ref-space-base) / 2);
+        font-size: 0.8rem;
+        padding: calc(var(--ds-ref-space-base) / 1.5) var(--ds-ref-space-base);
+        border-radius: var(--ds-sys-radius-card);
+        background: var(--ds-sys-color-surface-variant);
+        color: var(--ds-sys-color-on-surface-variant);
+        border-left: 4px solid var(--ds-sys-color-border);
+        font-family: var(--font-body);
+        transition: all 0.2s ease;
+        max-width: 600px;
+        display: block;
+        /* ensure it renders even when empty to prevent layout shift if desired, or let it collapse */
+    }
+
+    .smart-date-range-hint:empty {
+        display: none;
+    }
+
+    /* Validation States */
+    .smart-date-range-hint.invalid {
+        background: var(--ds-sys-color-error-container);
+        color: var(--ds-sys-color-on-error-container);
+        border-left-color: var(--ds-sys-color-error);
+    }
+
+    /* Inline Action Buttons inside the text input */
+    .smart-refresh-btn,
+    .info-icon {
+        position: absolute;
+        right: var(--ds-ref-space-base);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ds-sys-color-on-surface-variant);
+        transition: transform 0.2s, color 0.2s ease;
+        padding: 0;
+    }
+
+    /* Add spacing if both are present */
+    .smart-refresh-btn {
+        right: calc(var(--ds-ref-space-base) * 3.5);
+    }
+
+    .smart-refresh-btn:hover,
+    .info-icon:hover {
+        color: var(--ds-sys-color-primary);
+    }
+
+    .smart-refresh-btn:hover {
+        transform: rotate(180deg);
+    }
+
+    /* =========================================
+       HELP MODAL
+       ========================================= */
+    #helpModal {
+        display: none;
+        position: fixed;
+        z-index: var(--ds-sys-z-modal);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--ds-sys-color-scrim);
+        backdrop-filter: blur(4px);
+        align-items: center;
+        justify-content: center;
+    }
+
+    #helpModal.is-open {
+        display: flex !important;
+        animation: modal-fade-in 0.2s ease-out forwards;
+    }
+
+    #helpModal .modal-content {
+        background: var(--ds-sys-color-surface);
+        color: var(--ds-sys-color-on-surface);
+        padding: calc(var(--ds-ref-space-base) * 2);
+        width: 90%;
+        max-width: 450px;
+        border-radius: var(--ds-sys-radius-card);
+        border: var(--ds-sys-border-width) solid var(--ds-sys-color-border);
+        box-shadow: var(--ds-sys-shadow-modal);
+        font-family: var(--font-body);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--ds-ref-space-base);
+        padding-bottom: var(--ds-ref-space-base);
+        border-bottom: 1px solid var(--ds-sys-color-border);
+    }
+
+    .modal-header h2 {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-size: 1.25rem;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--ds-sys-color-on-surface-variant);
+        display: flex;
+        align-items: center;
+        padding: 4px;
+        border-radius: var(--ds-sys-radius-btn);
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .close-btn:hover {
+        background: var(--ds-sys-color-surface-variant);
+        color: var(--ds-sys-color-on-surface);
+    }
+
+    #helpModal ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--ds-ref-space-base) 0;
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--ds-ref-space-base) / 2);
+    }
+
+    #helpModal li {
+        margin: 0;
+    }
+
+    #helpModal code {
+        background: var(--ds-sys-color-surface-variant);
+        color: var(--ds-sys-color-primary);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        display: inline-block;
+    }
+
+    @keyframes modal-fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+
+    .smart-input-container[data-entry-mode="both"] {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--ds-ref-space-base);
+    }
+
+    .smart-input-container[data-entry-mode="manual"] .smart-manual-controls {
+        margin-top: 0;
+    }
+
+    .smart-manual-controls {
+        display: flex;
+        flex-direction: row;
+        gap: var(--ds-ref-space-base);
+        width: 100%;
+        max-width: fit-content;
+    }
+
+    .smart-control-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: calc(var(--ds-ref-space-base) / 2);
+        padding: 0 calc(var(--ds-ref-space-base) / 1.5);
+        height: var(--ds-cmp-input-height, 3rem);
+        border: var(--ds-sys-border-width) solid var(--ds-sys-color-border);
+        border-radius: var(--ds-sys-radius-input);
+        background: var(--ds-sys-color-surface-variant);
+    }
+
+    .smart-control-group label {
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--ds-sys-color-on-surface-variant);
+        white-space: nowrap;
+        margin-right: calc(var(--ds-ref-space-base) / 2);
+    }
+
+    .smart-manual-date,
+    .smart-manual-time {
+        border: none !important;
+        background: transparent !important;
+        color: var(--ds-sys-color-on-surface);
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        padding: 0 !important;
+        min-width: 0;
+        width: auto !important;
+        height: 100% !important;
+    }
+
+    .smart-manual-date:focus,
+    .smart-manual-time:focus {
+        outline: none;
+        color: var(--ds-sys-color-primary);
+    }
+
+    .smart-manual-time {
+        border-left: 1px solid var(--ds-sys-color-border);
+        padding-left: calc(var(--ds-ref-space-base) / 2);
+    }
+
+    /* Stack on very small screens */
+    @media (max-width: 480px) {
+        .smart-manual-controls {
+            flex-direction: column;
+        }
+    }
+}

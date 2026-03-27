@@ -1,0 +1,159 @@
+/* css/components/forms/selection-controls.css */
+@layer components {
+
+  /* --- 1. BASE NATIVE RESET --- */
+  input[type="checkbox"],
+  input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    
+    display: inline-grid;
+    place-content: center;
+    margin: 0;
+    width: var(--ds-cmp-control-size, 1.25rem);
+    height: var(--ds-cmp-control-size, 1.25rem);
+    
+    background-color: var(--ds-cmp-control-bg, var(--ds-sys-color-surface));
+    border: var(--ds-cmp-control-border-width, 1px) solid var(--ds-cmp-control-border-color, var(--ds-sys-color-border));
+    
+    cursor: pointer;
+    transition: 
+      background-color 0.2s ease, 
+      border-color 0.2s ease, 
+      transform 0.2s ease;
+  }
+
+  /* --- 2. SHAPE LOGIC --- */
+  input[type="checkbox"] {
+    border-radius: var(--ds-cmp-checkbox-radius, var(--ds-sys-radius-btn, 4px));
+  }
+
+  input[type="radio"] {
+    border-radius: 50%;
+  }
+
+  /* --- 3. CHECKED STATES --- */
+  input[type="checkbox"]:checked,
+  input[type="radio"]:checked {
+    background-color: var(--ds-sys-color-primary);
+    border-color: var(--ds-sys-color-primary);
+  }
+
+  /* --- 4. THE MARKERS (::before) --- */
+  /* Checkmark */
+  input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    box-shadow: inset 1em 1em var(--ds-sys-color-on-primary);
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    transform: scale(0);
+    transition: 0.2s transform cubic-bezier(0.5, 1.5, 0.5, 1);
+  }
+
+  /* Radio Dot */
+  input[type="radio"]::before {
+    content: "";
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background-color: var(--ds-sys-color-on-primary);
+    transform: scale(0);
+    transition: 0.2s transform cubic-bezier(0.5, 1.5, 0.5, 1);
+  }
+
+  input[type="checkbox"]:checked::before,
+  input[type="radio"]:checked::before {
+    transform: scale(1);
+  }
+
+  /* --- 5. TOGGLE SWITCH VARIANT (REFACTORED) --- */
+  /* Usage: <input type="checkbox" class="toggle"> */
+  input[type="checkbox"].toggle {
+    /* Define dimensions locally */
+    --toggle-width: 2.75rem;
+    --toggle-height: 1.5rem;
+    --toggle-padding: 2px;
+    --knob-size: 1.15rem;
+    
+    width: var(--toggle-width);
+    height: var(--toggle-height);
+    border-radius: 99px;
+    
+    /* Layout Engine Change: Use Absolute Positioning */
+    display: inline-block;
+    position: relative;
+    padding: 0; /* Padding handled by positioning logic below */
+    
+    /* Ensure border uses theme variable */
+    border-width: var(--ds-cmp-control-border-width, 1px);
+    
+    /* Reset the checkmark styles from section 4 */
+    clip-path: none;
+  }
+  
+  /* The Knob */
+  input[type="checkbox"].toggle::before {
+    content: "";
+    
+    /* Dimensions */
+    width: var(--knob-size);
+    height: var(--knob-size);
+    border-radius: 50%;
+    
+    /* Paint */
+    background-color: var(--ds-sys-color-on-surface);
+    box-shadow: none;
+    clip-path: none; /* Clear checkmark clip */
+    
+    /* POSITIONING ENGINE */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Perfect vertical center */
+    
+    /* Unchecked State: Stick to left padding edge */
+    left: var(--toggle-padding);
+    
+    /* Animation */
+    transition: left 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s;
+  }
+
+  /* Toggle Checked Styles */
+  input[type="checkbox"].toggle:checked {
+    background-color: var(--ds-sys-color-primary);
+    border-color: var(--ds-sys-color-primary);
+  }
+  
+  input[type="checkbox"].toggle:checked::before {
+    background-color: var(--ds-sys-color-on-primary);
+    
+    /* FIXED LOGIC: 
+       '100%' refers to the padding-box width.
+       So if borders grow, '100%' shrinks automatically.
+       We just subtract the knob width and the right padding.
+    */
+    left: calc(100% - var(--knob-size) - var(--toggle-padding));
+  }
+
+  /* --- 6. STATES (Disabled/Focus) --- */
+  input:focus-visible {
+    outline: 2px solid var(--ds-sys-color-primary);
+    outline-offset: 2px;
+  }
+
+  input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--ds-sys-color-surface);
+    border-color: var(--ds-sys-color-border);
+  }
+  
+  .field--checkbox,
+  .field--radio {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    user-select: none;
+  }
+}

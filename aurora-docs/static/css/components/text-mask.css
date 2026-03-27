@@ -1,0 +1,91 @@
+/* -------------------------------------------------------------------------- */
+/* COMPONENT: TEXT IMAGE MASK                                                 */
+/* Location: /static/css/components/text-mask.css                             */
+/* -------------------------------------------------------------------------- */
+
+/* 
+    1. TEXT FILL (Background Image clipped to Text bounds)
+    Requires the element to have a background image defined either inline 
+    or via another class (e.g. style="background-image: url('...');")
+*/
+.text-mask-fill {
+    /* Set the text transparent so the background can show through */
+    color: transparent !important;
+    background-color: transparent !important;
+    
+    /* Standardize background sizing for images */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Apply the clipping masks to the text fill */
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+/* 
+    2. TEXT KNOCKOUT (Text punches a hole through a container to reveal the background)
+    Requires a specific HTML structure:
+    
+    <div class="text-mask-knockout-container" style="background-image: url('...');">
+        <h1 class="text-mask-knockout-text">LONDON</h1>
+    </div>
+    
+    Important: The internal text block MUST have a solid black background
+    and solid white text in order to Multiply out the transparency hole correctly.
+*/
+.text-mask-knockout-container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Create a stacking context so the mix-blend-mode doesn't bleed out */
+    isolation: isolate; 
+}
+
+.text-mask-knockout-text {
+    /* Knockout colors - White text on Black background creates the alpha mask */
+    background-color: black !important;
+    color: white !important;
+    
+    /* Multiply the black background (makes it invisible) and white text (makes it transparent) */
+    mix-blend-mode: multiply;
+
+    /* Normalize layout to fill the container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Inverse Knockout - for when you want a white overlay instead of a black one */
+.text-mask-knockout-text.inverse {
+    background-color: white !important;
+    color: black !important;
+    mix-blend-mode: screen;
+}
+
+/* 
+    3. EDGE-TO-EDGE FLUID TYPOGRAPHY (CQI)
+    Forces child typography elements to dynamically stretch based on the exact width of this container.
+    Use with caution: extremely long words will result in unreadably small font sizes. 
+*/
+.text-mask-fit-width {
+    container-type: inline-size;
+    width: 100%;
+}
+
+.text-mask-fit-width > * {
+    /* 
+       A standard 6-character English word ("LONDON") spans ~100% of the container 
+       when the font-size is roughly 20-22% of the container's inline width depending on the font face.
+       A fallback using 'vw' is provided for browsers lacking CQI support.
+    */
+    font-size: 20vw;
+    font-size: 21cqi; 
+    line-height: 0.8 !important;
+    white-space: nowrap;
+    text-align: center;
+}

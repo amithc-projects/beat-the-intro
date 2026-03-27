@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#aed500",
+              "primary-fixed-dim": "#aed500",
+              "surface": "#131313",
+              "surface-container-lowest": "#0e0e0e",
+              "error-container": "#93000a",
+              "inverse-surface": "#e2e2e2",
+              "on-primary-container": "#000000",
+              "surface-variant": "#353535",
+              "tertiary": "#ffffff",
+              "inverse-on-surface": "#303030",
+              "primary-fixed": "#c7f300",
+              "on-tertiary-fixed-variant": "#454747",
+              "on-error": "#ffffff",
+              "on-tertiary": "#2f3131",
+              "on-background": "#e2e2e2",
+              "on-secondary": "#002e6a",
+              "on-tertiary-container": "#636565",
+              "on-primary": "#000000",
+              "surface-container-low": "#1b1b1b",
+              "secondary": "#adc6ff",
+              "secondary-fixed-dim": "#adc6ff",
+              "surface-dim": "#131313",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed": "#001a42",
+              "primary-container": "#D1FF00",
+              "background": "#131313",
+              "on-surface-variant": "#c5c9ac",
+              "surface-container-high": "#1a1a1a",
+              "outline-variant": "#444933",
+              "on-surface": "#ffffff",
+              "on-secondary-fixed-variant": "#004395",
+              "tertiary-container": "#e2e2e2",
+              "on-secondary-container": "#e6ecff",
+              "primary": "#D1FF00",
+              "surface-bright": "#393939",
+              "error": "#ff5555",
+              "secondary-fixed": "#d8e2ff",
+              "tertiary-fixed": "#e2e2e2",
+              "secondary-container": "#0566d9",
+              "surface-container-highest": "#353535",
+              "on-tertiary-fixed": "#1a1c1c",
+              "outline": "#8e9378",
+              "surface-container": "#1f1f1f",
+              "on-primary-fixed-variant": "#3d4d00",
+              "tertiary-fixed-dim": "#c6c6c7",
+              "inverse-primary": "#526600",
+              "on-primary-fixed": "#171e00"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0", "lg": "0", "xl": "0", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .grainy-overlay {
+        position: relative;
+      }
+      .grainy-overlay::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.05;
+        pointer-events: none;
+        z-index: 100;
+      }
+      .brutal-shadow {
+        box-shadow: 6px 6px 0px 0px #D1FF00;
+      }
+      .brutal-shadow-white {
+        box-shadow: 6px 6px 0px 0px #ffffff;
+      }
+      .brutal-border {
+        border: 4px solid #D1FF00;
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden grainy-overlay">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-[60] flex justify-between items-center px-6 h-16 bg-[#131313] border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 border-2 border-[#D1FF00] overflow-hidden bg-white">
+<img alt="Spotify User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxlkmAxhKKn7X_wj-A4RO5wBgHA-c1wtchtWa8z5sb-HXcQWfp7I1ORoXPFdTFIAHJTs_WziIQB0vmBaGV1XEumkYY8wAbuZJQ72KTv_Z67xEa1M2C4wLgmO6LEH5hLX1Uxsv4slUP5W3VHJ_Dw68l5Cqkpyd2WR6Epr5Zj3LeOVzJLlrUeTnZAw3SzGbCRXnBPZXBrbw-wlEPwW7Qj3RnVjyH6wB_l-z1LbTW9S12sCSKvlIKzmru95WKpfn6qolZnxzajTY9pJM"/>
+</div>
+<span class="text-xl font-black italic tracking-tighter text-[#D1FF00] uppercase font-headline">BEAT THE INTRO</span>
+</div>
+<button class="text-[#D1FF00] active:scale-95 transition-all">
+<span class="material-symbols-outlined text-2xl">settings</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-4 max-w-lg mx-auto">
+<!-- SESSION COMPLETE HEADER -->
+<div class="mb-8">
+<h1 class="text-6xl font-black italic leading-[0.85] tracking-tighter uppercase mb-2">SESSION<br/>COMPLETE</h1>
+<p class="font-label text-[10px] tracking-[0.2em] text-[#D1FF00] font-bold uppercase">System Report // High-Voltage Mode</p>
+</div>
+<!-- SCORE SECTION -->
+<section class="mb-8">
+<div class="bg-surface-container-high border-4 border-primary-container p-6 relative overflow-hidden">
+<div class="flex items-start justify-between relative z-10">
+<div class="flex items-baseline gap-2">
+<span class="text-8xl font-black text-primary-container leading-none italic">08</span>
+<div class="flex flex-col">
+<span class="text-2xl font-black uppercase leading-none">CORRECT</span>
+<span class="text-[10px] font-bold opacity-50 uppercase tracking-widest mt-1">OUT OF 10 ROUNDS</span>
+</div>
+</div>
+</div>
+<div class="mt-8 h-3 bg-surface-container-highest border-2 border-primary-container">
+<div class="h-full bg-primary-container w-[80%]"></div>
+</div>
+<div class="mt-6 grid grid-cols-2 gap-4 border-t-2 border-white/10 pt-4">
+<div>
+<span class="block text-[10px] uppercase opacity-50 font-bold mb-1">TOTAL TIME</span>
+<span class="text-2xl font-black italic leading-none uppercase">01:42.04</span>
+</div>
+<div>
+<span class="block text-[10px] uppercase opacity-50 font-bold mb-1">AVG. RESPONSE</span>
+<span class="text-2xl font-black italic leading-none uppercase text-primary-container">1.2s</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ACTION BUTTONS -->
+<div class="grid grid-cols-1 gap-4 mb-12">
+<button class="w-full bg-primary-container text-black py-4 font-black text-xl uppercase italic tracking-tighter brutal-shadow active:translate-x-1 active:translate-y-1 transition-all">
+                SHARE RESULT
+            </button>
+<button class="w-full border-4 border-white text-white py-4 font-black text-xl uppercase italic tracking-tighter hover:bg-white hover:text-black active:translate-x-1 active:translate-y-1 transition-all">
+                PLAY AGAIN
+            </button>
+</div>
+<!-- ROUND BREAKDOWN HEADER -->
+<div class="mb-6 flex justify-between items-end border-b-4 border-white pb-2">
+<h2 class="text-3xl font-black uppercase italic tracking-tighter leading-none">ROUND BREAKDOWN</h2>
+<span class="font-label text-[9px] font-bold opacity-40 uppercase">LOG_884_SUM</span>
+</div>
+<!-- LIST OF ROUNDS -->
+<div class="space-y-4">
+<!-- ROUND 01 - CORRECT -->
+<div class="flex bg-surface-container-high border-l-[12px] border-primary-container">
+<div class="w-16 flex flex-col items-center justify-center bg-primary-container text-black shrink-0">
+<span class="text-[10px] font-black uppercase">RND</span>
+<span class="text-2xl font-black italic">01</span>
+</div>
+<div class="p-3 flex-grow flex items-center gap-3 overflow-hidden">
+<div class="w-12 h-12 bg-black border border-white/20 shrink-0">
+<img alt="Album Art" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn0vxB1vw-hR0HkF1OD4WeFvAdLRHgu6Ohp0g_iKpYOXlufNbtA6PWdK5-aKh4GhCr3vYkiD8KOOK5yu3VV55NgeuXq5WSRtnlMQGH4QqBy9ASN-66JDKvScv-nWdXj9kJfqRF_qGss-mo4tvYsgaS9pe24mg06tCllAnsGOXoqVKX_smg1dMOPzIo6bdCVObNca8VgMC7F1b1VCiMjLiUYrrHPRFNAgYxnGrVAfX4UMgkGW_BwhYpsf2rhmBSZOIpU-NwJHophN0"/>
+</div>
+<div class="flex-grow min-w-0">
+<h4 class="font-black text-sm uppercase truncate leading-tight">Harder Better Faster Stronger</h4>
+<p class="text-[10px] font-bold opacity-60 uppercase truncate">Daft Punk — Discovery</p>
+</div>
+<div class="text-right shrink-0">
+<span class="block text-[9px] font-black text-primary-container uppercase mb-1">CORRECT</span>
+<span class="text-xl font-black italic leading-none">0.8s</span>
+</div>
+</div>
+</div>
+<!-- ROUND 02 - FAILED -->
+<div class="flex bg-surface-container-high border-l-[12px] border-error">
+<div class="w-16 flex flex-col items-center justify-center bg-error text-white shrink-0">
+<span class="text-[10px] font-black uppercase">RND</span>
+<span class="text-2xl font-black italic">02</span>
+</div>
+<div class="p-3 flex-grow flex items-center gap-3 overflow-hidden">
+<div class="w-12 h-12 bg-black border border-white/20 shrink-0">
+<img alt="Album Art" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgTn_d0QWiUgyEBmhD4qgyb8j3iTc8EmSP3hWrBqWiP4VQBJoyy8h6VJq_RUSrtsyRTZ_q1byGtH9a-HMsEGbzvJ2l9OtswLs8Ql1-pzKJXx1hmiRzxBO3gmtbHhdcFYLMrPzjeOTsk7WjKqFQKgxeNRDjo50kDyZjR-AiC9Yw04z3v_nz5K8elpS7jQJEAq7ROQx9fUp5Tb4osL9b6FskK9SruhaGaZLATsDbwAjyKzPcd1fEC5PuiMGgwxz2Fp0BSnRAhmNKO_s"/>
+</div>
+<div class="flex-grow min-w-0">
+<h4 class="font-black text-sm uppercase truncate leading-tight">Stayin' Alive</h4>
+<p class="text-[10px] font-bold opacity-60 uppercase truncate mb-1">Bee Gees — SNF</p>
+<p class="text-[9px] font-bold text-error uppercase">X Guessed: Night Fever</p>
+</div>
+<div class="text-right shrink-0">
+<span class="block text-[9px] font-black text-error uppercase mb-1">FAILED</span>
+<span class="text-xl font-black italic leading-none">4.2s</span>
+</div>
+</div>
+</div>
+<!-- ROUND 03 - CORRECT -->
+<div class="flex bg-surface-container-high border-l-[12px] border-primary-container">
+<div class="w-16 flex flex-col items-center justify-center bg-primary-container text-black shrink-0">
+<span class="text-[10px] font-black uppercase">RND</span>
+<span class="text-2xl font-black italic">03</span>
+</div>
+<div class="p-3 flex-grow flex items-center gap-3 overflow-hidden">
+<div class="w-12 h-12 bg-black border border-white/20 shrink-0">
+<img alt="Album Art" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUDlF04GXvGVSCv3Hoieqc2Ml9vgE-T-_NT86Gz0H_Mtfkmw-90KMlbYlOiv-QrCMg6Y0bM_y7Fy2ZHxY_BWJwv73KI5UtGYtx2tsv2ZTNk9B6gvQDgJxxCrV2oFuEQ4dygyC-EGiY860gZLKXCQnrJz2ZzostAAJQpMYC6u6f5omfcine_jjayBaEmxS1g1R-LPeZcKhL7WLJXw0Z_nk3X_eMbJ8Qm9gocde8CvWjAY4Js315-9-7AmzrPOhViXzf5LvqU_NoGJE"/>
+</div>
+<div class="flex-grow min-w-0">
+<h4 class="font-black text-sm uppercase truncate leading-tight">Blinding Lights</h4>
+<p class="text-[10px] font-bold opacity-60 uppercase truncate">The Weeknd — After Hours</p>
+</div>
+<div class="text-right shrink-0">
+<span class="block text-[9px] font-black text-primary-container uppercase mb-1">CORRECT</span>
+<span class="text-xl font-black italic leading-none">0.4s</span>
+</div>
+</div>
+</div>
+<!-- ROUND 04 - CORRECT -->
+<div class="flex bg-surface-container-high border-l-[12px] border-primary-container">
+<div class="w-16 flex flex-col items-center justify-center bg-primary-container text-black shrink-0">
+<span class="text-[10px] font-black uppercase">RND</span>
+<span class="text-2xl font-black italic">04</span>
+</div>
+<div class="p-3 flex-grow flex items-center gap-3 overflow-hidden">
+<div class="w-12 h-12 bg-black border border-white/20 shrink-0">
+<img alt="Album Art" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxKszDTLyiGM7ba_9wjd_ZfvJB6vDLgjeO9ph_YhoiH1yegkq9gqE-XHStyWGPf-_hZ4br0ThazfToteKsvpHP2XRrffGqLimwEcaHWI-jt3woNqR4Pf75VFXRrvzeywA0OIYWt_r12NKN2k9CTzWpQSUWnL-xw_5G3i9goXlt1qHW3h6_wmYE1v02oOsw8lolSKgf_5GHGd2Lh3NHgwAfKPNeKMFbjGcoNKaIgZ38dBeY7PkJvJe54sRBqP7e47Yt0o6JZ-QqilY"/>
+</div>
+<div class="flex-grow min-w-0">
+<h4 class="font-black text-sm uppercase truncate leading-tight">Mr. Brightside</h4>
+<p class="text-[10px] font-bold opacity-60 uppercase truncate">The Killers — Hot Fuss</p>
+</div>
+<div class="text-right shrink-0">
+<span class="block text-[9px] font-black text-primary-container uppercase mb-1">CORRECT</span>
+<span class="text-xl font-black italic leading-none">1.1s</span>
+</div>
+</div>
+</div>
+</div>
+<!-- FOOTER VISUAL -->
+<div class="mt-12 text-center">
+<span class="inline-block px-4 py-1 border-2 border-white/20 text-[10px] font-black uppercase tracking-[0.3em] opacity-30 italic">END OF TRANSMISSION</span>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full h-16 z-[60] flex justify-around items-stretch bg-[#131313] border-t-4 border-[#D1FF00]">
+<div class="flex flex-col items-center justify-center text-white/60 h-full px-4 hover:text-white transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-2xl">play_arrow</span>
+<span class="font-bold tracking-[5%] text-[9px] uppercase">PLAY</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/60 h-full px-4 hover:text-white transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-2xl">explore</span>
+<span class="font-bold tracking-[5%] text-[9px] uppercase">DISCOVER</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/60 h-full px-4 hover:text-white transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-2xl">leaderboard</span>
+<span class="font-bold tracking-[5%] text-[9px] uppercase">RANK</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#D1FF00] text-black h-full px-6 cursor-pointer">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-bold tracking-[5%] text-[9px] uppercase">PROFILE</span>
+</div>
+</nav>
+</body></html>

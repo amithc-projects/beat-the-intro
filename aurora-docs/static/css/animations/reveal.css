@@ -1,0 +1,65 @@
+/* static/css/animations/reveal.css */
+@layer animations {
+
+    /* --- BASE REVEAL STATE (Hidden) --- */
+    .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        /* Use a beautiful, highly-springy easing curve for the motion */
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+    }
+
+    /* --- DIRECTIONAL VARIANTS --- */
+    .reveal.reveal--left {
+        transform: translateX(-40px);
+    }
+
+    .reveal.reveal--right {
+        transform: translateX(40px);
+    }
+
+    .reveal.reveal--scale {
+        transform: scale(0.95);
+    }
+
+    /* --- TRIGGERED STATE (Visible) --- */
+    .reveal.is-revealed {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+        /* Reset everything safely */
+    }
+
+    /* --- STAGGER UTILITIES --- */
+    /* Helpful when rendering lists or grids of items */
+    .reveal-delay-1 {
+        transition-delay: 0.1s;
+    }
+
+    .reveal-delay-2 {
+        transition-delay: 0.2s;
+    }
+
+    .reveal-delay-3 {
+        transition-delay: 0.3s;
+    }
+
+    .reveal-delay-4 {
+        transition-delay: 0.4s;
+    }
+
+    /* =========================================================================
+     ACCESSIBILITY CRITICAL:
+     If the user has enabled OS-level motion reduction, forcefully bypass 
+     all transition durations and starting transforms so elements appear 
+     solidly and instantly rather than swinging into the viewport. 
+     ========================================================================= */
+    @media (prefers-reduced-motion: reduce) {
+        .reveal {
+            transition: none !important;
+            transform: none !important;
+            opacity: 1 !important;
+            /* Ensure they aren't stuck invisible */
+        }
+    }
+}

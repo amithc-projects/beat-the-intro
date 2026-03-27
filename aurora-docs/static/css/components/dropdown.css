@@ -1,0 +1,153 @@
+/* static/css/components/dropdown.css */
+:root {
+    --ds-cmp-dropdown-min-width: 180px;
+    --ds-cmp-dropdown-z-index: 100;
+    --ds-cmp-dropdown-bg: var(--ds-sys-color-surface, #fff);
+    --ds-cmp-dropdown-shadow: var(--ds-sys-shadow-flyout, 0 10px 15px -3px rgb(0 0 0/.12));
+    --ds-cmp-dropdown-radius: var(--ds-sys-radius-lg, 0.5rem);
+    --ds-cmp-dropdown-border: var(--ds-sys-color-border, #e5e7eb);
+    --ds-cmp-dropdown-item-hover: var(--ds-sys-color-surface-hover, rgba(0, 0, 0, 0.05));
+    --ds-cmp-dropdown-item-radius: var(--ds-sys-radius-md, 0.375rem);
+}
+
+[data-mode="dark"],
+[data-theme="dark"] {
+    --ds-cmp-dropdown-item-hover: rgba(255, 255, 255, 0.05);
+}
+
+/* ─── Menu wrapper (positioning context) ─── */
+.dropdown-wrapper,
+.menu-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* ─── Menu panel ─── */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: var(--ds-cmp-dropdown-min-width);
+    background: var(--ds-cmp-dropdown-bg);
+    border: 1px solid var(--ds-cmp-dropdown-border);
+    border-radius: var(--ds-cmp-dropdown-radius);
+    box-shadow: var(--ds-cmp-dropdown-shadow);
+    z-index: var(--ds-cmp-dropdown-z-index);
+    padding: .25rem;
+    list-style: none;
+    transform-origin: top left;
+    transform: scale(.97) translateY(-4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 100ms cubic-bezier(0, 0, .2, 1), opacity 100ms cubic-bezier(0, 0, .2, 1);
+    margin: 0;
+}
+
+.dropdown-menu.align-end {
+    left: auto;
+    right: 0;
+    transform-origin: top right;
+}
+
+.dropdown-menu.is-open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ─── Menu items ─── */
+.dropdown-menu .menu-item {
+    display: flex;
+    align-items: center;
+    gap: .625rem;
+    padding: .4375rem .75rem;
+    border-radius: var(--ds-cmp-dropdown-item-radius);
+    font-size: var(--ds-sys-typography-body-sm-size, 0.875rem);
+    color: var(--ds-sys-color-on-surface, #111827);
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    transition: background 80ms;
+    white-space: nowrap;
+}
+
+.dropdown-menu .menu-item:hover,
+.dropdown-menu .menu-item:focus {
+    background: var(--ds-cmp-dropdown-item-hover);
+}
+
+.dropdown-menu .menu-item.is-destructive {
+    color: var(--ds-sys-color-error, #ef4444);
+}
+
+.dropdown-menu .menu-item.is-destructive:hover,
+.dropdown-menu .menu-item.is-destructive:focus {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.dropdown-menu .menu-item[aria-disabled="true"] {
+    opacity: .4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.dropdown-menu .menu-item[aria-checked="true"] .item-check {
+    opacity: 1;
+}
+
+.dropdown-menu .item-check {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    color: var(--ds-sys-color-primary, #2563eb);
+    flex-shrink: 0;
+}
+
+.dropdown-menu .item-icon {
+    width: 15px;
+    height: 15px;
+    color: var(--ds-sys-color-on-surface-subtle, #6b7280);
+    flex-shrink: 0;
+}
+
+.dropdown-menu .menu-item.is-destructive .item-icon {
+    color: var(--ds-sys-color-error, #ef4444);
+}
+
+.dropdown-menu .item-label {
+    flex: 1;
+}
+
+.dropdown-menu .item-shortcut {
+    font-size: 0.75rem;
+    color: var(--ds-sys-color-on-surface-subtle, #9ca3af);
+    letter-spacing: .02em;
+}
+
+.dropdown-menu .item-badge {
+    font-size: 10px;
+    font-weight: 600;
+    background: var(--ds-sys-color-primary, #2563eb);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 99px;
+}
+
+/* ─── Separator ─── */
+.dropdown-menu .menu-separator {
+    height: 1px;
+    background: var(--ds-cmp-dropdown-border);
+    margin: .25rem 0;
+    pointer-events: none;
+}
+
+/* ─── Group label ─── */
+.dropdown-menu .menu-group-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--ds-sys-color-on-surface-subtle, #6b7280);
+    padding: .375rem .75rem .1875rem;
+    pointer-events: none;
+}

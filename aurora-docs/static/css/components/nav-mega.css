@@ -1,0 +1,177 @@
+/* css/components/nav-mega.css */
+@layer components {
+
+    /* The main wrapper of the horizontal menu that houses the mega dropdown */
+    .nav-mega {
+        position: relative;
+        /* Anchor for standard positioning if needed, though usually mega menus span the whole viewport or container */
+    }
+
+    /* Container for the nav items */
+    .nav-mega>ul {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        background-color: var(--ds-sys-color-surface-inverse);
+        color: var(--ds-sys-color-on-surface-inverse);
+        height: 4rem;
+        padding: 0 var(--ds-ref-space-base);
+        border-radius: var(--ds-sys-radius-btn);
+    }
+
+    /* The list item that triggers the mega menu */
+    .nav-mega>ul>li {
+        position: static;
+        /* Critical: allows the absolute child to span the nearest relative ancestor (often the header or viewport wrapper) */
+        /* If we want the mega menu to span the entire screen, we could use position: static here, 
+           and position: relative on the main `<nav>` or `<header>` outside this component. */
+    }
+
+    /* When the wrapper is restricted */
+    .nav-mega-wrapper {
+        position: relative;
+    }
+
+    .nav-mega a.nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: inherit;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0 1rem;
+        height: 2.5rem;
+        border-radius: var(--ds-sys-radius-btn);
+        transition: background-color 0.2s ease, opacity 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .nav-mega a.nav-link:hover {
+        background-color: color-mix(in srgb, var(--ds-sys-color-on-surface-inverse) 12%, transparent);
+    }
+
+    /* The Mega Menu Panel */
+    .nav-mega-panel {
+        position: absolute;
+        top: 100%;
+        /* Drop right below the header */
+        left: 0;
+        width: 100%;
+        /* Spans the entire width of the relative container */
+        background-color: var(--ds-sys-color-surface);
+        color: var(--ds-sys-color-on-surface);
+        box-shadow: var(--ds-sys-shadow-card), 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--ds-sys-color-border);
+        border-radius: 0 0 var(--ds-sys-radius-card) var(--ds-sys-radius-card);
+        /* Curve bottom only */
+        padding: var(--ds-ref-space-xl);
+
+        /* Animation states */
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+        pointer-events: none;
+        z-index: 200;
+    }
+
+    /* Trigger the panel on hover */
+    .nav-mega>ul>li:hover .nav-mega-panel {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    /* Mega Menu Grid System */
+    .nav-mega-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        /* Default to 4 columns */
+        gap: var(--ds-ref-space-lg);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .nav-mega-grid.cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .nav-mega-grid.cols-5 {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    /* Column content styling */
+    .nav-mega-column h4 {
+        margin-top: 0;
+        margin-bottom: var(--ds-ref-space-sm);
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--ds-sys-color-on-surface);
+        border-bottom: 2px solid var(--ds-sys-color-primary);
+        padding-bottom: 0.5rem;
+        display: inline-block;
+    }
+
+    .nav-mega-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-mega-column ul li {
+        margin-bottom: 0.25rem;
+    }
+
+    .nav-mega-column ul a {
+        color: var(--ds-sys-color-on-surface-variant);
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: color 0.15s ease;
+        display: block;
+        padding: 0.25rem 0;
+    }
+
+    .nav-mega-column ul a:hover {
+        color: var(--ds-sys-color-primary);
+    }
+
+    /* Promotional Banner Area in Mega Menu */
+    .nav-mega-promo {
+        background-color: var(--ds-sys-color-surface-container-low);
+        padding: var(--ds-ref-space-md);
+        border-radius: var(--ds-sys-radius-card);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .nav-mega-promo h3 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Chevron */
+    .nav-mega .cascader {
+        display: block;
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-left: 0.5rem;
+        background-color: currentColor;
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        opacity: 0.6;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-mega>ul>li:hover .cascader {
+        transform: rotate(180deg);
+        opacity: 1;
+    }
+}

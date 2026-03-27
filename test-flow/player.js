@@ -11,7 +11,7 @@ const playerReadyPromise = new Promise((resolve) => {
 // Define callback at top level so it's ready when the script loads
 window.onSpotifyWebPlaybackSDKReady = () => {
     player = new window.Spotify.Player({
-        name: 'Beat the Intro Test Player',
+        name: 'Beat the Intro Player',
         getOAuthToken: async (cb) => {
             if (isTokenExpired()) {
                 await refreshToken();

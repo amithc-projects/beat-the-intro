@@ -1,0 +1,213 @@
+/* COUNTDOWN COMPONENT */
+
+.cd-host {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.cd-frame {
+    position: relative;
+    width: 360px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cd-card-bg, var(--ds-sys-color-surface, #1e293b));
+    border-radius: var(--cd-border-radius, var(--ds-sys-radius-card, 24px));
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    transition:
+        width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        border-radius 0.4s ease;
+    overflow: visible;
+    box-sizing: border-box;
+    border: 1px solid var(--ds-sys-color-border, transparent);
+}
+
+.cd-frame.cd-alt {
+    width: 260px;
+    height: 260px;
+}
+
+.cd-frame.cd-circle {
+    border-radius: 50%;
+}
+
+.cd-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.cd-track {
+    fill: none;
+    stroke: var(--ds-sys-color-border);
+    stroke-width: var(--cd-border-thickness, 6px);
+}
+
+.cd-bg-fill {
+    fill: url(#cd-grad-INSTANCEID);
+    opacity: var(--cd-fill-opacity, 0);
+    transition: opacity 0.3s ease;
+}
+
+.cd-progress {
+    fill: none;
+    stroke: var(--cd-accent, var(--ds-sys-color-primary, #38bdf8));
+    stroke-width: var(--cd-border-thickness, 6px);
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 8px var(--cd-accent, var(--ds-sys-color-primary, #38bdf8)));
+    transition: stroke 0.3s ease;
+}
+
+.cd-marker {
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-width: 2px;
+    stroke-linecap: round;
+}
+
+.cd-tick {
+    fill: var(--cd-tick-color, #fff);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.8));
+}
+
+.cd-ripple {
+    fill: var(--cd-accent, var(--ds-sys-color-primary, #38bdf8));
+    opacity: 0;
+}
+
+.cd-ripple-animate {
+    animation: cd-ripple 0.6s ease-out;
+}
+
+@keyframes cd-ripple {
+    0% {
+        transform: scale(0);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.cd-display {
+    font-family: inherit;
+    font-size: var(--cd-font-size, 4.5rem);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    z-index: 10;
+    color: var(--cd-accent, var(--ds-sys-color-primary, #38bdf8));
+    transition: color 0.3s ease, transform 0.2s ease, font-size 0.4s ease;
+    display: inline-block;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.cd-frame.cd-alt .cd-display {
+    font-size: var(--cd-font-size, 3.2rem);
+}
+
+.cd-frame.cd-triangle .cd-display {
+    transform: translateY(20px);
+}
+
+.cd-frame.cd-heart .cd-display {
+    transform: translateY(-5px);
+}
+
+@keyframes cd-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+@keyframes cd-glow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px var(--cd-accent, var(--ds-sys-color-primary)));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 25px var(--cd-accent, var(--ds-sys-color-primary)));
+    }
+}
+
+@keyframes cd-flash {
+
+    0%,
+    100% {
+        opacity: 0.1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+.cd-pulse {
+    animation: cd-pulse 1s ease-in-out infinite;
+}
+
+.cd-glow {
+    animation: cd-glow 1s ease-in-out infinite;
+}
+
+.cd-flash {
+    animation: cd-flash 1s ease-in-out infinite !important;
+}
+
+.cd-controls {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.cd-btn {
+    font-family: inherit;
+    padding: 0.7rem 1.4rem;
+    border-radius: var(--ds-sys-radius-button, 10px);
+    border: none;
+    background: var(--cd-base-accent, var(--ds-sys-color-primary, #38bdf8));
+    color: var(--ds-sys-color-on-primary, #0f172a);
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+    min-width: 100px;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+
+.cd-btn:hover {
+    opacity: 0.9;
+}
+
+.cd-btn:active {
+    transform: scale(0.95);
+}
+
+.cd-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.cd-btn-secondary {
+    background: transparent;
+    border: 1px solid var(--cd-base-accent, var(--ds-sys-color-primary, #38bdf8));
+    color: var(--cd-base-accent, var(--ds-sys-color-primary, #38bdf8));
+}

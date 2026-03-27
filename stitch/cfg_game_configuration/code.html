@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#aed500",
+              "primary-fixed-dim": "#aed500",
+              "surface": "#131313",
+              "surface-container-lowest": "#0e0e0e",
+              "error-container": "#93000a",
+              "inverse-surface": "#e2e2e2",
+              "on-primary-container": "#576c00",
+              "surface-variant": "#353535",
+              "tertiary": "#ffffff",
+              "inverse-on-surface": "#303030",
+              "primary-fixed": "#c7f300",
+              "on-tertiary-fixed-variant": "#454747",
+              "on-error": "#690005",
+              "on-tertiary": "#2f3131",
+              "on-background": "#e2e2e2",
+              "on-secondary": "#002e6a",
+              "on-tertiary-container": "#636565",
+              "on-primary": "#293500",
+              "surface-container-low": "#1b1b1b",
+              "secondary": "#adc6ff",
+              "secondary-fixed-dim": "#adc6ff",
+              "surface-dim": "#131313",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed": "#001a42",
+              "primary-container": "#c7f300",
+              "background": "#131313",
+              "on-surface-variant": "#c5c9ac",
+              "surface-container-high": "#2a2a2a",
+              "outline-variant": "#444933",
+              "on-surface": "#e2e2e2",
+              "on-secondary-fixed-variant": "#004395",
+              "tertiary-container": "#e2e2e2",
+              "on-secondary-container": "#e6ecff",
+              "primary": "#ffffff",
+              "surface-bright": "#393939",
+              "error": "#ffb4ab",
+              "secondary-fixed": "#d8e2ff",
+              "tertiary-fixed": "#e2e2e2",
+              "secondary-container": "#0566d9",
+              "surface-container-highest": "#353535",
+              "on-tertiary-fixed": "#1a1c1c",
+              "outline": "#8e9378",
+              "surface-container": "#1f1f1f",
+              "on-primary-fixed-variant": "#3d4d00",
+              "tertiary-fixed-dim": "#c6c6c7",
+              "inverse-primary": "#526600",
+              "on-primary-fixed": "#171e00"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0rem", "lg": "0rem", "xl": "0rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grainy-bg {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            pointer-events: none;
+        }
+        .zine-skew {
+            transform: skew(-1deg, 0.5deg);
+        }
+        .offset-shadow-volt {
+            box-shadow: 6px 6px 0px 0px #c7f300;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-fixed-variant overflow-x-hidden">
+<div class="fixed inset-0 grainy-bg z-[-1]"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-[#131313] border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 border-2 border-primary-container p-0.5">
+<img alt="Spotify User Profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a cool urban person with neon green lighting highlights on face against dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuHBLlIa4YXqAz_xZUBTHiHzgV_zniJqQWIYo6p6KauD8BU-3aHjF_9wKdefmw4wKP4mKdJK-_kHceoK8TDz5JLL_-RoV5CpnamfXXMAY0i3noIJEeMBWmxVkvy3gtHK4UIeK3T79pSq6AtRo-C2IySnMn0fh-vJF4A4Cq5vwyTSpt9cMbHhy4gC0n_pHrWUOh5d2qhDZlbpE9w0LITuiOCtsHLG6ny7_9Mg7CWY2mMjznlkotn-9H8k5GjJwM2Sl50NbXyQ_zFtg"/>
+</div>
+<h1 class="font-['Space_Grotesk'] uppercase tracking-[-2%] font-black italic text-2xl tracking-tighter text-[#D1FF00] hover:skew-x-12 transition-transform">CFG: Game Configuration</h1>
+</div>
+<button class="text-[#D1FF00] hover:bg-[#D1FF00] hover:text-black transition-all duration-75 active:translate-x-1 active:translate-y-1 p-2">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-6 min-h-screen">
+<div class="max-w-6xl mx-auto md:grid md:grid-cols-2 md:gap-12 md:items-start">
+<!-- Left Column: Playlist Summary -->
+<section class="mb-12 md:mb-0">
+<div class="relative zine-skew mb-8">
+<div class="absolute -inset-1 bg-primary-container transform translate-x-2 translate-y-2"></div>
+<div class="relative bg-surface-container-high border-4 border-primary p-4">
+<div class="aspect-square w-full mb-6 border-2 border-primary-container overflow-hidden">
+<img alt="Playlist Cover" class="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-500" data-alt="Abstract vibrant digital art with neon green and purple streaks representing high energy electronic music" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQU5yB8YRu_Q1yZTJBe9EiLMQ6Mkx1dqG_tfEwEuTZhA7L4DJ4DkEucgbgky7M0Pg5Z72eKlymqra5gTeQzG7SlvMSmiOKLxrQMcTGchogJc2QxaVYRO8tiEl1bRUZ02NB2UZBOQ0ejkHJwuzabBWIx_evm1A32h_x9J8dBDrijidnFKi5sp9hiKJyEVgcBG32T8Rcnu7oNdBsodlGFqPmFmwjVENdgPQEM7ZmpSYQZXzh7uyW9P0gD2CBCzbdurlCthLbPgIhy1M"/>
+</div>
+<div class="space-y-2">
+<span class="bg-primary-container text-on-primary-fixed-variant px-2 py-1 text-[10px] font-black uppercase tracking-widest">SELECTED TRACKLIST</span>
+<h2 class="text-4xl font-black uppercase tracking-tight leading-none break-words">HYPERPOP 2024: THE SPEEDRUN</h2>
+<div class="flex justify-between items-end pt-4 border-t-2 border-primary-container/30">
+<p class="font-label text-sm tracking-widest opacity-70 uppercase">Total Tracks</p>
+<p class="text-3xl font-black italic text-primary-container">42</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Technical Readout / Metadata -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 border-b-4 border-primary/20">
+<p class="text-[10px] font-bold tracking-widest text-primary-container opacity-50 mb-1 uppercase">EST. PLAYTIME</p>
+<p class="text-xl font-bold italic">12:45 MIN</p>
+</div>
+<div class="bg-surface-container-low p-4 border-b-4 border-primary/20">
+<p class="text-[10px] font-bold tracking-widest text-primary-container opacity-50 mb-1 uppercase">AVG. DIFFICULTY</p>
+<p class="text-xl font-bold italic">VOLTAGE</p>
+</div>
+</div>
+</section>
+<!-- Right Column: Configuration -->
+<section class="space-y-12">
+<!-- Round Selection: Aurora Segmented Control -->
+<div class="space-y-6">
+<div class="flex items-baseline gap-4">
+<h3 class="text-2xl font-black italic uppercase">ROUNDS_SELECT</h3>
+<div class="flex-grow border-b-2 border-primary/20"></div>
+</div>
+<div class="grid grid-cols-4 gap-0 border-4 border-primary p-1 bg-surface-container-lowest overflow-hidden">
+<button class="py-4 text-center text-sm font-black transition-all bg-primary-container text-black scale-105 z-10">3</button>
+<button class="py-4 text-center text-sm font-black transition-all hover:bg-white/10 text-white">5</button>
+<button class="py-4 text-center text-sm font-black transition-all hover:bg-white/10 text-white">10</button>
+<button class="py-4 text-center text-sm font-black transition-all hover:bg-white/10 text-white">MAX</button>
+</div>
+<div class="space-y-3">
+<label class="font-label text-[10px] tracking-widest uppercase text-primary-container font-black">OR ENTER CUSTOM_INT</label>
+<div class="relative group">
+<input class="w-full bg-surface-container-high border-b-4 border-primary text-4xl font-black italic p-4 focus:outline-none focus:border-primary-container focus:bg-surface-container-highest transition-colors placeholder:text-white/10" placeholder="00" type="number"/>
+<div class="absolute right-4 bottom-4 text-primary-container/40 pointer-events-none uppercase text-xs font-bold">VAL_ENTRY</div>
+</div>
+</div>
+</div>
+<!-- Difficulty Hack (Zine Style) -->
+<div class="space-y-6">
+<div class="flex items-baseline gap-4">
+<h3 class="text-2xl font-black italic uppercase">MODIFIERS</h3>
+<div class="flex-grow border-b-2 border-primary/20"></div>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="px-4 py-2 border-2 border-primary text-xs font-bold uppercase hover:bg-primary hover:text-black transition-all">SUDDEN_DEATH</button>
+<button class="px-4 py-2 border-2 border-primary-container text-primary-container text-xs font-bold uppercase hover:bg-primary-container hover:text-black transition-all">BASS_BOOST</button>
+<button class="px-4 py-2 border-2 border-primary/20 text-white/20 text-xs font-bold uppercase cursor-not-allowed">CHORUS_ONLY [LOCKED]</button>
+</div>
+</div>
+<!-- Primary Action -->
+<div class="pt-8 md:pt-16">
+<button class="group relative w-full h-24 transition-all active:scale-95">
+<div class="absolute inset-0 bg-primary-container translate-x-3 translate-y-3"></div>
+<div class="absolute inset-0 bg-black border-4 border-primary flex items-center justify-between px-8 group-hover:bg-primary-container group-hover:text-black transition-colors duration-100">
+<span class="text-4xl font-black italic tracking-tighter uppercase">START_GAME</span>
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</button>
+<p class="mt-6 font-label text-[9px] leading-tight opacity-50 uppercase tracking-widest text-center">By clicking start, you acknowledge that tempo speeds exceed 160BPM. Stay alert.</p>
+</div>
+</section>
+</div>
+</main>
+<!-- NavigationDrawer (Suppressed per "Transactional" rule, but implemented as requested by shared components shell logic) -->
+<!-- Suppression logic check: This is a configuration screen (transactional/task-focused). Hiding bottom nav as per instructions for Task-Focused pages. -->
+<!-- If needed, BottomNavBar would go here. Suppressed for focus on Game CFG journey. -->
+</body></html>

@@ -1,0 +1,98 @@
+@layer components {
+
+    /* --- MAIN WRAPPER --- */
+    .pin-input {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        max-width: 100%;
+    }
+
+    /* --- INDIVIDUAL BOXES --- */
+    .pin-input__box {
+        width: 3rem;
+        height: 3.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+        color: var(--ds-sys-color-on-surface);
+        background: var(--ds-sys-color-surface);
+        border: 1px solid var(--ds-sys-color-border);
+        border-radius: var(--ds-sys-radius-btn);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        transition: all 0.2s ease;
+
+        /* Remove browser default up/down number arrows */
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+
+    .pin-input__box::-webkit-outer-spin-button,
+    .pin-input__box::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Focus & Active States */
+    .pin-input__box:focus {
+        outline: none;
+        border-color: var(--ds-sys-color-primary);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ds-sys-color-primary), transparent 80%);
+    }
+
+    /* Filled State (when a character is inside) */
+    .pin-input__box:not(:placeholder-shown) {
+        border-color: color-mix(in srgb, var(--ds-sys-color-primary), var(--ds-sys-color-border) 50%);
+    }
+
+    /* --- WRAPPER COMPLETION STATES --- */
+
+    /* When all boxes are filled, optional parent indication */
+    .pin-input.is-complete .pin-input__box {
+        border-color: var(--ds-sys-color-success);
+        background: color-mix(in srgb, var(--ds-sys-color-success), transparent 95%);
+    }
+
+    .pin-input.is-complete .pin-input__box:focus {
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ds-sys-color-success), transparent 80%);
+    }
+
+    /* Basic Error State */
+    .pin-input.is-error .pin-input__box {
+        border-color: var(--ds-sys-color-error);
+        background: color-mix(in srgb, var(--ds-sys-color-error), transparent 95%);
+        animation: pinShake 0.4s ease-in-out;
+    }
+
+    @keyframes pinShake {
+
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+
+        25% {
+            transform: translateX(-4px);
+        }
+
+        75% {
+            transform: translateX(4px);
+        }
+    }
+
+    /* --- MOBILE RESPONSIVENESS --- */
+    @media (max-width: 480px) {
+        .pin-input {
+            gap: 0.25rem;
+            /* Tighter gap on small screens */
+        }
+
+        .pin-input__box {
+            width: 2.5rem;
+            height: 3rem;
+            font-size: 1.25rem;
+        }
+    }
+}

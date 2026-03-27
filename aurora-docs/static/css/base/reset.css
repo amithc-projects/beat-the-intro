@@ -1,0 +1,32 @@
+/* css/base/reset.css */
+@layer reset {
+  :root {
+    --ds-sys-density: 1;
+    /* Enable Native Light/Dark Auto-Detection */
+    color-scheme: light dark;
+  }
+
+  /* Manual Overrides (Controlled by JS) */
+  [data-mode="light"] { color-scheme: light; }
+  [data-mode="dark"]  { color-scheme: dark; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  img { max-width: 100%; display: block; }
+  ul { list-style: none; }
+  
+  body { 
+    min-height: 100vh; 
+    line-height: 1.5; 
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--font-body);
+    
+    /* Global Colors */
+    background-color: var(--ds-sys-color-bg-app);
+    color: var(--ds-sys-color-on-surface);
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    /* Native Control Tinting */
+    accent-color: var(--ds-sys-color-primary);
+  }
+}

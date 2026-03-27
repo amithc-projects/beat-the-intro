@@ -1,0 +1,33 @@
+/* Viewport Snap Primitive */
+.l-viewport-snap {
+  height: 100vh;
+  width: 100vw;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  
+  /* Hide scrollbar for immersive experience */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.l-viewport-snap::-webkit-scrollbar {
+  display: none;
+}
+
+.l-section-viewport {
+  height: 100vh;
+  width: 100vw;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+}

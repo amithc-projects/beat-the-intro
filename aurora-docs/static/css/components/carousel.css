@@ -1,0 +1,235 @@
+/* MODERN CSS CAROUSEL (Fixed Dot Colors) */
+
+:root {
+  --carousel-height: min(60vh, 500px);
+  --item-width: 280px;
+}
+
+/* CAROUSEL CONTAINER */
+.carousel {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  /* Match inner children's max height */
+  gap: 0;
+  width: 100%;
+  padding: 20px 0; /* Vertical padding for halo/scale */
+  margin: 1rem 0;
+
+  overflow-x: auto;
+  overflow-y: visible;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  scroll-behavior: smooth;
+
+  /* Dots placement */
+  scroll-marker-group: after;
+
+  /* Scope & State */
+  anchor-name: --carousel;
+  anchor-scope: --carousel;
+  position: relative;
+}
+
+/* Hide scrollbars */
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel {
+  scrollbar-width: none;
+}
+
+
+/* --- ITEMS (Direct Children) --- */
+.carousel>* {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding-inline: calc(50% - (var(--item-width) / 2));
+  /* Center Logic */
+  scroll-snap-align: center;
+  box-sizing: border-box;
+  container-type: scroll-state;
+}
+
+/* --- CARD CONTENT --- */
+.carousel>*>* {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: var(--item-width);
+  margin: 0;
+  box-sizing: border-box;
+  background: var(--ds-sys-color-surface-container);
+  border: 1px solid var(--ds-sys-color-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+  font-size: 1.2rem;
+
+  /* Unsnapped State */
+  opacity: 0.5;
+  transform: scale(var(--ds-motion-scale-unsnapped, 0.9));
+  transition: 
+    opacity var(--ds-sys-motion-duration) var(--ds-sys-motion-ease),
+    transform var(--ds-sys-motion-duration) var(--ds-sys-motion-ease),
+    outline var(--ds-sys-motion-duration) var(--ds-sys-motion-ease),
+    box-shadow var(--ds-sys-motion-duration) var(--ds-sys-motion-ease);
+  outline: 0 solid transparent;
+}
+
+/* --- OVERFLOW HELPER --- */
+.carousel__item--overflow {
+  overflow: visible !important;
+}
+
+/* --- PLAIN HELPER (No Jacket) --- */
+.carousel__item--plain {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Snapped State (Default active) */
+@container scroll-state(snapped: inline) {
+  .carousel>*>* {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: var(--ds-sys-shadow-card, 0 4px 10px rgba(0, 0, 0, 0.1));
+    border-color: var(--ds-sys-color-primary);
+  }
+}
+
+/* FOCUS STANDARD: Interaction Lift */
+.carousel>*>*:hover,
+.carousel>*>*:focus-within {
+  transform: scale(var(--ds-motion-scale-focus, 1.05)) !important;
+  opacity: 1 !important;
+  z-index: 100;
+  outline: 2px solid var(--ds-sys-color-primary);
+  outline-offset: 4px;
+  box-shadow: var(--ds-motion-halo-glow), var(--shadow-xl);
+  cursor: pointer;
+}
+
+/* --- NAVIGATION MARKERS (The Dots) --- */
+.carousel::scroll-marker-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  gap: 12px;
+  /* More spacing for touch targets */
+  order: 999;
+  width: 100%;
+}
+
+/* INACTIVE DOT */
+.carousel>*::scroll-marker {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  /* COLOR FIX: Use "On Surface" (Text Color) with opacity */
+  /* This ensures visibility on both Light (Black) and Dark (White) backgrounds */
+  background-color: var(--ds-sys-color-on-surface);
+  opacity: 0.3;
+}
+
+/* HOVER STATE */
+.carousel>*::scroll-marker:hover {
+  opacity: 0.6;
+}
+
+/* ACTIVE DOT */
+.carousel>*::scroll-marker:target-current {
+  /* Use Brand Color and Full Opacity */
+  background-color: var(--ds-sys-color-primary);
+  opacity: 1;
+  transform: scale(1.25);
+}
+
+
+/* --- NAVIGATION ARROWS --- */
+.carousel::scroll-button(*) {
+  position-anchor: --carousel;
+  position: absolute;
+  z-index: 10;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+
+  /* Arrow Colors */
+  border: 1px solid var(--ds-sys-color-border);
+  background: var(--ds-sys-color-surface);
+  color: var(--ds-sys-color-on-surface);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.9;
+  transition: all 0.2s;
+}
+
+.carousel::scroll-button(*):hover {
+  background: var(--ds-sys-color-primary);
+  color: var(--ds-sys-color-on-primary);
+  border-color: var(--ds-sys-color-primary);
+}
+
+.carousel::scroll-button(inline-start) {
+  content: "❮";
+  position-area: left center;
+  margin-right: 10px;
+}
+
+.carousel::scroll-button(inline-end) {
+  content: "❯";
+  position-area: right center;
+  margin-left: 10px;
+}
+
+
+/* --- MULTI-ITEM VARIANT --- */
+.carousel.carousel--multi {
+  --item-width: 220px;
+  --item-gap: 16px;
+  padding-inline: 2rem;
+  scroll-padding-inline: 2rem;
+}
+
+.carousel.carousel--multi>* {
+  padding-inline: 0;
+  margin-right: var(--item-gap);
+  scroll-snap-align: start;
+}
+
+.carousel.carousel--multi>*>* {
+  width: var(--item-width);
+  transform: none;
+  opacity: 0.8; /* Slightly dimmed when not snapped */
+}
+
+@container scroll-state(snapped: inline) {
+  .carousel.carousel--multi>*>* {
+    opacity: 1;
+    border-color: var(--ds-sys-color-primary);
+    border-width: 2px;
+    background: var(--ds-sys-color-surface);
+    box-shadow: var(--ds-motion-halo-glow);
+  }
+}

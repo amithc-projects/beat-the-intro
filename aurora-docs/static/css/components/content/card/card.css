@@ -1,0 +1,352 @@
+/* css/components/card.css */
+@layer components {
+  .card {
+    container-name: card;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+
+    background: var(--ds-sys-color-surface);
+    color: var(--ds-sys-color-on-surface);
+    border: var(--ds-sys-border-width, 1px) solid var(--ds-sys-color-border);
+    border-radius: var(--ds-sys-radius-card);
+    box-shadow: var(--ds-sys-shadow-card);
+
+    /* MOTION BASE */
+    transition: 
+      transform var(--ds-motion-duration-norm) var(--ds-motion-easing-active),
+      box-shadow var(--ds-motion-duration-norm) var(--ds-motion-easing-active),
+      outline var(--ds-motion-duration-norm) var(--ds-motion-easing-active);
+    outline: 0 solid transparent;
+    outline-offset: 2px;
+  }
+
+  /* FOCUS STANDARD: Lift + Halo */
+  .card:hover,
+  .card:focus-within {
+    transform: scale(var(--ds-motion-scale-focus, 1.05));
+    box-shadow: var(--ds-sys-shadow-card-hover, var(--shadow-xl));
+    z-index: 10;
+    outline: 2px solid var(--ds-sys-color-primary);
+    outline-offset: 4px;
+    cursor: pointer;
+  }
+
+  /* --- NEW INTERACTION STANDARD (The "Netflix" Fix) --- */
+  .card--interactive {
+    transition: 
+      transform var(--ds-sys-motion-duration) var(--ds-sys-motion-ease),
+      box-shadow var(--ds-sys-motion-duration) var(--ds-sys-motion-ease),
+      outline var(--ds-sys-motion-duration) var(--ds-sys-motion-ease);
+  }
+
+  .card--interactive:focus-visible,
+  .card--interactive.is-selected {
+    outline: 4px solid var(--ds-sys-color-primary);
+    outline-offset: 4px;
+    transform: scale(var(--ds-motion-scale-focus, 1.05));
+    box-shadow: var(--ds-sys-shadow-card-hover, var(--shadow-xl));
+    z-index: 10;
+  }
+
+  /* CONTENT REAL: Reveal metadata/actions */
+  .card__reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 
+      opacity var(--ds-motion-duration-norm) var(--ds-motion-easing-reveal),
+      transform var(--ds-motion-duration-norm) var(--ds-motion-easing-reveal);
+    margin-top: var(--space-sm);
+  }
+
+  .card:hover .card__reveal,
+  .card:focus-within .card__reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card__media {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+
+  .card__content {
+    /* Use 'lg' for comfortable internal padding, scaled by density if needed */
+    padding: calc(var(--space-lg) * var(--ds-sys-density));
+    display: flex;
+    flex-direction: column;
+    /* Smaller gap between elements inside */
+    gap: var(--space-xs);
+    flex-grow: 1;
+  }
+
+  .card .primary,
+  .card .secondary {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+
+  @container card style(--ds-cmp-card-layout: media-left) {
+    .card {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .card__media {
+      aspect-ratio: 1/1;
+      width: 30%;
+      height: 100%;
+    }
+  }
+
+  @container card style(--ds-cmp-card-layout: overlay) {
+    .card {
+      display: grid;
+      grid-template-areas: "stack";
+    }
+
+    .card__media,
+    .card__content {
+      grid-area: stack;
+    }
+
+    .card__content {
+      z-index: 1;
+      align-self: end;
+      background: linear-gradient(to top, black, transparent);
+      color: white;
+    }
+
+    .card__action {
+      align-self: flex-start;
+    }
+  }
+
+  /* Append to css/components/content/card/card.css */
+
+  /* --- HORIZONTAL CARD (Media Object) --- */
+  /* Usage: <article class="card card--horizontal"> */
+  .card--horizontal {
+    flex-direction: row;
+    /* Side by side */
+    align-items: stretch;
+    overflow: hidden;
+    /* ensure image obeys corners */
+  }
+
+  /* The Image Side */
+  .card--horizontal .card__media {
+    width: 35%;
+    /* Fixed ratio or generic width */
+    max-width: 250px;
+    height: auto;
+    /* Allow full height */
+    object-fit: cover;
+    border-radius: 0;
+    /* Remove top-only radius from standard card */
+  }
+
+  /* The Content Side */
+  .card--horizontal .card__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Center text vertically */
+    padding: var(--space-md);
+  }
+
+  /* Mobile Responsive: Stack them again */
+  @container (max-width: 500px) {
+    .card--horizontal {
+      flex-direction: column;
+    }
+
+    .card--horizontal .card__media {
+      width: 100%;
+      height: 200px;
+      max-width: none;
+    }
+  }
+
+  /* --- METRIC / STAT CARD --- */
+  /* Usage: <article class="card card-metric"> */
+  .card-metric {
+    position: relative;
+    padding: var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .card-metric .card__content {
+    padding: 0;
+    /* Remove default huge padding */
+    gap: var(--space-xs);
+  }
+
+  .card-metric__label {
+    font-size: var(--text-sm);
+    color: var(--ds-sys-color-on-surface-subtle);
+    font-weight: 500;
+  }
+
+  .card-metric__value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ds-sys-color-on-surface);
+  }
+
+  .card-metric__trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .card-metric__trend--positive {
+    color: var(--ds-sys-color-success);
+  }
+
+  .card-metric__trend--negative {
+    color: var(--ds-sys-color-error);
+  }
+
+  .card-metric__trend--neutral {
+    color: var(--ds-sys-color-on-surface-subtle);
+  }
+
+  .card-metric__icon {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ds-sys-color-surface-variant);
+    color: var(--ds-sys-color-on-surface-subtle);
+    border-radius: var(--ds-sys-radius-md);
+    flex-shrink: 0;
+  }
+
+  .card-metric__chart {
+    margin-top: auto;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .card-metric__chart-bar {
+    flex: 1;
+    background: var(--ds-sys-color-surface-variant);
+    border-radius: 2px 2px 0 0;
+  }
+
+  /* --- PRICING CARD --- */
+  /* Usage: <article class="card card-pricing"> */
+  .card-pricing {
+    padding: var(--space-xl);
+    align-items: center;
+    text-align: center;
+    gap: var(--space-lg);
+  }
+
+  .card-pricing__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .card-pricing__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--ds-sys-color-on-surface);
+  }
+
+  .card-pricing__desc {
+    font-size: var(--text-sm);
+    color: var(--ds-sys-color-on-surface-subtle);
+  }
+
+  .card-pricing__price {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--ds-sys-color-on-surface);
+    line-height: 1;
+    margin: var(--space-xs) 0;
+  }
+
+  .card-pricing__price span {
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--ds-sys-color-on-surface-subtle);
+  }
+
+  .card-pricing__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .card-pricing__features li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    font-size: var(--text-sm);
+    color: var(--ds-sys-color-on-surface-subtle);
+  }
+
+  .card-pricing__features svg {
+    color: var(--ds-sys-color-primary);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .card-pricing .btn {
+    width: 100%;
+    margin-top: auto;
+  }
+
+  /* Highlighted / Popular Tier */
+  .card-pricing--highlighted {
+    border: 2px solid var(--ds-sys-color-primary);
+    box-shadow: var(--ds-sys-shadow-md);
+    position: relative;
+    /* Scale up slightly on desktop */
+    transform: scale(1.05);
+    z-index: 10;
+  }
+
+  .card-pricing--highlighted .card-pricing__badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ds-sys-color-primary);
+    color: #fff;
+    padding: 2px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Reset scale on mobile so they stack cleanly */
+  @media (max-width: 768px) {
+    .card-pricing--highlighted {
+      transform: none;
+      z-index: 1;
+    }
+  }
+}

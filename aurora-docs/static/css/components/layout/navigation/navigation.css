@@ -1,0 +1,370 @@
+/* css/components/navigation.css */
+@layer components {
+  /* =========================================
+     1. BASE & DESKTOP LAYOUT
+     ========================================= */
+  .nav {
+    --nav-bg: var(--ds-cmp-nav-bg, var(--ds-sys-color-surface));
+    --nav-color: var(--ds-cmp-nav-text, var(--ds-sys-color-on-surface));
+    --nav-border: var(--ds-cmp-nav-border, 1px solid var(--ds-sys-color-border));
+    
+    background: var(--nav-bg);
+    border-bottom: var(--nav-border);
+    width: 100%;
+    position: relative;
+    z-index: 100;
+  }
+
+  .nav__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 4rem;
+    gap: var(--space-sm); /* Add gap for spacing between elements */
+  }
+
+
+  /* LOGO (Keep class as it's a specific element) */
+  .nav__brand {
+    font-weight: 800;
+    font-size: 1.25rem;
+    text-decoration: none;
+    color: var(--ds-sys-color-primary);
+  }
+  .nav__settings {
+    position: relative;
+    list-style: none; /* Remove marker from details */
+    margin-left: auto; /* Push to right on Desktop if not in menu */
+  }
+  /* Remove native triangle */
+  .nav__settings > summary { list-style: none; cursor: pointer; }
+  .nav__settings > summary::-webkit-details-marker { display: none; }
+
+  .nav__settings-icon {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    color: var(--nav-color);
+    transition: background 0.2s;
+  }
+  
+  .nav__settings-icon:hover {
+    background: var(--ds-sys-color-bg-app);
+    color: var(--ds-sys-color-primary);
+  }
+
+  /* The Dropdown Panel */
+  .nav__settings-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    width: 220px;
+    padding: var(--space-md);
+    
+    background: var(--nav-bg);
+    border: var(--nav-border);
+    border-radius: var(--ds-sys-radius-card);
+    box-shadow: var(--ds-sys-shadow-card);
+    z-index: 200;
+    
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  
+  /* Style the controls inside */
+  .nav__settings-panel label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--ds-sys-color-on-surface);
+  }
+
+  /* MAIN MENU (The top-level UL) */
+  .nav__menu {
+    display: flex;
+    gap: var(--space-md);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* LINKS (Targeting all 'a' tags inside the menu) */
+  .nav__menu a {
+    display: block;
+    padding: var(--space-sm) var(--space-md);
+    text-decoration: none;
+    color: var(--nav-color);
+    font-weight: 600;
+    border-radius: var(--ds-sys-radius-btn);
+    transition: background 0.2s;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .nav__menu a:hover,
+  .nav__menu a:focus {
+    background: var(--ds-sys-color-bg-app);
+    color: var(--ds-sys-color-primary);
+  }
+  
+  /* LIST ITEMS (Relative context for dropdowns) */
+  .nav__menu li {
+    position: relative;
+  }
+
+  /* ARROW INDICATOR: Modern CSS ':has()' selector
+     "If an LI has a UL inside it, add an arrow to its direct link child"
+  */
+  .nav__menu li:has(ul) > a::after {
+    content: "expand_more";
+    font-family: "Material Symbols Outlined";
+    font-size: 1rem;
+    vertical-align: middle;
+    margin-left: 0.25rem;
+    display: inline-block;
+  }
+
+  /* =========================================
+     2. DROPDOWNS (Nested ULs)
+     ========================================= */
+  .nav__menu ul {
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    
+    /* Paint */
+    background: var(--nav-bg);
+    border: var(--nav-border);
+    border-radius: var(--ds-sys-radius-card);
+    box-shadow: var(--ds-sys-shadow-card);
+    
+    list-style: none;
+    padding: var(--space-xs);
+    
+    /* Animation setup */
+    transform: translateY(10px);
+    transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+  }
+    
+  /* NESTED LEVELS (Level 3+) */
+  .nav__menu ul ul {
+    top: 0;
+    left: 100%;
+    margin-top: -5px; 
+  }
+
+  /* REVEAL LOGIC: Hover LI or Focus inside LI */
+  .nav__menu li:hover > ul,
+  .nav__menu li:focus-within > ul {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* =========================================
+     3. MOBILE / BURGER MODE
+     ========================================= */
+  #nav-toggle { display: none; }
+  .nav__burger { display: none; }
+
+  @media (max-width: 768px) {
+    /* SHOW BURGER */
+
+    /* Ensure Settings Icon stays visible and positioned */
+    .nav__settings {
+      order: 3; /* Always on the far right (or left depending on pref) */
+      margin-left: 0;
+    }
+    
+    /* Logic: If burger is on Right (Order 2), Brand is (1), Settings should be (0 - Left) */
+    .nav[style*="right"] .nav__settings { order: 1; margin-right: auto; }
+    
+    /* Logic: If burger is on Left (Order 1), Brand is (2), Settings should be (3 - Right) */
+    .nav[style*="left"] .nav__settings { order: 3; margin-left: auto; }
+    
+    /* Ensure panel doesn't go off-screen */
+    .nav[style*="right"] .nav__settings-panel {
+      right: auto; left: 0; /* Align left if icon is on left */
+    }
+    
+    .nav__burger {
+      display: grid;
+      place-items: center;
+      width: 3rem;
+      height: 3rem;
+      font-size: 2rem;
+      cursor: pointer;
+      font-family: "Material Symbols Outlined";
+      order: var(--burger-order, 1);
+    }
+    
+    /* Reorder Brand */
+    .nav__brand { order: 2; flex-grow: 1; text-align: center; }
+    
+    /* REORDER LOGIC based on CSS Variable */
+    .nav[style*="right"] .nav__burger { order: 2; }
+    .nav[style*="right"] .nav__brand  { order: 1; text-align: left; }
+    .nav[style*="left"] .nav__burger { order: 1; }
+    .nav[style*="left"] .nav__brand  { order: 2; text-align: right; }
+
+    /* DRAWER */
+    .nav__menu {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 80%;
+      max-width: 300px;
+      
+      background: var(--nav-bg);
+      flex-direction: column;
+      gap: 0;
+      padding-top: 4rem;
+      box-shadow: 0 0 50px rgba(0,0,0,0.5);
+      
+      transition: transform 0.3s ease-in-out;
+      
+      /* Default slide from left */
+      left: 0;
+      transform: translateX(-100%);
+    }
+
+    /* Drawer Position Logic */
+    .nav[style*="--ds-cmp-nav-mobile-pos: right"] .nav__menu {
+      left: auto;
+      right: 0;
+      transform: translateX(100%);
+    }
+    
+    /* Open State */
+    #nav-toggle:checked ~ .nav__menu {
+      transform: translateX(0);
+    }
+    
+    /* MOBILE DROPDOWNS (Reset to Accordion-ish) */
+    .nav__menu ul {
+      position: static;
+      box-shadow: none;
+      border: none;
+      padding-left: var(--space-lg);
+      border-left: 2px solid var(--ds-sys-color-border);
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      
+      /* Simple toggle: Hide unless hovering/focused parent */
+      display: none; 
+    }
+    
+    .nav__menu li:hover > ul,
+    .nav__menu li:focus-within > ul {
+      display: block;
+    }
+    
+    /* Icon Swap */
+
+/* =========================================
+     3. MOBILE / BURGER MODE
+     ========================================= */
+  #nav-toggle { display: none; }
+  .nav__burger { display: none; }
+
+  @media (max-width: 768px) {
+    /* 1. LAYOUT ORDERING (Fixed Variable Names) */
+    
+    .nav__burger {
+      display: grid;
+      place-items: center;
+      width: 3rem;
+      height: 3rem;
+      font-size: 2rem;
+      cursor: pointer;
+      font-family: "Material Symbols Outlined";
+      
+      /* FIXED: Use the correct Theme Variable */
+      order: var(--ds-cmp-nav-mobile-order-burger, 1);
+    }
+    
+    .nav__brand {
+      flex-grow: 1;
+      /* FIXED: Use the correct Theme Variable */
+      order: var(--ds-cmp-nav-mobile-order-brand, 2);
+      text-align: var(--ds-cmp-nav-mobile-text-align, center);
+    }
+
+    .nav__settings {
+      /* FIXED: Use the correct Theme Variable */
+      order: var(--ds-cmp-nav-mobile-order-settings, 3);
+      margin: 0; 
+    }
+    
+    .nav__settings-panel {
+      right: 0; 
+    }
+
+    /* 2. THE DRAWER */
+    .nav__menu {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 80%;
+      max-width: 300px;
+      
+      /* Position controlled by theme */
+      left: var(--ds-cmp-nav-mobile-left, auto);
+      right: var(--ds-cmp-nav-mobile-right, auto);
+      
+      background: var(--nav-bg);
+      flex-direction: column;
+      gap: 0;
+      padding-top: 4rem;
+      box-shadow: 0 0 50px rgba(0,0,0,0.5);
+      
+      transition: transform 0.3s ease-in-out;
+      transform: var(--ds-cmp-nav-mobile-transform-closed, translateX(-100%));
+    }
+
+    #nav-toggle:checked ~ .nav__menu {
+      transform: translateX(0);
+    }
+    
+    .nav__menu ul { position: static; box-shadow: none; border: none; padding-left: var(--space-lg); border-left: 2px solid var(--ds-sys-color-border); opacity: 1; visibility: visible; transform: none; display: none; }
+    .nav__menu li:hover > ul, .nav__menu li:focus-within > ul { display: block; }
+    
+    /* 3. BURGER / CLOSE ICON POSITIONING */
+    .nav__burger::after { content: "menu"; }
+    
+    /* FIXED: Close Icon overlaps the static burger position exactly */
+    #nav-toggle:checked ~ .nav__burger { 
+      position: fixed; 
+      z-index: 101; 
+      
+      /* 1. Center it vertically (approx 0.5rem top for a 4rem bar) */
+      top: 0.5rem;
+      
+      /* 2. Anchor it to the Left or Right based on theme */
+      left: var(--ds-cmp-nav-mobile-left, auto);
+      right: var(--ds-cmp-nav-mobile-right, auto);
+      
+      /* 3. Add margin to match the container's padding (var(--space-md)) 
+         This ensures it sits exactly where it was before becoming 'fixed' */
+      margin-left: var(--space-md);
+      margin-right: var(--space-md);
+    }
+    
+    #nav-toggle:checked ~ .nav__burger::after { content: "close"; }
+  }
+  }
+
+
+}

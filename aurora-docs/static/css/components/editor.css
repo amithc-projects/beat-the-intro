@@ -1,0 +1,151 @@
+/* static/css/components/editor.css */
+@layer components {
+
+    /* --- WRAPPER --- */
+    .editor-wrapper {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--ds-sys-color-border);
+        border-radius: var(--ds-sys-radius-md);
+        background: var(--ds-sys-color-surface);
+        overflow: hidden;
+        transition: border-color 0.2s;
+    }
+
+    .editor-wrapper:focus-within {
+        border-color: var(--ds-sys-color-primary);
+        box-shadow: 0 0 0 1px var(--ds-sys-color-primary);
+    }
+
+    /* --- TOOLBAR --- */
+    .editor-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-xs);
+        padding: var(--space-xs) var(--space-sm);
+        background: var(--ds-sys-color-surface-variant);
+        border-bottom: 1px solid var(--ds-sys-color-border);
+    }
+
+    /* Toolbar Buttons */
+    .editor-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: transparent;
+        border-radius: var(--ds-sys-radius-sm);
+        color: var(--ds-sys-color-on-surface-subtle);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .editor-btn:hover {
+        background: var(--ds-sys-color-surface);
+        color: var(--ds-sys-color-on-surface);
+    }
+
+    /* Active State (e.g. when typing bold text) */
+    .editor-btn.is-active {
+        background: var(--ds-sys-color-primary-container);
+        color: var(--ds-sys-color-on-primary-container);
+    }
+
+    /* Separator lines between btn groups */
+    .editor-divider {
+        width: 1px;
+        height: 20px;
+        background: var(--ds-sys-color-border);
+        margin: 0 var(--space-xs);
+    }
+
+    /* Toolbar standard select */
+    .editor-select {
+        height: 32px;
+        padding: 0 var(--space-xs);
+        border: 1px solid var(--ds-sys-color-border);
+        border-radius: var(--ds-sys-radius-sm);
+        background: var(--ds-sys-color-surface);
+        color: var(--ds-sys-color-on-surface);
+        font-size: var(--text-sm);
+        cursor: pointer;
+    }
+
+    .editor-select:focus {
+        outline: none;
+        border-color: var(--ds-sys-color-primary);
+    }
+
+    /* --- CONTENT AREA (contenteditable) --- */
+    .editor-content {
+        min-height: 200px;
+        padding: var(--space-md);
+        font-family: var(--ds-sys-typography-font-family);
+        font-size: var(--text-base);
+        line-height: 1.6;
+        color: var(--ds-sys-color-on-surface);
+        outline: none;
+        /* Removed so it doesn't double-ring with wrapper */
+        overflow-y: auto;
+    }
+
+    /* Native WYSIWYG Defaults inside the editor */
+    .editor-content:empty::before {
+        content: attr(placeholder);
+        color: var(--ds-sys-color-on-surface-subtle);
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    .editor-content p {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+
+    .editor-content h1,
+    .editor-content h2,
+    .editor-content h3 {
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .editor-content h1:first-child,
+    .editor-content h2:first-child {
+        margin-top: 0;
+    }
+
+    .editor-content ul,
+    .editor-content ol {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        padding-left: 2rem;
+    }
+
+    .editor-content ul li {
+        list-style-type: disc;
+    }
+
+    .editor-content blockquote {
+        border-left: 4px solid var(--ds-sys-color-primary);
+        padding-left: 1rem;
+        margin-left: 0;
+        margin-right: 0;
+        font-style: italic;
+        color: var(--ds-sys-color-on-surface-subtle);
+    }
+
+    /* Force visual overrides for inline formatting inside the editor to beat the global variable font resets */
+    .editor-content b,
+    .editor-content strong {
+        font-weight: bold;
+        font-variation-settings: 'wght' calc(var(--vf-wght) + 300), 'wdth' var(--vf-wdth);
+    }
+
+    .editor-content i,
+    .editor-content em {
+        font-style: italic;
+    }
+}

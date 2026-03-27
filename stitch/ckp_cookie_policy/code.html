@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-fixed": "#001a42",
+              "background": "#131313",
+              "secondary": "#adc6ff",
+              "on-secondary": "#002e6a",
+              "surface-container-highest": "#353535",
+              "surface-container-low": "#1b1b1b",
+              "on-tertiary-container": "#636565",
+              "on-secondary-fixed-variant": "#004395",
+              "error": "#ffb4ab",
+              "on-tertiary-fixed-variant": "#454747",
+              "outline": "#8e9378",
+              "tertiary-container": "#e2e2e2",
+              "surface-bright": "#393939",
+              "on-primary-fixed": "#171e00",
+              "on-primary-container": "#576c00",
+              "on-error": "#690005",
+              "on-tertiary": "#2f3131",
+              "primary-fixed": "#c7f300",
+              "on-tertiary-fixed": "#1a1c1c",
+              "inverse-on-surface": "#303030",
+              "surface-dim": "#131313",
+              "surface-container": "#1f1f1f",
+              "outline-variant": "#444933",
+              "on-surface-variant": "#c5c9ac",
+              "primary-container": "#c7f300",
+              "surface-variant": "#353535",
+              "surface-tint": "#aed500",
+              "tertiary-fixed-dim": "#c6c6c7",
+              "surface": "#131313",
+              "surface-container-high": "#2a2a2a",
+              "secondary-fixed": "#d8e2ff",
+              "inverse-primary": "#526600",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#aed500",
+              "on-secondary-container": "#e6ecff",
+              "on-surface": "#e2e2e2",
+              "secondary-container": "#0566d9",
+              "tertiary": "#ffffff",
+              "on-primary": "#293500",
+              "inverse-surface": "#e2e2e2",
+              "on-primary-fixed-variant": "#3d4d00",
+              "secondary-fixed-dim": "#adc6ff",
+              "tertiary-fixed": "#e2e2e2",
+              "on-error-container": "#ffdad6",
+              "on-background": "#e2e2e2",
+              "surface-container-lowest": "#0e0e0e",
+              "primary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0", "lg": "0", "xl": "0", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBFuOZ1IHLTIN2LgUYSwc_exgmqX3q1aa3rhYXNPxwTmiJ9c65EPxAzN_BBfhqkp-6hGnrYmw2P1vWkrGxFhvwaURE4DDohsqf3nXUpqgaDPxUdO5p-NAfNW1IkBlv1BWMzeQIpU-DJtqkhXFQFH8XmQFil7CqlIiATfiE5icIbqUlPEgaXlY1kJVelo6YkrQhVn-6thKwX8r5iRcErOx1eubWQkOfe_P5Fdn0Kv4-qImW1TzS58A3P5YBJ5isDMEpCo4-eni37nJ0);
+    pointer-events: none
+    }
+.skew-box {
+    transform: skew(-2deg)
+    }
+.unskew-content {
+    transform: skew(2deg)
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-black">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-black outline outline-4 outline-[#D1FF00] border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#D1FF00] text-3xl" data-icon="bolt">bolt</span>
+<h1 class="text-2xl font-black italic tracking-tighter text-[#D1FF00] font-['Space_Grotesk'] uppercase">BEAT THE INTRO</h1>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-white hover:bg-[#D1FF00] hover:text-black transition-none p-2 active:translate-x-1 active:translate-y-1">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<main class="pt-32 pb-40 px-6 max-w-7xl mx-auto relative">
+<!-- Static Grain Texture Overlay (Subtle) -->
+<div class="fixed inset-0 grain-overlay opacity-20"></div>
+<!-- Breadcrumb -->
+<nav class="mb-12 flex items-center gap-4 font-label text-[12px] tracking-[0.2em] uppercase font-bold">
+<a class="text-on-surface-variant hover:text-primary-container" href="#">Home</a>
+<span class="material-symbols-outlined text-[14px] text-primary-container" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary-container">Cookie Policy</span>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+<!-- Left Side: Hero Section -->
+<div class="lg:col-span-7">
+<div class="relative mb-16">
+<h2 class="text-6xl md:text-8xl font-black uppercase italic tracking-tighter leading-none mb-4 mix-blend-difference">
+                        DATA <span class="text-primary-container">TRACKING</span> PROTOCOLS
+                    </h2>
+<div class="absolute -top-4 -left-4 w-24 h-24 border-t-8 border-l-8 border-primary-container opacity-50"></div>
+<p class="text-xl font-medium max-w-xl border-l-4 border-primary-container pl-6 py-2">
+                        Transparent disclosure on how 'Beat the Intro' utilizes digital identifiers to maintain the voltage and high-speed gameplay mechanics.
+                    </p>
+</div>
+<!-- Content Sections: Bento Style -->
+<div class="space-y-10">
+<!-- Essential Section -->
+<section class="bg-surface-container-high p-8 outline outline-2 outline-primary outline-offset-4 relative">
+<div class="absolute -right-4 top-1/2 -translate-y-1/2 bg-primary-container text-black px-4 py-2 rotate-90 font-black tracking-widest text-xs">
+                            CRITICAL
+                        </div>
+<div class="flex items-start gap-6 mb-6">
+<span class="material-symbols-outlined text-4xl text-primary-container" data-icon="lock" style="font-variation-settings: 'FILL' 1;">lock</span>
+<div>
+<h3 class="text-2xl font-black uppercase italic tracking-tighter">01. Essential Cookies</h3>
+<p class="text-on-surface-variant mt-2">Core system requirements for session management and security. Without these, the broadcast stops.</p>
+</div>
+</div>
+<ul class="space-y-3 font-label text-sm tracking-wide">
+<li class="flex justify-between items-center border-b border-white/10 pb-2">
+<span>SESSION_TOKEN</span>
+<span class="bg-primary-container text-black px-2 font-bold">REQUIRED</span>
+</li>
+<li class="flex justify-between items-center border-b border-white/10 pb-2">
+<span>AUTH_VALIDATOR</span>
+<span class="bg-primary-container text-black px-2 font-bold">REQUIRED</span>
+</li>
+<li class="flex justify-between items-center border-b border-white/10 pb-2">
+<span>CSRF_SHIELD</span>
+<span class="bg-primary-container text-black px-2 font-bold">REQUIRED</span>
+</li>
+</ul>
+</section>
+<!-- Analytical Section -->
+<section class="bg-black p-8 border-4 border-primary-container relative skew-box">
+<div class="unskew-content">
+<div class="flex items-start gap-6 mb-6">
+<span class="material-symbols-outlined text-4xl text-primary-container" data-icon="monitoring">monitoring</span>
+<div>
+<h3 class="text-2xl font-black uppercase italic tracking-tighter">02. Analytical High-Voltage</h3>
+<p class="text-on-surface-variant mt-2">These allow us to track gameplay performance and technical latency across different frequencies.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-4 bg-surface-container-highest">
+<p class="text-xs font-black text-primary-container uppercase mb-1">Purpose</p>
+<p class="text-sm">Usage patterns and engagement metrics for the global leaderboard.</p>
+</div>
+<div class="p-4 bg-surface-container-highest">
+<p class="text-xs font-black text-primary-container uppercase mb-1">Duration</p>
+<p class="text-sm">30 Days rolling storage.</p>
+</div>
+</div>
+<div class="mt-8 flex justify-end">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-8 bg-surface-container-highest peer-focus:outline-none ring-4 ring-transparent peer-checked:ring-primary-container/20 rounded-none peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-none after:h-6 after:w-6 after:transition-all peer-checked:bg-primary-container"></div>
+<span class="ml-3 text-sm font-black uppercase tracking-widest text-primary-container">Active</span>
+</label>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Right Side: Technical Specs & Image -->
+<aside class="lg:col-span-5 space-y-10">
+<div class="bg-surface-container-low p-1 border-l-8 border-primary-container">
+<img alt="Abstract visual" class="w-full grayscale contrast-125 brightness-75 hover:grayscale-0 transition-all duration-500" data-alt="Abstract digital distortion with neon green scan lines and glitch art effects over a deep black background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoBUqvgRN4L_RjPkQFtT81jkIWvM-lR3W87Ur5Qkm26-Kp5OqZ4l1cx3_PLA0r_u8AEBi-n6Ill0yheAQycnxLDZjFHQJ28nhAE9Y8jnp8_gp9PPI2opFqWo9qAGx8_JvbbZtuefOMJuABsPgrPy-Rt_y07jzuARZMKqgXKSHI-_NGByRz-2jSrKNMum4x4r_RbOLrONFdL5pZmwHqPeeFmC2JO6P4jt_r4PVWKq95hkZkg7F1XgjDxXg4-6c0K74J0lYGzxzW7Gw"/>
+<div class="p-6 bg-black">
+<h4 class="text-sm font-black tracking-[0.3em] uppercase text-primary-container mb-4">Voltage Log [0043]</h4>
+<p class="text-sm font-mono text-on-surface-variant leading-relaxed">
+                            System cookie settings are cached locally. Altering these parameters may affect real-time sync with the global beat server. Proceed with technical caution.
+                        </p>
+</div>
+</div>
+<!-- Action Hub -->
+<div class="flex flex-col gap-4">
+<button class="bg-primary-container text-black p-6 text-xl font-black uppercase italic tracking-tighter flex justify-between items-center group relative overflow-hidden active:translate-x-1 active:translate-y-1">
+<span class="relative z-10">ACCEPT ALL PROTOCOLS</span>
+<span class="material-symbols-outlined relative z-10" data-icon="bolt" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-none"></div>
+</button>
+<button class="border-4 border-white text-white p-6 text-xl font-black uppercase italic tracking-tighter flex justify-between items-center hover:bg-white hover:text-black transition-none active:translate-x-1 active:translate-y-1">
+<span>REJECT NON-ESSENTIAL</span>
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Informational Small Text -->
+<div class="bg-surface-container-highest p-6 text-[10px] font-medium leading-loose text-on-surface-variant uppercase tracking-widest">
+<p class="mb-4">COOKIE POLICY LAST UPDATED: 24.05.2024.SYSTEMS OPERATIONAL. FREQUENCY MODULATION AT 99.8%. FOR DIRECT INQUIRIES REGARDING DATA PERSISTENCE, CONTACT THE GRID OVERSEER.</p>
+<a class="text-primary-container underline hover:no-underline" href="#">VIEW FULL PRIVACY MANIFESTO</a>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-stretch h-20 bg-black border-t-4 border-[#D1FF00]">
+<!-- Active Tab: PROFILE (mapping to cookie/settings context) -->
+<a class="flex flex-col items-center justify-center text-white p-0 h-full hover:bg-white hover:text-black transition-none active:bg-white" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="play_arrow">play_arrow</span>
+<span class="font-['Space_Grotesk'] uppercase font-bold tracking-[0.2em] text-[10px] mt-1">PLAY</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white p-0 h-full hover:bg-white hover:text-black transition-none active:bg-white" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="search">search</span>
+<span class="font-['Space_Grotesk'] uppercase font-bold tracking-[0.2em] text-[10px] mt-1">DISCOVER</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white p-0 h-full hover:bg-white hover:text-black transition-none active:bg-white" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="leaderboard">leaderboard</span>
+<span class="font-['Space_Grotesk'] uppercase font-bold tracking-[0.2em] text-[10px] mt-1">RANK</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#D1FF00] text-black p-0 h-full scale-105 transition-none active:bg-white" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-['Space_Grotesk'] uppercase font-bold tracking-[0.2em] text-[10px] mt-1">PROFILE</span>
+</a>
+</nav>
+</body></html>

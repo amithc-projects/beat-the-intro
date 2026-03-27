@@ -1,0 +1,156 @@
+.aurora-complex-gantt {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  width: 100%;
+  border: 1px solid var(--ds-sys-color-border);
+  border-radius: var(--ds-sys-radius-m);
+  overflow: hidden;
+  background-color: var(--ds-sys-color-surface);
+  position: relative;
+}
+
+.gantt-table-panel {
+  border-right: 1px solid var(--ds-sys-color-border);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ds-sys-color-surface);
+  z-index: 2;
+}
+
+.gantt-table-header {
+  height: 48px;
+  /* Fixed height to match ECharts grid top */
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  align-items: center;
+  padding: 0 var(--ds-sys-spacing-4);
+  background-color: var(--ds-sys-color-surface-variant);
+  border-bottom: 1px solid var(--ds-sys-color-border);
+  font-family: var(--font-primary);
+  font-size: var(--ds-sys-typography-label-medium-size);
+  font-weight: var(--ds-sys-typography-label-medium-weight);
+  color: var(--ds-sys-color-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+
+
+.gantt-row {
+  height: 48px;
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  align-items: center;
+  padding: 0 var(--ds-sys-spacing-4);
+  border-bottom: 1px solid var(--ds-sys-color-border);
+  font-family: var(--font-primary);
+  font-size: var(--ds-sys-typography-body-medium-size);
+  color: var(--ds-sys-color-on-surface);
+  /* transition: background-color var(--ds-sys-motion-duration-short) ease; */
+}
+
+.gantt-row:hover {
+  /* background-color: rgba(var(--ds-sys-color-primary-rgb), 0.04);*/
+}
+
+.gantt-row:last-child {
+  border-bottom: none;
+}
+
+.gantt-row-group {
+  background-color: var(--ds-sys-color-surface-variant);
+
+  font-weight: 600;
+  border-bottom: 1px solid var(--ds-sys-color-border-strong, var(--ds-sys-color-border));
+  cursor: pointer;
+}
+
+.gantt-row-group:hover {
+  background-color: var(--ds-sys-color-surface-variant);
+}
+
+.gantt-task-name {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-sys-spacing-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gantt-task-name .ds-icon {
+  color: var(--ds-sys-color-on-surface-variant);
+  width: 16px;
+  height: 16px;
+  transition: transform var(--ds-sys-motion-duration-short) ease;
+}
+
+.gantt-row-group.is-collapsed .ds-icon {
+  transform: rotate(-90deg);
+}
+
+.gantt-task-assignee {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.gantt-assignee-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--ds-sys-color-surface-variant);
+  border: 1px solid var(--ds-sys-color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ds-sys-color-on-surface);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.gantt-assignee-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.gantt-timeline-panel {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* width: 100%; */
+}
+
+/* Ensure ECharts container exactly fills or overflows the panel */
+.gantt-timeline-panel .aurora-chart-container {
+  height: 100% !important;
+  min-width: 800px;
+  /* Forces horizontal scrolling */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .aurora-complex-gantt {
+    grid-template-columns: 1fr;
+  }
+
+  .gantt-table-panel {
+    border-right: none;
+    border-bottom: 2px solid var(--ds-sys-color-border-strong, var(--ds-sys-color-border));
+  }
+
+  .gantt-timeline-panel {
+    height: 400px;
+    /* Force height on mobile since parent grid is changing */
+  }
+
+  .gantt-timeline-panel .aurora-chart-container {
+    position: relative;
+  }
+}

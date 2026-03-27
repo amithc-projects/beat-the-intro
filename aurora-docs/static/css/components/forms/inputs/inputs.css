@@ -1,0 +1,253 @@
+/* --- DEFINITIONS: The "Input" Look --- */
+/* We define the styles on the class .input, but also apply them 
+   to bare elements when inside specific containers. */
+.input,
+.select,
+.textarea,
+/* Context: Inside a Field */
+.field > input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),
+.field > select,
+.field > textarea,
+/* Context: Inside an Input Group */
+.input-group > input,
+.input-group > select,
+/* Context: Stepper */
+.stepper > input {
+  width: 100%;
+  height: var(--ds-cmp-input-height, 3rem);
+  padding-inline: var(--ds-cmp-input-padding-x, 1rem);
+  
+  border-radius: var(--ds-cmp-input-radius, var(--ds-sys-radius-btn, 4px));
+  border: 1px solid var(--ds-sys-color-border);
+  
+  background-color: var(--ds-sys-color-surface);
+  color: var(--ds-sys-color-on-surface);
+  
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none; 
+}
+
+/* Textarea Specifics */
+.textarea,
+.field > textarea {
+  height: auto;
+  min-height: 6rem;
+  padding-block: 0.75rem;
+  resize: vertical;
+}
+
+/* Focus State */
+:is(.input, .select, .textarea, .field > input, .input-group > input):focus-visible {
+  outline: none;
+  border-color: var(--ds-sys-color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ds-sys-color-primary), transparent 85%);
+  z-index: 2; /* Bring above siblings in groups */
+}
+
+/* --- FIELD CONTAINER --- */
+.field {
+  /* Internal private variables that default to system-wide or top-level tokens */
+  --_field-layout: var(--ds-field-layout, column);
+  --_field-label-width: var(--ds-field-label-width, 12rem);
+  --_field-gap: var(--ds-field-gap, 0.5rem);
+  
+  display: flex;
+  flex-direction: var(--_field-layout);
+  gap: var(--_field-gap);
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+/* Logic for row (Horizontal) Layout */
+/* We support both a single variable (--ds-field-layout: row) and utility classes (.field--row, .form--row) */
+.field--row,
+.form--row .field,
+.field[style*="row"],
+form[style*="row"] .field,
+.form-horizontal .field {
+  --_field-layout: row;
+  --_field-gap: 1.5rem;
+  align-items: baseline;
+}
+
+/* Clean Label Selector */
+.field > label,
+.field__label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ds-sys-color-on-surface);
+  flex: 0 0 auto;
+}
+
+/* Fixed width label logic for row mode */
+.field--row > label,
+.field--row .field__label,
+.form--row .field > label,
+.form--row .field .field__label,
+.field[style*="row"] > label,
+.field[style*="row"] .field__label,
+form[style*="row"] .field > label,
+form[style*="row"] .field .field__label,
+.form-horizontal .field > label,
+.form-horizontal .field .field__label {
+  flex: 0 0 var(--_field-label-width);
+  margin-bottom: 0;
+}
+
+/* Body handles the remaining space in row layout */
+.field__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Mobile Fallback: Force column on small screens regardless of variable */
+@media (max-width: 600px) {
+  .field {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+  }
+  .field > label,
+  .field__label {
+    flex: auto !important;
+  }
+}
+
+/* Clean Hint Selector */
+.field > small,
+.field .hint,
+.field__hint {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin-top: -0.25rem;
+  display: block;
+}
+
+/* --- INPUT GROUPS (Merged from Inline) --- */
+.input-group {
+  display: flex;
+  width: 100%;
+  position: relative;
+  align-items: center;
+}
+
+/* Addons (Prefix/Suffix) */
+.input-prefix, 
+.input-suffix {
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  padding: 0 0.75rem;
+  background: var(--ds-sys-color-surface-container);
+  border: 1px solid var(--ds-sys-color-border);
+  color: var(--ds-sys-color-on-surface);
+  white-space: nowrap;
+  height: 3rem; /* Match input height */
+}
+
+/* Border Radius Logic for Groups */
+.input-prefix { border-right: none; border-radius: 4px 0 0 4px; }
+.input-suffix { border-left: none; border-radius: 0 4px 4px 0; }
+
+.input-group > :first-child:not(:last-child) { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.input-group > :last-child:not(:first-child) { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+.input-group > :not(:first-child):not(:last-child) { border-radius: 0; }
+
+/* Icons Overlay */
+.input-icon-overlay {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 10;
+  color: var(--ds-sys-color-on-surface-variant);
+}
+
+/* Utilities for padding when icons are present */
+.has-icon-left { padding-left: 2.5rem !important; }
+.has-icon-right { padding-right: 2.5rem !important; }
+
+/* --- STEPPER (Merged from Inline) --- */
+.stepper {
+  display: inline-flex;
+  border: 1px solid var(--ds-sys-color-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.stepper > button {
+  width: 40px;
+  height: 3rem;
+  border: none;
+  background: var(--ds-sys-color-surface-container);
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.stepper > button:hover { background: var(--ds-sys-color-surface-variant); }
+
+/* Override standard input styles for stepper middle */
+.stepper > input {
+  width: 60px;
+  text-align: center;
+  border: none;
+  border-left: 1px solid var(--ds-sys-color-border);
+  border-right: 1px solid var(--ds-sys-color-border);
+  border-radius: 0;
+  margin: 0;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.stepper > input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* --- TOGGLE SWITCH --- */
+.toggle {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 44px;
+  height: 24px;
+  background: var(--ds-sys-color-surface-container-highest, #ccc);
+  border-radius: 99px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease;
+  vertical-align: middle;
+  border: none;
+  margin-right: 0.75rem;
+}
+
+.toggle::after {
+  content: "";
+  position: absolute;
+  top: 2px; 
+  left: 2px;
+  width: 20px; 
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.toggle:checked {
+  background: var(--ds-sys-color-primary);
+}
+
+.toggle:checked::after {
+  transform: translateX(20px);
+}
+
+.toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toggle:hover:not(:disabled) {
+  opacity: 0.9;
+}

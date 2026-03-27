@@ -1,0 +1,200 @@
+/* css/components/image-hotspot.css */
+@layer components {
+    .image-hotspot-container {
+        position: relative;
+        display: inline-block;
+        /* Shrink to fit image width */
+        max-width: 100%;
+        border-radius: var(--ds-sys-radius-card);
+    }
+
+    .image-hotspot-container>img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        border-radius: inherit;
+    }
+
+    /* =========================================
+       DEFAULT OVERLAY HOTSPOTS (Direct Triggers)
+       ========================================= */
+    .hotspot-dot {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: var(--ds-sys-color-primary);
+        color: var(--ds-sys-color-on-primary);
+        border: 2px solid #ffffff;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        /* Center precisely on the top/left coordinates */
+        transform: translate(-50%, -50%);
+        padding: 0;
+        z-index: 10;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .hotspot-dot::before {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        border: 2px solid var(--ds-sys-color-primary);
+        opacity: 0;
+        animation: hotspot-pulse 2.5s infinite ease-out;
+    }
+
+    .hotspot-dot:hover,
+    .hotspot-dot:focus-visible {
+        transform: translate(-50%, -50%) scale(1.1);
+        background-color: var(--ds-sys-color-primary-container);
+        color: var(--ds-sys-color-on-primary-container);
+    }
+
+    .hotspot-dot .material-symbols-outlined {
+        font-size: 18px;
+    }
+
+    /* Overlay Card / Popover */
+    .hotspot-overlay {
+        position: absolute;
+        /* --- CSS Anchor Positioning API --- */
+        position-area: top;
+        position-try-options: flip-block, flip-inline, flip-block flip-inline;
+        margin: 12px;
+        /* Margin pushes it away from the anchor point natively */
+
+        /* Aurora Theming */
+        background: var(--ds-sys-color-surface);
+        color: var(--ds-sys-color-on-surface);
+        padding: var(--ds-ref-space-base);
+        border-radius: var(--ds-sys-radius-card);
+        border: var(--ds-sys-border-width) solid var(--ds-sys-color-border);
+        box-shadow: var(--ds-sys-shadow-card);
+        width: max-content;
+        max-width: 250px;
+        z-index: 100;
+
+        /* Animation Base */
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.2s ease, transform 0.2s ease, display 0.2s allow-discrete, overlay 0.2s allow-discrete;
+    }
+
+    /* Popover Open State Animates In */
+    .hotspot-overlay:popover-open {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Native entry animation starting point */
+    @starting-style {
+        .hotspot-overlay:popover-open {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+    }
+
+    /* Optional Typography utilities inside the overlay */
+    .hotspot-overlay header {
+        font-family: var(--font-heading);
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: calc(var(--ds-ref-space-base) / 2);
+    }
+
+    .hotspot-overlay p {
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        color: var(--ds-sys-color-on-surface-variant);
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    @keyframes hotspot-pulse {
+        0% {
+            transform: scale(1);
+            opacity: 0.6;
+        }
+
+        100% {
+            transform: scale(1.6);
+            opacity: 0;
+        }
+    }
+
+    /* =========================================
+       DRAWER MODE VARIATION (Bottom Triggers)
+       ========================================= */
+    .image-hotspot-container.hotspot-drawer-mode {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--ds-sys-color-border);
+        background: var(--ds-sys-color-surface-variant);
+        overflow: hidden;
+        /* contain the bottom tray */
+    }
+
+    .image-hotspot-container.hotspot-drawer-mode>img {
+        border-radius: 0;
+    }
+
+    /* The bottom flexbar holding the buttons */
+    .hotspot-controls {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        background: var(--ds-sys-color-surface);
+        border-top: 1px solid var(--ds-sys-color-border);
+    }
+
+    .hotspot-controls>button {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--ds-ref-space-base);
+        background: transparent;
+        border: none;
+        border-right: 1px solid var(--ds-sys-color-border);
+        color: var(--ds-sys-color-on-surface);
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .hotspot-controls>button:last-child {
+        border-right: none;
+    }
+
+    .hotspot-controls>button:hover,
+    .hotspot-controls>button.is-active {
+        background: var(--ds-sys-color-surface-variant);
+        color: var(--ds-sys-color-primary);
+    }
+
+    /* The invisible optical marker that CSS Anchors target */
+    .hotspot-target {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: var(--ds-sys-color-primary);
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8), 0 4px 6px rgba(0, 0, 0, 0.3);
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+        z-index: 5;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+        pointer-events: none;
+        /* Let clicks pass through to image if needed */
+    }
+
+    /* When the Javascript controller marks it active */
+    .hotspot-target.is-active {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}

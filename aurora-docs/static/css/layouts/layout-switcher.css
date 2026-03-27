@@ -1,0 +1,120 @@
+/* static/css/layouts/layout-switcher.css */
+@layer layouts {
+
+    /* THE PLAYGROUND CONTAINER */
+    .layout-playground {
+        display: grid;
+        gap: var(--space-md);
+        width: 100%;
+        min-height: 500px;
+        background: var(--ds-sys-color-surface-variant);
+        border: 1px solid var(--ds-sys-color-border);
+        border-radius: var(--ds-sys-radius-md);
+        padding: var(--space-md);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ZONE DECLARATIONS */
+    /* We assign each physical HTML node a virtual logical map name */
+    .lp-header {
+        grid-area: header;
+    }
+
+    .lp-sidebar {
+        grid-area: sidebar;
+    }
+
+    .lp-main {
+        grid-area: main;
+    }
+
+    .lp-footer {
+        grid-area: footer;
+    }
+
+    /* MOCK STYLING FOR VISUALIZATION */
+    .lp-zone {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--ds-sys-color-surface);
+        border: 1px dashed var(--ds-sys-color-primary);
+        border-radius: var(--ds-sys-radius-sm);
+        padding: var(--space-md);
+        font-weight: 600;
+        color: var(--ds-sys-color-primary);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: var(--text-sm);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Animate zone reflows perfectly! */
+    }
+
+    /* --- STATE 1: STANDARD (SaaS Default) --- */
+    /* Sidebar Left, Main Right */
+    .layout-playground[data-layout="standard"] {
+        grid-template-columns: 240px 1fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+            "header  header"
+            "sidebar main"
+            "footer  footer";
+    }
+
+    /* --- STATE 2: REVERSED --- */
+    /* Main Left, Sidebar Right */
+    .layout-playground[data-layout="reversed"] {
+        grid-template-columns: 1fr 240px;
+        /* Note the columns flipped */
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+            "header header"
+            "main   sidebar"
+            /* The CSS physically moves the node based on this string! */
+            "footer footer";
+    }
+
+    /* --- STATE 3: STACKED (Mobile / Content Heavy) --- */
+    /* Everything is a full-width stack. Sidebars act like top-nav bars. */
+    .layout-playground[data-layout="stacked"] {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-areas:
+            "header"
+            "sidebar"
+            "main"
+            "footer";
+    }
+
+    /* Make the sidebar look like a horizontal bar in this view */
+    .layout-playground[data-layout="stacked"] .lp-sidebar {
+        min-height: 60px;
+    }
+
+    /* --- STATE 4: MINIMAL (Focus Mode) --- */
+    /* The sidebar is forcefully destroyed from the equation entirely */
+    .layout-playground[data-layout="minimal"] {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+            "header"
+            "main"
+            "footer";
+    }
+
+    .layout-playground[data-layout="minimal"] .lp-sidebar {
+        display: none;
+        /* Strip it out entirely */
+    }
+
+    /* --- CONTROL PANEL --- */
+    .layout-controls {
+        display: flex;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-lg);
+        background: var(--ds-sys-color-surface);
+        padding: var(--space-sm);
+        border: 1px solid var(--ds-sys-color-border);
+        border-radius: var(--ds-sys-radius-md);
+    }
+}

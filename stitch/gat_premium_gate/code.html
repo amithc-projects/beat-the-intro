@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#aed500",
+              "primary-fixed-dim": "#aed500",
+              "surface": "#131313",
+              "surface-container-lowest": "#0e0e0e",
+              "error-container": "#93000a",
+              "inverse-surface": "#e2e2e2",
+              "on-primary-container": "#000000",
+              "surface-variant": "#353535",
+              "tertiary": "#ffffff",
+              "inverse-on-surface": "#303030",
+              "primary-fixed": "#c7f300",
+              "on-tertiary-fixed-variant": "#454747",
+              "on-error": "#690005",
+              "on-tertiary": "#2f3131",
+              "on-background": "#e2e2e2",
+              "on-secondary": "#002e6a",
+              "on-tertiary-container": "#636565",
+              "on-primary": "#293500",
+              "surface-container-low": "#1b1b1b",
+              "secondary": "#adc6ff",
+              "secondary-fixed-dim": "#adc6ff",
+              "surface-dim": "#131313",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed": "#001a42",
+              "primary-container": "#D1FF00",
+              "background": "#131313",
+              "on-surface-variant": "#c5c9ac",
+              "surface-container-high": "#2a2a2a",
+              "outline-variant": "#444933",
+              "on-surface": "#e2e2e2",
+              "on-secondary-fixed-variant": "#004395",
+              "tertiary-container": "#e2e2e2",
+              "on-secondary-container": "#e6ecff",
+              "primary": "#ffffff",
+              "surface-bright": "#393939",
+              "error": "#ffb4ab",
+              "secondary-fixed": "#d8e2ff",
+              "tertiary-fixed": "#e2e2e2",
+              "secondary-container": "#0566d9",
+              "surface-container-highest": "#353535",
+              "on-tertiary-fixed": "#1a1c1c",
+              "outline": "#8e9378",
+              "surface-container": "#1f1f1f",
+              "on-primary-fixed-variant": "#3d4d00",
+              "tertiary-fixed-dim": "#c6c6c7",
+              "inverse-primary": "#526600",
+              "on-primary-fixed": "#171e00"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glitch-border {
+        box-shadow: 4px 4px 0px 0px #D1FF00;
+      }
+      .impact-stroke {
+        outline: 4px solid #D1FF00;
+      }
+      .static-bg {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.05;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<title>GAT: Premium Gate</title></head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-[#131313] border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container-highest border-2 border-[#D1FF00] overflow-hidden">
+<img alt="Spotify User Profile" class="w-full h-full object-cover" data-alt="abstract digital user avatar with neon green lighting and distorted pixel aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkVdjg8cpE9dNbUaDoQB3b9tqoBpvlx6t6vHWS1MsYNGW1U70htJg8wQN07x0k4E22JE9l7Y6r1UAHQXBD6_3c2bmQlCpM6fAOV10SNV-fI-deLExrgc5sp0oGa5WwM7U-zNlOHdaZ7d12Ik0-y8_m45C7ZPSyfMz0ov7KocGmMD5ldkp6WIflQ_zoGWNn6ZionE__RQ5MU8_03AXWO_JmX3hW1CV7P6hbLSyxB0L_sh1hcdei-QnVw1vskqyzql8ivzkNpv2Ltdw"/>
+</div>
+<span class="text-2xl font-black italic tracking-tighter text-[#D1FF00] font-headline uppercase">BEAT THE INTRO</span>
+</div>
+<button class="text-[#D1FF00] hover:bg-[#D1FF00] hover:text-black transition-all duration-75 p-2 active:translate-x-1 active:translate-y-1">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="min-h-screen pt-20 pb-16 md:pb-0 flex flex-col items-center justify-center px-6 relative overflow-hidden">
+<!-- Background Static Texture -->
+<div class="absolute inset-0 static-bg pointer-events-none"></div>
+<!-- Portrait Layout (Visible on Small Screens) -->
+<div class="w-full max-w-[340px] md:hidden flex flex-col gap-8 z-10">
+<!-- Alert Header -->
+<div class="relative">
+<div class="bg-error-container p-6 border-l-8 border-[#D1FF00] relative z-10">
+<h1 class="text-4xl font-black uppercase italic tracking-tighter leading-none mb-2 text-white">
+                        Spotify Premium Required
+                    </h1>
+<div class="flex items-center gap-2 text-white/80 font-label tracking-widest text-xs font-bold">
+<span class="material-symbols-outlined text-sm" data-icon="warning">warning</span>
+                        CRITICAL_ACCESS_DENIED
+                    </div>
+</div>
+<!-- Offset "Ghost" Border -->
+<div class="absolute inset-0 border-4 border-[#D1FF00] translate-x-2 translate-y-2 -z-10"></div>
+</div>
+<!-- Explanation Content -->
+<div class="bg-surface-container-high p-6 flex flex-col gap-4">
+<div class="text-xs font-label tracking-[0.2em] text-[#D1FF00] font-bold uppercase">SDK_LIMITATION_REPORT</div>
+<p class="text-lg leading-tight font-medium text-white">
+                    Our real-time gameplay engine requires the high-fidelity streaming capabilities only available to <span class="text-[#D1FF00] italic font-black">Spotify Premium</span> subscribers.
+                </p>
+<div class="h-[2px] w-full bg-white/10"></div>
+<p class="text-sm text-on-surface-variant font-medium leading-relaxed">
+                    Standard accounts cannot stream full tracks via third-party hardware controllers. Access is currently locked to maintain tournament integrity.
+                </p>
+</div>
+<!-- Action Area -->
+<div class="flex flex-col gap-4">
+<button class="bg-[#D1FF00] text-black font-black uppercase py-5 text-xl tracking-tighter active:scale-95 transition-transform flex items-center justify-center gap-3">
+                    Try a different account
+                    <span class="material-symbols-outlined" data-icon="sync">sync</span>
+</button>
+<button class="border-2 border-white text-white font-bold uppercase py-4 text-sm tracking-[0.1em] hover:bg-white hover:text-black transition-colors">
+                    Back to Main Menu
+                </button>
+</div>
+</div>
+<!-- Landscape Layout (Visible on Medium+ Screens) -->
+<div class="hidden md:flex w-full max-w-5xl flex-row items-stretch gap-0 z-10 bg-surface-container-lowest border-4 border-[#D1FF00] shadow-[12px_12px_0px_0px_rgba(209,255,0,0.2)]">
+<!-- Left Side: Visual / Brand -->
+<div class="w-1/3 bg-[#D1FF00] p-10 flex flex-col justify-between overflow-hidden relative">
+<div class="absolute -right-10 top-0 opacity-10">
+<span class="material-symbols-outlined text-[20rem]" data-icon="error">error</span>
+</div>
+<div class="relative z-10">
+<div class="text-black font-black text-6xl italic leading-[0.8] tracking-tighter uppercase">
+                        STOP.<br/>PAY.<br/>PLAY.
+                    </div>
+</div>
+<div class="relative z-10 font-label text-black font-black tracking-widest text-xs">
+                    AUTH_GATE_001 // v2.4.0
+                </div>
+</div>
+<!-- Right Side: Content -->
+<div class="w-2/3 p-12 flex flex-col justify-center gap-8 relative bg-surface">
+<div class="space-y-4">
+<h1 class="text-6xl font-black uppercase italic tracking-tighter leading-none text-white">
+                        Spotify Premium <br/><span class="text-[#D1FF00]">Required</span>
+</h1>
+<p class="text-xl text-on-surface max-w-md font-medium">
+                        To maintain high-speed technical precision, this experience is restricted to Premium members due to official Spotify SDK streaming requirements.
+                    </p>
+</div>
+<div class="flex gap-6">
+<button class="bg-[#D1FF00] text-black font-black uppercase px-8 py-5 text-xl tracking-tighter flex items-center gap-4 hover:translate-x-1 hover:-translate-y-1 transition-transform glitch-border">
+                        SWITCH_ACCOUNT
+                        <span class="material-symbols-outlined" data-icon="logout">logout</span>
+</button>
+<button class="border-2 border-white/20 text-white font-bold uppercase px-8 py-5 text-sm tracking-[0.2em] hover:border-white hover:bg-white/5 transition-colors">
+                        DISMISS
+                    </button>
+</div>
+<!-- Technical Footer Decoration -->
+<div class="absolute bottom-6 right-6 flex items-center gap-4 opacity-30">
+<div class="w-32 h-1 bg-white"></div>
+<span class="text-[10px] font-label font-bold tracking-tighter">HARDWARE_LOCK_ACTIVE</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Drawer (Contextual) -->
+<aside class="fixed inset-y-0 left-0 z-[60] flex flex-col h-full w-80 border-r-4 border-[#D1FF00] bg-[#131313] -translate-x-full lg:translate-x-0 hidden">
+<div class="p-8 border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 border-2 border-[#D1FF00]">
+<img alt="Spotify User" class="w-full h-full object-cover" data-alt="retro cyber technology aesthetic with green glowing lights and metallic components" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_gwZGn314KDwX8HSaURnPcH01aLj4G1W1BqYwLeeDy5RHYMhmJxZ8WWauCRqxlM1_t_MsQ8jyxpBBH75WSS2sBlPhSwa6BABUGx-DKjKM5ugVbNC0225_aIneIXO6nWh8fRzHiqSqOKQIVV7aKdw-0vT-s5CWr4TdnQw10a-eK0-dfn1gjl-SfmFP2j5M7H_SNRRqdvS5WYP7Oo8tJWf2aQy_z20GJt3EE5lhuNArbyYPy6_TRNcYD68aJmmZNROV1nNwbqdc6q4"/>
+</div>
+<div>
+<div class="text-[#D1FF00] font-black text-xl font-headline">USER_01</div>
+<div class="text-white/50 text-xs font-label uppercase">Premium Member</div>
+</div>
+</div>
+</div>
+<nav class="flex-1">
+<a class="text-white p-4 border-b border-white/10 flex items-center gap-4 hover:bg-white hover:text-black transition-colors font-bold uppercase font-headline" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span> Settings
+            </a>
+<a class="text-white p-4 border-b border-white/10 flex items-center gap-4 hover:bg-white hover:text-black transition-colors font-bold uppercase font-headline" href="#">
+<span class="material-symbols-outlined" data-icon="cookie">cookie</span> Cookies
+            </a>
+<a class="text-white p-4 border-b border-white/10 flex items-center gap-4 hover:bg-white hover:text-black transition-colors font-bold uppercase font-headline" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span> Privacy
+            </a>
+</nav>
+</aside>
+<!-- Bottom Navigation (Mobile Only) -->
+<footer class="md:hidden fixed bottom-0 left-0 w-full h-16 z-50 flex justify-around items-stretch bg-[#131313] border-t-4 border-[#D1FF00]">
+<button class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 active:scale-95 transition-transform flex-1">
+<span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PLAY</span>
+</button>
+<button class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 active:scale-95 transition-transform flex-1">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">DISCOVER</span>
+</button>
+<button class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 active:scale-95 transition-transform flex-1">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">RANK</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-[#D1FF00] text-black h-full px-4 transform scale-110 flex-1">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PROFILE</span>
+</button>
+</footer>
+</body></html>

@@ -1,0 +1,58 @@
+/* css/components/forms/search.css */
+@layer components {
+
+  /* --- 1. SEARCH INPUT GROUP (Join Input + Button) --- */
+  .search-group {
+    display: flex;
+    width: 100%;
+    position: relative;
+  }
+
+  .search-group .input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    flex: 1;
+    z-index: 1; /* Ensure focus ring sits on top */
+  }
+  
+  .search-group .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: -1px; /* Merge borders */
+  }
+
+  /* --- 2. INPUT WITH ICON (Inside) --- */
+  /* Usage: <div class="input-icon input-icon--left">...</div> */
+  .input-icon {
+    position: relative;
+    width: 100%;
+    color: var(--ds-sys-color-on-surface);
+  }
+
+  .input-icon .material-symbols-outlined {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    opacity: 0.5;
+    z-index: 2;
+  }
+
+  /* Variant: Icon Left */
+  .input-icon--left .material-symbols-outlined { left: 0.75rem; }
+  .input-icon--left .input { padding-left: 2.5rem; }
+
+  /* Variant: Icon Right */
+  .input-icon--right .material-symbols-outlined { right: 0.75rem; }
+  .input-icon--right .input { padding-right: 2.5rem; }
+
+  /* --- 3. THE NETFLIX/BBC EXPANDING SEARCH (Visual Pattern) --- */
+  /* A simple styled search box that looks good on dark backgrounds */
+  .search-bar--dark {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+  }
+  .search-bar--dark::placeholder { color: rgba(255,255,255,0.6); }
+
+}

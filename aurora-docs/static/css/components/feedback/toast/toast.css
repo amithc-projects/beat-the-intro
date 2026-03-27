@@ -1,0 +1,487 @@
+/* css/components/feedback/toast.css */
+@layer components {
+
+  :root {
+    /* Default Duration: 5 seconds */
+    --ds-cmp-toast-duration: 5000ms;
+  }
+
+  /* --- 1. TOAST CONTAINER (The Dock) --- */
+  .toast-container {
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    pointer-events: none;
+    /* Let clicks pass through empty space */
+
+    /* Default: Bottom Right */
+    inset: auto 0 0 auto;
+    align-items: flex-end;
+    /* Align toasts to right */
+  }
+
+  /* --- POSITIONING MODIFIERS (9 Points) --- */
+
+  /* TOP ROW */
+  .toast-container--top-left {
+    inset: 0 auto auto 0;
+    align-items: flex-start;
+    flex-direction: column-reverse;
+    /* Newest at top */
+  }
+
+  .toast-container--top-center {
+    inset: 0 50% auto 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    flex-direction: column-reverse;
+  }
+
+  .toast-container--top-right {
+    inset: 0 0 auto auto;
+    align-items: flex-end;
+    flex-direction: column-reverse;
+  }
+
+  /* MIDDLE ROW */
+  .toast-container--middle-left {
+    inset: 50% auto auto 0;
+    transform: translateY(-50%);
+    align-items: flex-start;
+  }
+
+  .toast-container--middle-center {
+    inset: 50% 50% auto 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+  }
+
+  .toast-container--middle-right {
+    inset: 50% 0 auto auto;
+    transform: translateY(-50%);
+    align-items: flex-end;
+  }
+
+  /* BOTTOM ROW */
+  .toast-container--bottom-left {
+    inset: auto auto 0 0;
+    align-items: flex-start;
+  }
+
+  .toast-container--bottom-center {
+    inset: auto 50% 0 50%;
+    transform: translateX(-50%);
+    align-items: center;
+  }
+
+  .toast-container--bottom-right {
+    inset: auto 0 0 auto;
+    align-items: flex-end;
+  }
+
+  /* --- 2. TOAST ITEM --- */
+  .toast {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    width: max-content;
+    max-width: min(100vw - 2rem, 400px);
+    pointer-events: auto;
+    overflow: hidden;
+
+    /* Paint */
+    padding: 0.875rem 1rem;
+    background: var(--ds-cmp-toast-bg, var(--ds-sys-color-surface-inverse));
+    color: var(--ds-sys-color-on-surface-inverse);
+    border: var(--ds-cmp-toast-border-width, 1px) solid transparent;
+    border-radius: var(--ds-cmp-toast-radius, var(--ds-sys-radius-card));
+    box-shadow: var(--ds-sys-shadow-card);
+
+    /* LIFECYCLE ENGINE */
+    /* If NO JS is present, the toast manages its own lifecycle via CSS */
+    --duration: var(--ds-cmp-toast-duration);
+    animation: toast-lifecycle linear forwards;
+    animation-duration: var(--duration);
+
+    will-change: transform, opacity;
+  }
+
+  /* Fallback: Entry animations when JS manages lifecycle instead of the full CSS lifecycle */
+  .toast.js-managed {
+    animation: toastIn 280ms cubic-bezier(0, 0, 0.2, 1) forwards;
+  }
+
+  .toast-container--top-left .toast.js-managed,
+  .toast-container--top-center .toast.js-managed,
+  .toast-container--top-right .toast.js-managed {
+    animation-name: toastInTop;
+  }
+
+  .toast-container--bottom-left .toast.js-managed,
+  .toast-container--bottom-center .toast.js-managed,
+  .toast-container--bottom-right .toast.js-managed {
+    animation-name: toastInBottom;
+  }
+
+  /* PAUSE ON HOVER: If user is reading, don't dismiss! */
+  .toast:hover {
+    animation-play-state: paused;
+  }
+
+  .toast:hover .toast__progress-bar {
+    animation-play-state: paused;
+  }
+
+  /* PERSIST / MANUAL DISMISS FLAGS */
+  .toast--persist {
+    animation-name: toast-enter !important;
+    animation-duration: 0.3s !important;
+  }
+
+  .toast.is-leaving {
+    animation: toast-exit 200ms cubic-bezier(0.32, 0, 0.67, 0) forwards !important;
+  }
+
+  /* --- VARIANTS --- */
+
+  .toast--success {
+    background: var(--ds-sys-color-surface-inverse);
+    border-color: transparent;
+  }
+
+  .toast--success::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--ds-sys-color-success);
+    border-radius: var(--ds-cmp-toast-radius) 0 0 var(--ds-cmp-toast-radius);
+  }
+
+  .toast--error {
+    background: var(--ds-sys-color-surface-inverse);
+    border-color: transparent;
+  }
+
+  .toast--error::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--ds-sys-color-error);
+    border-radius: var(--ds-cmp-toast-radius) 0 0 var(--ds-cmp-toast-radius);
+  }
+
+  .toast--info {
+    background: var(--ds-sys-color-surface-inverse);
+    border-color: transparent;
+  }
+
+  .toast--info::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--ds-sys-color-primary);
+    border-radius: var(--ds-cmp-toast-radius) 0 0 var(--ds-cmp-toast-radius);
+  }
+
+  .toast--warning {
+    background: var(--ds-sys-color-surface-inverse);
+    border-color: transparent;
+  }
+
+  .toast--warning::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--ds-sys-color-warning);
+    border-radius: var(--ds-cmp-toast-radius) 0 0 var(--ds-cmp-toast-radius);
+  }
+
+  /* Content Styling */
+  .toast__icon {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+    font-size: 20px;
+  }
+
+  .toast--success .toast__icon {
+    color: var(--ds-sys-color-success);
+  }
+
+  .toast--error .toast__icon {
+    color: var(--ds-sys-color-error);
+  }
+
+  .toast--warning .toast__icon {
+    color: var(--ds-sys-color-warning);
+  }
+
+  .toast--info .toast__icon {
+    color: var(--ds-sys-color-primary);
+  }
+
+  .toast--loading .toast__icon {
+    color: var(--ds-sys-color-primary);
+  }
+
+  .toast__body {
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .toast__title {
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--ds-sys-color-on-surface-inverse);
+  }
+
+  .toast__message {
+    font-size: 0.75rem;
+    color: color-mix(in srgb, var(--ds-sys-color-on-surface-inverse) 80%, transparent);
+    margin-top: 0.1875rem;
+    line-height: 1.5;
+  }
+
+  .toast__action {
+    display: inline-flex;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--ds-sys-color-primary);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .toast__action:hover {
+    text-decoration: underline;
+  }
+
+  .toast__close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    margin: -0.25rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    transition: 0.2s;
+    color: color-mix(in srgb, var(--ds-sys-color-on-surface-inverse) 60%, transparent);
+    flex-shrink: 0;
+  }
+
+  .toast__close:hover {
+    background: color-mix(in srgb, var(--ds-sys-color-on-surface-inverse) 15%, transparent);
+    color: var(--ds-sys-color-on-surface-inverse);
+  }
+
+  .toast__close:focus-visible {
+    outline: 2px solid var(--ds-sys-color-primary);
+    outline-offset: 1px;
+  }
+
+  /* --- PROGRESS BAR --- */
+  .toast__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: transparent;
+  }
+
+  .toast__progress-bar {
+    height: 100%;
+    width: 100%;
+    transform-origin: left;
+    animation: toastProgress linear forwards;
+  }
+
+  @keyframes toastProgress {
+    from {
+      transform: scaleX(1);
+    }
+
+    to {
+      transform: scaleX(0);
+    }
+  }
+
+  .toast--success .toast__progress-bar {
+    background: var(--ds-sys-color-success);
+  }
+
+  .toast--warning .toast__progress-bar {
+    background: var(--ds-sys-color-warning);
+  }
+
+  .toast--error .toast__progress-bar {
+    background: var(--ds-sys-color-error);
+  }
+
+  .toast--info .toast__progress-bar {
+    background: var(--ds-sys-color-primary);
+  }
+
+  /* --- SPINNER --- */
+  .toast__spinner {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    animation: spin 700ms linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+      transform-origin: center;
+    }
+  }
+
+  .spinner-track {
+    fill: none;
+    stroke: color-mix(in srgb, var(--ds-sys-color-on-surface-inverse) 20%, transparent);
+    stroke-width: 2.5;
+  }
+
+  .spinner-arc {
+    fill: none;
+    stroke: var(--ds-sys-color-primary);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-dasharray: 60 100;
+  }
+
+  /* --- ANIMATIONS --- */
+  @keyframes toastIn {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes toastInTop {
+    from {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes toastInBottom {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes toast-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes toast-exit {
+    to {
+      opacity: 0;
+      transform: scale(0.9);
+      max-height: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+  }
+
+  /* The Full CSS Lifecycle (No-JS default) */
+  @keyframes toast-lifecycle {
+    0% {
+      opacity: 0;
+      transform: translateY(20px) scale(0.9);
+    }
+
+    5% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    90% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    100% {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.9);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toast.js-managed {
+      animation: toastFade 200ms ease forwards;
+    }
+
+    .toast.is-leaving {
+      animation: toastFadeOut 200ms ease forwards !important;
+    }
+
+    @keyframes toastFade {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes toastFadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,360 @@
+/* --- THEME BUILDER SCAFFOLDING --- */
+/* Strictly UI styling for the builder panels, not actual Design System tokens */
+
+body.theme-builder-body {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    height: 100vh;
+    margin: 0;
+    background-color: var(--ds-sys-color-surface-variant);
+    overflow: hidden;
+}
+
+#builder-sidebar {
+    height: 100vh;
+    border-right: 1px solid var(--ds-sys-color-border);
+    overflow-y: auto;
+    z-index: 100;
+}
+
+#builder-mirror-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#builder-mirror-container .pane {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    
+    /* Font Studio Environment Sync */
+    font-family: var(--font-body, var(--font-primary, sans-serif));
+    font-variation-settings: var(--settings-body, normal);
+}
+
+/* Base Light Mode Environment */
+#builder-mirror-container #lp {
+    color-scheme: light;
+    background-color: #ffffff;
+    /* Hardcode fallback */
+    background-color: var(--ds-sys-color-background, #ffffff);
+    color: var(--ds-sys-color-on-background, #000000);
+}
+
+/* Base Dark Mode Environment */
+#builder-mirror-container #dp {
+    color-scheme: dark;
+    background-color: #0f172a;
+    /* Hardcode fallback */
+    background-color: var(--ds-sys-color-background, #0f172a);
+    color: var(--ds-sys-color-on-background, #ffffff);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    /* Separator */
+}
+
+.pane-header {
+    background: rgba(127, 127, 127, 0.1);
+    padding: 0.5rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ds-sys-color-on-surface-variant);
+    border-bottom: 1px solid var(--ds-sys-color-border);
+    flex-shrink: 0;
+}
+
+.pane-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Special scoping for form-range inputs inside the sidebar to match Aurora standards */
+.form-range {
+    -webkit-appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.form-range::-webkit-slider-runnable-track {
+    background: rgba(150, 150, 150, 0.3);
+    border-radius: 999px;
+    height: 6px;
+}
+
+.form-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.1);
+    margin-top: -6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* --- THEME BUILDER LOCAL UTILITIES --- */
+/* Aurora avoids global utility classes natively, so we scaffold them securely here for the mock layouts */
+
+/* Grid */
+.grid {
+    display: grid;
+}
+
+.col-4 {
+    grid-column: span 4;
+}
+
+.col-8 {
+    grid-column: span 8;
+}
+
+.col-12 {
+    grid-column: span 12;
+}
+
+/* Flexbox */
+.d-flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-items-start {
+    align-items: flex-start;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+/* Spacing */
+.gap-1 {
+    gap: 0.25rem;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.gap-3 {
+    gap: 1rem;
+}
+
+.gap-4 {
+    gap: 1.5rem;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.mb-5 {
+    margin-bottom: 3rem;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.p-1 {
+    padding: 0.25rem;
+}
+
+.p-2 {
+    padding: 0.5rem;
+}
+
+.p-3 {
+    padding: 1rem;
+}
+
+.p-4 {
+    padding: 1.5rem;
+}
+
+.px-3 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.px-5 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.py-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.py-5 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+/* Sizing */
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+/* Typography */
+.text-center {
+    text-align: center;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.text-md {
+    font-size: 1rem;
+}
+
+.text-lg {
+    font-size: 1.25rem;
+}
+
+.text-2xl {
+    font-size: 2rem;
+}
+
+.text-4xl {
+    font-size: 3rem;
+}
+
+.fw-normal {
+    font-weight: 400;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.fw-bold {
+    font-weight: 700;
+}
+
+.fw-900 {
+    font-weight: 900;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.lh-sm {
+    line-height: 1.25;
+}
+
+/* Colors & Theming Masks */
+.text-primary {
+    color: var(--ds-sys-color-primary, #0ea5e9);
+}
+
+.text-success {
+    color: #10b981;
+}
+
+.text-warning {
+    color: #f59e0b;
+}
+
+.text-danger {
+    color: #ef4444;
+}
+
+.text-info {
+    color: #3b82f6;
+}
+
+.text-variant {
+    color: var(--ds-sys-color-on-surface-variant, #64748b);
+}
+
+.bg-primary {
+    background-color: var(--ds-sys-color-primary, #0ea5e9);
+}
+
+.bg-surface-variant {
+    background-color: var(--ds-sys-color-surface-variant, rgba(127, 127, 127, 0.1));
+}
+
+.surface-container-highest {
+    background-color: var(--ds-sys-color-surface-container-highest, light-dark(#e2e8f0, #1e293b));
+}
+
+.opacity-80 {
+    opacity: 0.8;
+}
+
+.border-0 {
+    border: 0 !important;
+}
+
+.border-primary {
+    border: 1px solid var(--ds-sys-color-primary, #0ea5e9);
+}
+
+.shadow-sm {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.rounded-pill {
+    border-radius: 9999px;
+}
+
+.rounded {
+    border-radius: calc(var(--ds-sys-radius-card, 16px) / 2);
+}
+
+.d-block {
+    display: block;
+}

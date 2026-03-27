@@ -1,0 +1,330 @@
+/* AURORA CSS CHARTS 
+   Data Driven via attr() type(<number>)
+   Usage: <td data-value="0.8">
+*/
+
+/* --- BASE TABLE RESET (Standard SVG/Bar Charts) --- */
+.chart {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 100%;
+  margin: 2rem 0;
+  box-sizing: border-box;
+  font-family: var(--font-body, sans-serif);
+}
+
+.chart caption,
+.chart-donut caption {
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.chart tbody {
+  display: flex;
+  flex-grow: 1;
+  gap: 1rem;
+  position: relative;
+  align-items: flex-end; /* Columns align bottom */
+}
+
+.chart tr {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-basis: 0;
+  justify-content: flex-end;
+  height: 100%;
+  position: relative;
+  transition: opacity 0.3s;
+}
+
+.chart tr:hover { opacity: 0.8; }
+
+.chart th {
+  position: absolute;
+  bottom: -2rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--ds-sys-color-on-surface);
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- DATA POINTS (Standard) --- */
+.chart td {
+  /* Default Color: Falls back to primary if no specific color is set */
+  background-color: var(--color, var(--ds-sys-color-primary));
+  transition: all 0.3s;
+  position: relative;
+  border-radius: 4px 4px 0 0;
+  
+  /* THE MODERN MAGIC: Read data-value="0.X" directly */
+  /* Fallback: 0 */
+  --val: attr(data-value type(<number>), 0);
+  
+  height: calc(var(--val) * 100%);
+  width: 100%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  font-size: 0;
+}
+
+.chart td:hover {
+  color: white;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* Animation */
+@keyframes chart-grow-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes chart-grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes chart-fade   { from { opacity: 0; } to { opacity: 1; } }
+
+.chart td {
+  transform-origin: bottom;
+  animation: chart-grow-y 1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Stagger (up to 10) */
+.chart tr:nth-child(1) td { animation-delay: 0.1s; }
+.chart tr:nth-child(2) td { animation-delay: 0.15s; }
+.chart tr:nth-child(3) td { animation-delay: 0.2s; }
+.chart tr:nth-child(4) td { animation-delay: 0.25s; }
+.chart tr:nth-child(5) td { animation-delay: 0.3s; }
+.chart tr:nth-child(6) td { animation-delay: 0.35s; }
+.chart tr:nth-child(7) td { animation-delay: 0.4s; }
+.chart tr:nth-child(8) td { animation-delay: 0.45s; }
+.chart tr:nth-child(9) td { animation-delay: 0.5s; }
+.chart tr:nth-child(10) td { animation-delay: 0.55s; }
+
+/* --- VARIANTS (Standard) --- */
+
+/* BAR (Horizontal) */
+.chart[data-type="bar"] tbody { flex-direction: column; align-items: stretch; }
+.chart[data-type="bar"] tr { flex-direction: row; align-items: center; }
+.chart[data-type="bar"] th { position: static; width: 100px; text-align: right; padding-right: 1rem; }
+.chart[data-type="bar"] td {
+  height: 2rem;
+  width: calc(var(--val) * 100%); /* Use the same var(--val) from attr */
+  border-radius: 0 4px 4px 0;
+  transform-origin: left;
+  animation-name: chart-grow-x;
+}
+
+/* STACKED */
+.chart[data-stacked] td { border-radius: 0; }
+.chart[data-stacked] tr { flex-direction: column-reverse; justify-content: flex-start; }
+.chart[data-stacked] td:last-child { border-radius: 4px 4px 0 0; }
+
+.chart[data-type="bar"][data-stacked] tr { flex-direction: row; }
+.chart[data-type="bar"][data-stacked] td:last-child { border-radius: 0 4px 4px 0; }
+
+/* RADIAL / GAUGE */
+.chart[data-type="radial"] { height: auto; }
+.chart[data-type="radial"] tbody { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 2rem; }
+.chart[data-type="radial"] tr { align-items: center; justify-content: flex-start; height: auto; }
+.chart[data-type="radial"] th { position: static; margin-top: 1rem; }
+.chart[data-type="radial"] td {
+  width: 100px; height: 100px; border-radius: 50%;
+  background: conic-gradient(
+    var(--color, var(--ds-sys-color-primary)) calc(var(--val) * 100%), 
+    #eee 0
+  );
+  mask: radial-gradient(transparent 55%, black 56%);
+  -webkit-mask: radial-gradient(transparent 55%, black 56%);
+  transform: none;
+  animation: chart-fade 1s ease-out;
+}
+.chart[data-type="radial"] td::before {
+  content: attr(data-label);
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-weight: bold; color: var(--ds-sys-color-on-surface);
+}
+
+/* AREA */
+.chart[data-type="area"] { gap: 0; }
+.chart[data-type="area"] tbody { gap: 0; align-items: flex-end; }
+.chart[data-type="area"] td {
+  border-radius: 0; opacity: 0.7; width: 100%;
+  background: linear-gradient(to bottom, var(--color, var(--ds-sys-color-primary)), transparent);
+}
+
+/* SVG Chart Wrapper */
+.chart-svg-wrapper { display: flex; flex-direction: column; align-items: center; margin: 2rem 0; width: 100%; }
+.chart-svg { width: 100%; max-width: 400px; overflow: visible; }
+.chart--line .chart-svg { max-width: 100%; }
+.chart-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; padding: 0; margin-top: 1rem; list-style: none; font-size: 0.85rem; }
+.chart-legend span { display: block; width: 12px; height: 12px; border-radius: 2px; margin-right: 0.5rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.chart-line-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: chart-draw 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes chart-draw { to { stroke-dashoffset: 0; } }
+@keyframes chart-fade-in { from { opacity: 0; transform: scale(0.9); transform-origin: center; } to { opacity: 1; transform: scale(1); transform-origin: center; } }
+
+/* --- CHART LAYOUT WRAPPER (For data-table-pos) --- */
+.chart-layout {
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 0;
+  width: 100%;
+  align-items: center; /* Center vertically for side-by-side */
+}
+.chart-layout--left, .chart-layout--right { flex-direction: row; flex-wrap: wrap; }
+.chart-layout--top, .chart-layout--bottom { flex-direction: column; align-items: stretch; }
+.chart-layout--left > *, .chart-layout--right > * { flex: 1; min-width: 300px; }
+.chart-layout .chart-svg-wrapper { margin: 0; width: auto; }
+
+.chart-data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.chart-data-table th, .chart-data-table td { padding: 0.5rem; border-bottom: 1px solid var(--ds-sys-color-border); text-align: left; }
+.chart-data-table th { font-weight: 700; background: var(--ds-sys-color-surface-variant); }
+
+
+/* =========================================
+   NEW: CSS-DRIVEN DONUT CHART
+   Usage: <table class="chart-donut">
+   ========================================= */
+
+.chart-donut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 2rem 0;
+  font-family: var(--font-body, sans-serif);
+}
+
+.chart-donut tbody {
+  position: relative;
+  display: block;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  margin: 1rem auto;
+  
+  /* The "Hole" - Masking the center */
+  mask: radial-gradient(transparent 55%, black 56%);
+  -webkit-mask: radial-gradient(transparent 55%, black 56%);
+}
+
+.chart-donut tr {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none; /* Stacking safely */
+}
+
+.chart-donut td {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  
+  /* 1. Value Reading */
+  --val: attr(data-value type(<number>), 0); 
+  
+  /* 2. Color Fallback (Theme overwrites this) */
+  background-color: var(--color, var(--ds-sys-color-primary));
+  
+  /* 3. Conic Gradient Drawing */
+  /* --start is calculated via tiny JS or manually inline */
+  background: conic-gradient(
+    transparent calc(var(--start) * 100%),
+    var(--color) 0 calc((var(--start) + var(--val)) * 100%),
+    transparent 0
+  );
+  
+  /* Initial State for Animation */
+  opacity: 0;
+  animation: chart-fade-in 0.6s ease-out forwards;
+}
+
+/* Stagger animations for donut slices */
+.chart-donut tr:nth-child(1) td { animation-delay: 0.1s; }
+.chart-donut tr:nth-child(2) td { animation-delay: 0.2s; }
+.chart-donut tr:nth-child(3) td { animation-delay: 0.3s; }
+.chart-donut tr:nth-child(4) td { animation-delay: 0.4s; }
+
+/* Hide standard table headers inside the wheel */
+.chart-donut th { display: none; }
+
+/* Optional: Legend for CSS Donut could be implemented via standard HTML outside tbody */
+
+
+/* =========================================
+   CHART THEMES (Applies to both .chart and .chart-donut)
+   ========================================= */
+
+/* 1. ROW BASED (Default for Bar, Column, Radial, AND CSS Donut) */
+[class*="chart-theme-"]:not([data-stacked]) tr:nth-child(1) td { --color: var(--chart-seq-1); }
+[class*="chart-theme-"]:not([data-stacked]) tr:nth-child(2) td { --color: var(--chart-seq-2); }
+[class*="chart-theme-"]:not([data-stacked]) tr:nth-child(3) td { --color: var(--chart-seq-3); }
+[class*="chart-theme-"]:not([data-stacked]) tr:nth-child(4) td { --color: var(--chart-seq-4); }
+[class*="chart-theme-"]:not([data-stacked]) tr:nth-child(5) td { --color: var(--chart-seq-5); }
+[class*="chart-theme-"]:not([data-stacked]) tr:nth-child(6) td { --color: var(--chart-seq-6); }
+[class*="chart-theme-"]:not([data-stacked]) tr:nth-child(7) td { --color: var(--chart-seq-7); }
+[class*="chart-theme-"]:not([data-stacked]) tr:nth-child(8) td { --color: var(--chart-seq-8); }
+[class*="chart-theme-"]:not([data-stacked]) tr:nth-child(9) td { --color: var(--chart-seq-9); }
+[class*="chart-theme-"]:not([data-stacked]) tr:nth-child(10) td { --color: var(--chart-seq-10); }
+
+/* 2. CELL BASED (Strictly for Stacked Charts) */
+[class*="chart-theme-"][data-stacked] tr td:nth-of-type(1) { --color: var(--chart-seq-1); }
+[class*="chart-theme-"][data-stacked] tr td:nth-of-type(2) { --color: var(--chart-seq-2); }
+[class*="chart-theme-"][data-stacked] tr td:nth-of-type(3) { --color: var(--chart-seq-3); }
+[class*="chart-theme-"][data-stacked] tr td:nth-of-type(4) { --color: var(--chart-seq-4); }
+[class*="chart-theme-"][data-stacked] tr td:nth-of-type(5) { --color: var(--chart-seq-5); }
+[class*="chart-theme-"][data-stacked] tr td:nth-of-type(6) { --color: var(--chart-seq-6); }
+[class*="chart-theme-"][data-stacked] tr td:nth-of-type(7) { --color: var(--chart-seq-7); }
+[class*="chart-theme-"][data-stacked] tr td:nth-of-type(8) { --color: var(--chart-seq-8); }
+[class*="chart-theme-"][data-stacked] tr td:nth-of-type(9) { --color: var(--chart-seq-9); }
+[class*="chart-theme-"][data-stacked] tr td:nth-of-type(10) { --color: var(--chart-seq-10); }
+
+
+/* --- THEME DEFINITIONS --- */
+.chart-theme-primary {
+  --chart-seq-1: color-mix(in oklch, var(--ds-sys-color-primary), white 60%);
+  --chart-seq-2: color-mix(in oklch, var(--ds-sys-color-primary), white 50%);
+  --chart-seq-3: color-mix(in oklch, var(--ds-sys-color-primary), white 40%);
+  --chart-seq-4: color-mix(in oklch, var(--ds-sys-color-primary), white 30%);
+  --chart-seq-5: color-mix(in oklch, var(--ds-sys-color-primary), white 20%);
+  --chart-seq-6: color-mix(in oklch, var(--ds-sys-color-primary), white 10%);
+  --chart-seq-7: var(--ds-sys-color-primary);
+  --chart-seq-8: color-mix(in oklch, var(--ds-sys-color-primary), black 10%);
+  --chart-seq-9: color-mix(in oklch, var(--ds-sys-color-primary), black 20%);
+  --chart-seq-10: color-mix(in oklch, var(--ds-sys-color-primary), black 30%);
+}
+
+.chart-theme-secondary {
+  --base-sec: var(--color-secondary-500, #10b981);
+  --chart-seq-1: color-mix(in oklch, var(--base-sec), white 60%);
+  --chart-seq-2: color-mix(in oklch, var(--base-sec), white 50%);
+  --chart-seq-3: color-mix(in oklch, var(--base-sec), white 40%);
+  --chart-seq-4: color-mix(in oklch, var(--base-sec), white 30%);
+  --chart-seq-5: color-mix(in oklch, var(--base-sec), white 20%);
+  --chart-seq-6: var(--base-sec);
+  --chart-seq-7: color-mix(in oklch, var(--base-sec), black 10%);
+  --chart-seq-8: color-mix(in oklch, var(--base-sec), black 20%);
+  --chart-seq-9: color-mix(in oklch, var(--base-sec), black 30%);
+  --chart-seq-10: color-mix(in oklch, var(--base-sec), black 40%);
+}
+
+.chart-theme-wheel {
+  --chart-seq-1: var(--ds-sys-color-primary);
+  --chart-seq-2: #10b981; /* Emerald */
+  --chart-seq-3: #f59e0b; /* Amber */
+  --chart-seq-4: #ef4444; /* Red */
+  --chart-seq-5: #8b5cf6; /* Violet */
+  --chart-seq-6: #ec4899; /* Pink */
+  --chart-seq-7: #06b6d4; /* Cyan */
+  --chart-seq-8: #84cc16; /* Lime */
+  --chart-seq-9: #d946ef; /* Fuchsia */
+  --chart-seq-10: #64748b; /* Slate */
+}
+

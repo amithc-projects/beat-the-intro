@@ -1,0 +1,137 @@
+/* static/css/components/progress.css */
+:root {
+    --ds-cmp-progress-track-bg: var(--ds-sys-color-border, #e5e7eb);
+    --ds-cmp-progress-fill-bg: var(--ds-sys-color-primary, #2563eb);
+    --ds-cmp-progress-radius: var(--ds-sys-radius-full, 9999px);
+}
+
+[data-mode="dark"],
+[data-theme="dark"] {
+    --ds-cmp-progress-track-bg: #334155;
+}
+
+/* ══════════════════ PROGRESS ══════════════════ */
+.progress-wrap {
+    margin-bottom: .25rem;
+}
+
+.progress-label-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .375rem;
+    font-size: 0.75rem;
+    color: var(--ds-sys-color-on-surface-subtle, #6b7280);
+}
+
+.progress-track {
+    width: 100%;
+    background: var(--ds-cmp-progress-track-bg);
+    border-radius: var(--ds-cmp-progress-radius);
+    overflow: hidden;
+}
+
+.progress-track-xs {
+    height: 2px;
+}
+
+.progress-track-sm {
+    height: 4px;
+}
+
+.progress-track-md {
+    height: 8px;
+}
+
+.progress-track-lg {
+    height: 16px;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: var(--ds-cmp-progress-radius);
+    background: var(--ds-cmp-progress-fill-bg);
+    transition: width 280ms cubic-bezier(0, 0, .2, 1);
+}
+
+/* State overrides */
+.progress-fill-success {
+    background: #22c55e;
+}
+
+.progress-fill-warning {
+    background: #f59e0b;
+}
+
+.progress-fill-danger {
+    background: var(--ds-sys-color-error, #ef4444);
+}
+
+/* Indeterminate */
+@keyframes indeterminate {
+    0% {
+        left: -35%;
+        right: 100%;
+    }
+
+    60% {
+        left: 100%;
+        right: -90%;
+    }
+
+    100% {
+        left: 100%;
+        right: -90%;
+    }
+}
+
+.progress-indeterminate {
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-indeterminate .progress-fill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    animation: indeterminate 1.6s ease-in-out infinite;
+    width: auto;
+    border-radius: var(--ds-cmp-progress-radius);
+}
+
+@media(prefers-reduced-motion: reduce) {
+    .progress-indeterminate .progress-fill {
+        animation: none;
+        width: 40%;
+    }
+}
+
+/* Segmented */
+.progress-segmented {
+    display: flex;
+    gap: 3px;
+}
+
+.progress-segment {
+    flex: 1;
+    height: 8px;
+    border-radius: var(--ds-cmp-progress-radius);
+    background: var(--ds-cmp-progress-track-bg);
+    transition: background 200ms;
+}
+
+.progress-segment.filled {
+    background: var(--ds-cmp-progress-fill-bg);
+}
+
+/* Stacked */
+.progress-stacked {
+    display: flex;
+    overflow: hidden;
+    border-radius: var(--ds-cmp-progress-radius);
+    height: 12px;
+}
+
+.stack-segment {
+    height: 100%;
+    transition: width 280ms cubic-bezier(0, 0, .2, 1);
+}

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SET: Settings / AUX</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#aed500",
+              "primary-fixed-dim": "#aed500",
+              "surface": "#131313",
+              "surface-container-lowest": "#0e0e0e",
+              "error-container": "#93000a",
+              "inverse-surface": "#e2e2e2",
+              "on-primary-container": "#576c00",
+              "surface-variant": "#353535",
+              "tertiary": "#ffffff",
+              "inverse-on-surface": "#303030",
+              "primary-fixed": "#c7f300",
+              "on-tertiary-fixed-variant": "#454747",
+              "on-error": "#690005",
+              "on-tertiary": "#2f3131",
+              "on-background": "#e2e2e2",
+              "on-secondary": "#002e6a",
+              "on-tertiary-container": "#636565",
+              "on-primary": "#293500",
+              "surface-container-low": "#1b1b1b",
+              "secondary": "#adc6ff",
+              "secondary-fixed-dim": "#adc6ff",
+              "surface-dim": "#131313",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed": "#001a42",
+              "primary-container": "#c7f300",
+              "background": "#131313",
+              "on-surface-variant": "#c5c9ac",
+              "surface-container-high": "#2a2a2a",
+              "outline-variant": "#444933",
+              "on-surface": "#e2e2e2",
+              "on-secondary-fixed-variant": "#004395",
+              "tertiary-container": "#e2e2e2",
+              "on-secondary-container": "#e6ecff",
+              "primary": "#ffffff",
+              "surface-bright": "#393939",
+              "error": "#ffb4ab",
+              "secondary-fixed": "#d8e2ff",
+              "tertiary-fixed": "#e2e2e2",
+              "secondary-container": "#0566d9",
+              "surface-container-highest": "#353535",
+              "on-tertiary-fixed": "#1a1c1c",
+              "outline": "#8e9378",
+              "surface-container": "#1f1f1f",
+              "on-primary-fixed-variant": "#3d4d00",
+              "tertiary-fixed-dim": "#c6c6c7",
+              "inverse-primary": "#526600",
+              "on-primary-fixed": "#171e00"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grainy-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            pointer-events: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-black">
+<!-- NAVIGATION SHELL: TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-[#131313] border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-high flex items-center justify-center border-2 border-[#D1FF00]">
+<img alt="Spotify User Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a modern stylish person with neon rim lighting in a dark studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD82SMKzJk9rLiDj-aD8TK1i8xzZJpa41RcJpvMxHduMVVGyb0RUbBHLTimrJuowLbilWg55krgeUehlsom9EqIuveAhn4V5MmLO3vOObSwYdccr4bUleZuQd383h6jxO-m2bZo7f_qlW1fCaIhcNV1owNbrlhn4SqjiZscch8igI5TP4N-7iebO6YEqvwpLwk7DQOZ9WRrhvTQ6hh7UTRmibyFg4xBm5HOIMAWXWI_ZYWoZDsLfYLMv1t43di1RVWBsJJNSEqx_U"/>
+</div>
+<h1 class="text-2xl font-black italic tracking-tighter text-[#D1FF00] hover:skew-x-12 transition-transform cursor-pointer font-['Space_Grotesk'] uppercase">
+                BEAT THE INTRO
+            </h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 font-['Space_Grotesk'] uppercase tracking-[-2%] font-black italic">
+<a class="text-[#D1FF00] underline decoration-4 underline-offset-8" href="#">Settings</a>
+<a class="text-white opacity-70 hover:bg-[#D1FF00] hover:text-black transition-all duration-75 px-2" href="#">Privacy</a>
+<a class="text-white opacity-70 hover:bg-[#D1FF00] hover:text-black transition-all duration-75 px-2" href="#">Cookies</a>
+</nav>
+<span class="material-symbols-outlined text-[#D1FF00] cursor-pointer">settings</span>
+</div>
+</header>
+<!-- NAVIGATION SHELL: NavigationDrawer -->
+<aside class="fixed inset-y-0 left-0 z-[60] flex flex-col h-full w-80 border-r-4 border-[#D1FF00] bg-[#131313] hidden lg:flex">
+<div class="p-8 border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 bg-primary-container">
+<img alt="Spotify User" class="w-full h-full object-cover grayscale" data-alt="Grayscale studio portrait of a person with high contrast shadows and sharp lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhnPcd0RS0aUazPix8SmUOt6id6OJeYZfti3e7_Y-vrMGxHqkkZlebxpC1E7CuVMMn8DTv_nPJU57aTxaRJGpM9-li2FiAa9AzZnWKN8CKqE_mnJC5kgu4SeAzDcQ77IYt0nIfEub18KoCfloL0eg8il_AzNy30emhzIGToLXkv-pE5qCPHzmudogYMeOvNNgEfNa3ELEv_tOkzUE4IIGUPVu7Z1x5St6nPrpDPZpQ6fmp9uJ3fMmF4JLbv8-JA3xkr_vi3qqJlNw"/>
+</div>
+<div>
+<h2 class="text-[#D1FF00] font-black text-xl font-['Space_Grotesk'] uppercase">USER_01</h2>
+<p class="text-white/50 text-xs tracking-widest uppercase">Premium Member</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 font-['Space_Grotesk'] font-bold uppercase">
+<a class="bg-[#D1FF00] text-black font-black p-4 flex items-center gap-4 hover:translate-x-2 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+<a class="text-white p-4 border-b border-white/10 flex items-center gap-4 hover:bg-white hover:text-black hover:translate-x-2 transition-transform" href="#">
+<span class="material-symbols-outlined">cookie</span> Cookies
+            </a>
+<a class="text-white p-4 border-b border-white/10 flex items-center gap-4 hover:bg-white hover:text-black hover:translate-x-2 transition-transform" href="#">
+<span class="material-symbols-outlined">security</span> Privacy
+            </a>
+</nav>
+<div class="p-4 text-[10px] tracking-[0.2em] text-white/30 uppercase">
+            V.2.4.0 // HIGH-VOLTAGE
+        </div>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<main class="pt-24 pb-20 lg:pl-80 min-h-screen relative overflow-hidden">
+<div class="grainy-overlay absolute inset-0 z-0"></div>
+<div class="container mx-auto px-6 relative z-10">
+<!-- BREADCRUMBS -->
+<div class="mb-12 flex items-center gap-2 font-label text-[10px] tracking-[0.3em] uppercase text-on-surface-variant">
+<span>SYSTEM</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>AUXILIARY</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary-fixed">CONFIGURATION</span>
+</div>
+<!-- ASYMMETRIC GRID LAYOUT -->
+<div class="grid grid-cols-12 gap-8">
+<!-- SETTINGS SECTION (SET) -->
+<section class="col-span-12 xl:col-span-5 space-y-8">
+<header class="relative">
+<h2 class="text-7xl md:text-8xl font-black italic uppercase leading-[0.8] tracking-tighter text-white opacity-10 absolute -top-8 -left-4 pointer-events-none select-none">
+                            SETUP
+                        </h2>
+<h3 class="text-4xl font-black uppercase italic tracking-tighter relative">
+                            Settings <span class="text-primary-fixed">.01</span>
+</h3>
+</header>
+<div class="bg-surface-container-high border-l-8 border-primary-fixed p-8 space-y-10">
+<!-- THEME TOGGLE (AURORA SWITCH) -->
+<div class="flex items-center justify-between group">
+<div class="space-y-1">
+<label class="text-xl font-bold uppercase tracking-tight">Dark / Light Theme</label>
+<p class="text-xs text-on-surface-variant tracking-wider uppercase">Current: DARK_MODE_V3</p>
+</div>
+<!-- CUSTOM SWITCH -->
+<div class="w-16 h-8 bg-surface-container-lowest border-2 border-primary-fixed relative cursor-pointer group-active:scale-95 transition-transform">
+<div class="absolute top-0 right-0 w-1/2 h-full bg-primary-fixed border-l-2 border-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-black font-black text-sm">bolt</span>
+</div>
+</div>
+</div>
+<!-- AUDIO SETTINGS -->
+<div class="space-y-4">
+<label class="text-sm font-black uppercase tracking-widest text-primary-fixed">Playback Fidelity</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="p-3 bg-primary-fixed text-black font-black text-xs border-2 border-primary-fixed">HIGH</button>
+<button class="p-3 border-2 border-white/20 text-white font-bold text-xs hover:border-white">MID</button>
+<button class="p-3 border-2 border-white/20 text-white font-bold text-xs hover:border-white">LOW</button>
+</div>
+</div>
+<!-- NOTIFICATIONS -->
+<div class="flex items-center justify-between">
+<label class="text-lg font-bold uppercase">Push Notifications</label>
+<div class="w-6 h-6 border-4 border-primary-fixed bg-surface-container-lowest"></div>
+</div>
+<!-- SAVE BUTTON -->
+<button class="w-full py-6 bg-primary-fixed text-black font-black text-2xl uppercase italic tracking-tighter hover:bg-white active:translate-x-1 active:translate-y-1 transition-all flex items-center justify-center gap-4 group">
+                            SAVE CHANGES
+                            <span class="material-symbols-outlined font-black group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</button>
+</div>
+<!-- DECORATIVE ZINE ELEMENT -->
+<div class="border-4 border-white/10 p-4 flex items-center gap-4 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-crosshair">
+<img alt="Music background" class="w-20 h-20 object-cover rotate-3" data-alt="Close up of a professional DJ mixer with glowing lights in a hazy concert atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_TqNtCwO-NxZ0rifr72RaisYE5BbJxcoqAzHbm3on9LUQHSB4_5RWqldrYm7C_IUklhZXTt2dMmTBnPqw4V8ZlW3SfOPIBwmrra2zL-drIZBubvqizJLL1CbZUR--ojgjBq6N6tc4gWCj_-CZlaRTEeIOAs6SJ7PANWlC0eeM7ah7Z9D91-Ik9ad83KWlJHgwuJpk-Z2R82aX6mvsMGFCgPZQHCgX_BtIowe30XB6eeu_k2uPPf-bkzzASB9gE6Mjw3kV_Oeu9cM"/>
+<p class="text-[10px] leading-tight font-mono tracking-tighter">
+                            SYSTEM_OVERRIDE_ACTIVE<br/>
+                            LATENCY: 12ms<br/>
+                            BUFF_CAP: 1024KB<br/>
+                            STATUS: // VOLTAGE_STABLE
+                        </p>
+</div>
+</section>
+<!-- POLICIES SECTION (PRV / CKP) -->
+<section class="col-span-12 xl:col-span-7 space-y-12">
+<!-- PRIVACY POLICY (PRV) -->
+<article class="bg-surface-container-lowest border-t-8 border-white p-10 relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-48 h-48 border-4 border-white/5 rotate-12 pointer-events-none"></div>
+<header class="mb-8 border-b-2 border-white/10 pb-4">
+<h2 class="text-4xl font-black uppercase tracking-tighter mb-2">Privacy Policy</h2>
+<div class="flex items-center gap-4 text-[10px] font-label tracking-widest text-on-surface-variant">
+<span>REV: 2024.11.08</span>
+<span class="w-2 h-2 bg-primary-fixed"></span>
+<span>OWNER: BEAT_INTRO_LEGAL</span>
+</div>
+</header>
+<div class="space-y-6 text-on-surface/80 leading-relaxed font-light text-sm">
+<p class="text-white font-bold text-lg uppercase leading-tight">
+                                Your data is the signal. We are just the amplifier.
+                            </p>
+<p>
+                                At <span class="text-primary-fixed font-bold">BEAT THE INTRO</span>, we respect your sonic identity. This policy outlines how we collect, process, and protect your metadata during high-intensity gameplay sessions.
+                            </p>
+<div class="grid md:grid-cols-2 gap-8 mt-8">
+<div class="space-y-3">
+<h4 class="text-white font-black uppercase tracking-widest text-xs border-l-2 border-primary-fixed pl-3">01. COLLECTION</h4>
+<p class="text-xs">We sync with your Spotify profile to pull rhythm-relevant data. We do not store your private passwords; we only cache the beat.</p>
+</div>
+<div class="space-y-3">
+<h4 class="text-white font-black uppercase tracking-widest text-xs border-l-2 border-primary-fixed pl-3">02. TELEMETRY</h4>
+<p class="text-xs">Gameplay stats, reaction times, and leaderboard placements are broadcasted to our central engine for global ranking.</p>
+</div>
+</div>
+<p class="italic text-xs opacity-50 pt-6">
+                                By continuing to use the platform, you acknowledge the electrical signal processing of your user profile.
+                            </p>
+</div>
+</article>
+<!-- COOKIE POLICY (CKP) -->
+<article class="bg-[#D1FF00] text-black p-10 transform -rotate-1 shadow-2xl">
+<header class="mb-6 flex justify-between items-start">
+<div>
+<h2 class="text-5xl font-black uppercase italic leading-[0.8] tracking-tighter">Cookie<br/>Policy</h2>
+<p class="text-[10px] font-bold tracking-widest mt-2">TECHNICAL_READOUT_V1</p>
+</div>
+<span class="material-symbols-outlined text-6xl opacity-20">cookie</span>
+</header>
+<div class="space-y-4 text-black font-bold text-xs uppercase tracking-tight max-w-md">
+<p class="border-b-2 border-black/20 pb-2">We use cookies to maintain your session rhythm and ensure the UI stays high-voltage across all devices.</p>
+<div class="space-y-2">
+<div class="flex justify-between border-b border-black/10 py-1">
+<span>ESSENTIAL_BEATS</span>
+<span>REQUIRED</span>
+</div>
+<div class="flex justify-between border-b border-black/10 py-1">
+<span>ANALYTIC_SAMPLES</span>
+<span>OPT_OUT_AVAILABLE</span>
+</div>
+<div class="flex justify-between border-b border-black/10 py-1">
+<span>USER_TEXTURES</span>
+<span>ACTIVE</span>
+</div>
+</div>
+<button class="mt-6 border-4 border-black px-6 py-3 font-black text-sm hover:bg-black hover:text-[#D1FF00] transition-colors">
+                                MANAGE PREFERENCES
+                            </button>
+</div>
+</article>
+<!-- EXTRA ASYMMETRIC CONTENT -->
+<div class="flex gap-4">
+<div class="flex-1 bg-surface-container-high p-6 border-b-4 border-primary-fixed">
+<h4 class="text-xs font-black tracking-widest uppercase mb-4">Support_Line</h4>
+<p class="text-2xl font-black italic tracking-tighter underline">SOS@BEATTHEINTRO.LIVE</p>
+</div>
+<div class="w-1/3 bg-white text-black p-6 flex flex-col justify-between items-end">
+<span class="material-symbols-outlined text-4xl">security</span>
+<span class="font-black text-[10px] tracking-tighter uppercase text-right">Encrypted<br/>Transmission</span>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- NAVIGATION SHELL: BottomNavBar (Mobile only) -->
+<nav class="fixed bottom-0 left-0 w-full h-16 z-50 flex justify-around items-stretch bg-[#131313] border-t-4 border-[#D1FF00] md:hidden">
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined">play_arrow</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PLAY</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">DISCOVER</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">RANK</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#D1FF00] text-black h-full px-4 transform scale-110 active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PROFILE</span>
+</a>
+</nav>
+</body></html>

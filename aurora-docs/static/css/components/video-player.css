@@ -1,0 +1,329 @@
+@layer components {
+
+    /* --- VARIABLES --- */
+    .video-player {
+        --ds-cmp-video-bg: #000;
+        --ds-cmp-video-panel-bg: rgba(0, 0, 0, 0.6);
+        --ds-cmp-video-panel-blur: blur(8px);
+        --ds-cmp-video-btn-color: #fff;
+        --ds-cmp-video-btn-hover: rgba(255, 255, 255, 0.2);
+        --ds-cmp-video-radius: var(--ds-sys-radius-card, 12px);
+        --ds-cmp-video-btn-size: 3rem;
+
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 2rem;
+        overflow: hidden;
+        /* For border-radius clipping */
+        border-radius: var(--ds-cmp-video-radius);
+        background-color: var(--ds-cmp-video-bg);
+    }
+
+    /* --- NATIVE MEDIA ELEMENT --- */
+    .video-player video,
+    .video-player audio {
+        width: 100%;
+        height: auto;
+        display: block;
+        background-color: inherit;
+    }
+
+    .video-player video {
+        cursor: pointer;
+    }
+
+    /* --- CONTROLS CONTAINER --- */
+    .video-controls {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        background: var(--ds-cmp-video-panel-bg);
+        backdrop-filter: var(--ds-cmp-video-panel-blur);
+        border-radius: 0 0 12px 12px;
+        z-index: 10;
+        overflow: visible;
+    }
+
+    /* Hide the native controls if JS failed to remove them conceptually */
+    .video-player video::-webkit-media-controls,
+    .video-player audio::-webkit-media-controls {
+        display: none !important;
+    }
+
+    /* --- POSITIONING MODES --- */
+
+    /* Extent of the Panel */
+    .video-player[data-controls-position="external"] .video-controls {
+        /* Sits normally under the video block */
+        border-bottom-left-radius: var(--ds-cmp-video-radius);
+        border-bottom-right-radius: var(--ds-cmp-video-radius);
+    }
+
+    .video-player[data-controls-position="overlay"] .video-controls {
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        /* Required for center align */
+        width: max-content;
+        height: max-content;
+        border-radius: 999px;
+        /* Pill shape when floating */
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+        /* Default Overlay state is hidden until video is paused/tapped */
+        opacity: 0;
+        pointer-events: none;
+        transform: scale(0.95);
+    }
+
+    .video-player[data-controls-position="overlay"].is-controls-visible .video-controls {
+        opacity: 1;
+        pointer-events: auto;
+        transform: scale(1);
+    }
+
+    /* Overlay Alignments */
+    .video-player[data-controls-align="center"] .video-controls {
+        /* Handled natively by absolute inset:0 and margin:auto */
+        position: absolute;
+    }
+
+    .video-player[data-controls-align="bottom"] .video-controls {
+        inset: auto 0 1.5rem 0;
+        /* Snapped to bottom edge with padding */
+    }
+
+    .video-player[data-controls-align="top"] .video-controls {
+        inset: 1.5rem 0 auto 0;
+        /* Snapped to top edge with padding */
+    }
+
+    /* Orientations */
+    .video-player[data-controls-orientation="vertical"] .video-controls {
+        flex-direction: column;
+        padding: 1.5rem 0.75rem;
+    }
+
+    .video-player[data-controls-orientation="vertical"][data-controls-align="left"] .video-controls {
+        inset: 0 auto 0 1.5rem;
+        margin: auto;
+    }
+
+    .video-player[data-controls-orientation="vertical"][data-controls-align="right"] .video-controls {
+        inset: 0 1.5rem 0 auto;
+        margin: auto;
+    }
+
+
+    /* --- BUTTONS --- */
+    .video-controls__btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--ds-cmp-video-btn-size);
+        height: var(--ds-cmp-video-btn-size);
+        border-radius: 50%;
+
+        background: transparent;
+        color: var(--ds-cmp-video-btn-color);
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .video-controls__btn .material-symbols-outlined {
+        font-size: calc(var(--ds-cmp-video-btn-size) * 0.6);
+    }
+
+    .video-controls__btn:hover {
+        background-color: var(--ds-cmp-video-btn-hover);
+    }
+
+    .video-controls__btn:active {
+        transform: scale(0.95);
+    }
+
+    /* Special prominent styling for Play/Pause in center */
+    .video-controls__btn--primary {
+        background-color: var(--ds-cmp-video-btn-color);
+        color: var(--ds-cmp-video-panel-bg);
+        width: var(--ds-cmp-video-btn-size);
+        height: var(--ds-cmp-video-btn-size);
+        min-width: var(--ds-cmp-video-btn-size);
+        /* Lock it against flex squishing */
+        min-height: var(--ds-cmp-video-btn-size);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* Ensure it remains a perfect circle and doesn't squish horizontally into an oval */
+        aspect-ratio: 1;
+        padding: 0 !important;
+        flex-shrink: 0;
+        box-sizing: border-box;
+    }
+
+    .video-controls__btn--primary:hover {
+        background-color: var(--ds-cmp-video-btn-color);
+        transform: scale(1.1);
+    }
+
+    .video-controls__btn--primary .material-symbols-outlined {
+        font-size: calc(var(--ds-cmp-video-btn-size) * 0.9);
+    }
+
+    /* --- NEW CONTROLS: TIMECODE & SLIDERS --- */
+    .video-controls__time {
+        font-family: var(--ds-sys-typography-mono, monospace);
+        font-size: 0.85rem;
+        color: var(--ds-cmp-video-btn-color);
+        opacity: 0.8;
+        user-select: none;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .video-controls__slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 6px;
+        background: transparent;
+        border-radius: 4px;
+        outline: none;
+        cursor: pointer;
+        flex-grow: 1;
+        /* Allow progress bar to take up remaining space */
+        min-width: 60px;
+        /* Don't collapse completely */
+    }
+
+    /* Webkit Track */
+    .video-controls__slider::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 6px;
+        /* Dynamic linear gradient using a --progress inline style from JS.
+           We use a robust gray with opacity as the empty track so it works on light and dark. */
+        background: linear-gradient(to right, var(--ds-cmp-video-btn-color) var(--progress, 0%), rgba(128, 128, 128, 0.4) var(--progress, 0%));
+        border-radius: 4px;
+    }
+
+    /* Firefox Track */
+    .video-controls__slider::-moz-range-track {
+        width: 100%;
+        height: 6px;
+        background: rgba(128, 128, 128, 0.4);
+        border-radius: 4px;
+    }
+
+    .video-controls__slider::-moz-range-progress {
+        background-color: var(--ds-cmp-video-btn-color);
+        height: 6px;
+        border-radius: 4px;
+    }
+
+    /* Slider Thumb */
+    .video-controls__slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        margin-top: -4px;
+        /* Center 14px thumb on 6px track ((6 - 14) / 2) */
+        border-radius: 50%;
+        background: var(--ds-cmp-video-btn-color);
+        cursor: pointer;
+        transition: transform 0.1s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .video-controls__slider::-moz-range-thumb {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--ds-cmp-video-btn-color);
+        cursor: pointer;
+        border: none;
+        transition: transform 0.1s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .video-controls__slider::-webkit-slider-thumb:hover,
+    .video-controls__slider::-webkit-slider-thumb:active {
+        transform: scale(1.3);
+    }
+
+    .video-controls__slider::-moz-range-thumb:hover,
+    .video-controls__slider::-moz-range-thumb:active {
+        transform: scale(1.3);
+    }
+
+    /* --- SETTINGS POPOVER --- */
+    .video-settings-menu {
+        position: absolute;
+        bottom: 100%;
+        right: 1.5rem;
+        margin-bottom: 0.5rem;
+        background: var(--ds-cmp-video-panel-bg);
+        backdrop-filter: var(--ds-cmp-video-panel-blur);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        min-width: 160px;
+
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(10px);
+        transition: all 0.2s ease;
+        z-index: 20;
+    }
+
+    .video-settings-menu.is-open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .video-settings-menu button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        background: transparent;
+        border: none;
+        color: var(--ds-cmp-video-btn-color);
+        padding: 0.5rem 0.75rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: var(--ds-sys-typography-sans, sans-serif);
+        font-size: 0.85rem;
+        text-align: left;
+    }
+
+    .video-settings-menu button:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .video-settings-menu button .material-symbols-outlined {
+        font-size: 1.1rem;
+    }
+
+    /* --- AUDIO CANVAS VISUALIZER --- */
+    .audio-canvas {
+        width: 100%;
+        height: 120px;
+        display: block;
+        background: transparent;
+        margin-bottom: -1rem;
+        /* Let it be clickable so JS can toggle play/pause */
+        pointer-events: auto;
+        cursor: pointer;
+    }
+}

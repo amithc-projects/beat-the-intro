@@ -1,0 +1,207 @@
+/* Backdrop was removed */
+
+/* Removed empty dark mode ruleset */
+
+/* ─── Panel ─── */
+.cmd-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: var(--ds-sys-color-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 405;
+    transition: transform var(--ds-sys-motion-duration, var(--duration-fast)) var(--ds-sys-motion-ease, var(--ease-out)), opacity var(--ds-sys-motion-duration, var(--duration-fast)) var(--ds-sys-motion-ease, var(--ease-out));
+}
+
+.cmd-panel.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ─── Input row ─── */
+/* Input row removed as it's now in the header */
+
+/* ─── Results ─── */
+.cmd-results {
+    max-height: 420px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.cmd-results::-webkit-scrollbar {
+    width: 4px;
+}
+
+.cmd-results::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.cmd-results::-webkit-scrollbar-thumb {
+    background: var(--color-border-default);
+    border-radius: 99px;
+}
+
+.cmd-group {
+    padding: .375rem 0;
+}
+
+.cmd-group+.cmd-group {
+    border-top: 1px solid var(--color-border-subtle);
+}
+
+.cmd-group-label {
+    padding: .375rem 1.125rem .25rem;
+    font-size: .6875rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+}
+
+.cmd-item {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .5625rem 1rem;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 60ms;
+    outline: none;
+}
+
+.cmd-item.is-active,
+.cmd-item:hover {
+    background: var(--color-surface-sunken);
+}
+
+.cmd-item.is-active {
+    background: var(--color-brand-subtle);
+}
+
+.cmd-item-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-md);
+    background: var(--color-surface-sunken);
+    border: 1px solid var(--color-border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-text-secondary);
+}
+
+.cmd-item.is-active .cmd-item-icon {
+    background: var(--color-brand-subtle);
+    border-color: #bfdbfe;
+    color: var(--color-brand);
+}
+
+.cmd-item-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.cmd-item-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cmd-item.is-active .cmd-item-label {
+    color: var(--color-brand);
+}
+
+.cmd-item-desc {
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    margin-top: .0625rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cmd-item-meta {
+    display: flex;
+    align-items: center;
+    gap: .375rem;
+    flex-shrink: 0;
+}
+
+.cmd-badge {
+    font-size: .6875rem;
+    font-family: var(--font-mono);
+    background: var(--color-surface-sunken);
+    border: 1px solid var(--color-border-default);
+    border-radius: .25rem;
+    padding: .0625rem .375rem;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+}
+
+.cmd-item.is-active .cmd-badge {
+    background: var(--color-brand-subtle);
+    border-color: #bfdbfe;
+    color: var(--color-brand);
+}
+
+.cmd-item mark {
+    background: var(--color-brand-subtle);
+    color: var(--color-brand);
+    border-radius: 2px;
+    font-style: normal;
+}
+
+/* ─── Empty state ─── */
+.cmd-empty {
+    padding: 2.5rem 1rem;
+    text-align: center;
+}
+
+.cmd-empty p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+.cmd-empty strong {
+    display: block;
+    font-size: .9375rem;
+    color: var(--color-text-primary);
+    margin-bottom: .375rem;
+}
+
+/* ─── Footer ─── */
+.cmd-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .5rem 1.125rem;
+    border-top: 1px solid var(--color-border-subtle);
+    background: var(--color-surface-sunken);
+}
+
+.cmd-footer-hints {
+    display: flex;
+    gap: .875rem;
+    flex-wrap: wrap;
+}
+
+.cmd-hint {
+    display: flex;
+    align-items: center;
+    gap: .3125rem;
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+}

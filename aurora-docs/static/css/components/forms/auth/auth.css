@@ -1,0 +1,85 @@
+/* css/components/forms/auth.css */
+@layer components {
+
+  /* --- LAYOUTS --- */
+  
+  /* 1. Centered Card (Simple) */
+  .auth-centered {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background-color: var(--ds-sys-color-bg-app);
+    padding: var(--space-md);
+  }
+  
+  .auth-centered .card {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  /* 2. Split Screen (Modern) */
+  .auth-split {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  
+  @media (min-width: 900px) {
+    .auth-split {
+      grid-template-columns: 1fr 1fr; /* Image | Form */
+    }
+  }
+
+  .auth-split__media {
+    background-color: var(--ds-sys-color-primary);
+    background-size: cover;
+    background-position: center;
+    display: none; /* Hidden on mobile */
+  }
+  @media (min-width: 900px) { .auth-split__media { display: block; } }
+
+  .auth-split__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-2xl);
+    background: var(--ds-sys-color-surface);
+  }
+
+  /* --- COMPONENTS --- */
+
+  /* Social Buttons (Google/GitHub/Microsoft) */
+  .btn-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: 100%;
+    position: relative;
+    
+    background: white;
+    color: #374151;
+    border: 1px solid var(--ds-sys-color-border);
+    font-weight: 500;
+  }
+  .btn-social:hover { background: #f9fafb; border-color: #d1d5db; }
+  
+  /* Divider ("Or continue with...") */
+  .auth-divider {
+    display: flex;
+    align-items: center;
+    margin-block: var(--space-lg);
+    color: var(--ds-sys-color-on-surface);
+    opacity: 0.5;
+    font-size: 0.85rem;
+  }
+  .auth-divider::before,
+  .auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--ds-sys-color-border);
+  }
+  .auth-divider span { padding-inline: var(--space-md); }
+
+}

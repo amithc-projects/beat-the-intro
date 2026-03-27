@@ -1,0 +1,50 @@
+/* MAGAZINE LAYOUT ENGINE 
+   Uses named grid lines to allow content to "break out" of the center column.
+*/
+
+.l-page-grid {
+  display: grid;
+  /* We define 3 zones:
+    1. full-start/end: The absolute edges of the browser.
+    2. wide-start/end: A wider breakout zone (e.g. for big images).
+    3. content-start/end: The standard reading width.
+  */
+  grid-template-columns:
+    [full-start] minmax(1rem, 1fr) 
+    [wide-start] minmax(0, 150px) 
+    [content-start] minmax(0, 800px) [content-end]
+    minmax(0, 150px) [wide-end]
+    minmax(1rem, 1fr) [full-end];
+    
+  /* Standard content stack */
+  gap: 1.5rem;
+}
+
+/* THE MAGIC: Any container (like <main> or <section>) 
+   can inherit this grid to pass it down to children.
+*/
+.l-page-grid > *,
+.l-subgrid-section {
+  grid-column: full; /* Default to full width of tracks */
+  
+  display: grid;
+  grid-template-columns: subgrid; /* Inherit the 5 columns from parent */
+}
+
+/* --- PLACEMENT UTILITIES --- */
+
+/* Standard Text: Sits in the center */
+.col-content { grid-column: content; display: block; }
+
+/* Wide Content: Breaks out slightly */
+.col-wide { grid-column: wide; display: block; }
+
+/* Full Width: Touches browser edges */
+.col-full { grid-column: full; }
+
+/* Feature Left: Text center, extends to left edge */
+.col-feature-left { grid-column: full-start / content-end; display: block; }
+
+/* Feature Right: Text center, extends to right edge */
+.col-feature-right { grid-column: content-start / full-end; display: block; }
+

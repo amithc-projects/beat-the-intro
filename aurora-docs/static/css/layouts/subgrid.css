@@ -1,0 +1,47 @@
+/* SUBGRID CARD ROW 
+   Enforces alignment of internal card elements across siblings.
+*/
+
+.l-subgrid-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  
+  /* Define the 3 rows that every card will share:
+     1. Header (Title) - auto height
+     2. Body (Text)    - 1fr (takes remaining space)
+     3. Footer (Action) - auto height
+  */
+  grid-auto-rows: auto 1fr auto;
+}
+
+/* The Card Itself */
+.l-subgrid-row > .card {
+  /* Span 3 rows of the parent grid */
+  grid-row: span 3;
+  
+  /* Inherit the parent's row definition */
+  display: grid;
+  grid-template-rows: subgrid;
+  
+  /* Reset standard card flex behavior if it exists */
+  display: grid; 
+  padding: 0; /* Let internal padding handle spacing if needed, or keep standard */
+  height: 100%;
+}
+
+/* Internal Card Structure - Must match the 3 rows defined above */
+.card__subgrid-header { grid-row: 1; padding: 1.5rem 1.5rem 0.5rem 1.5rem; }
+.card__subgrid-body   { grid-row: 2; padding: 0 1.5rem; }
+.card__subgrid-footer { grid-row: 3; padding: 1.5rem; align-self: end; }
+
+/* Fallback for older browsers (optional but good practice) */
+@supports not (grid-template-rows: subgrid) {
+  .l-subgrid-row > .card {
+    display: flex;
+    flex-direction: column;
+  }
+  .card__subgrid-body {
+    flex: 1;
+  }
+}

@@ -1,0 +1,110 @@
+/* Extracted from grouping-layouts.md */
+
+/* Horizontal Form Layout Utilities */
+.form-horizontal {
+  --ds-field-layout: row;
+}
+
+/* Right Alignment Modifier */
+.form-horizontal--right .field__label {
+  text-align: right;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .form-horizontal { 
+    flex-direction: column; 
+    align-items: stretch; 
+    gap: 0.5rem; 
+  }
+  .form-horizontal .field__label { 
+    flex: auto; 
+    text-align: left; /* Reset text alignment on mobile */
+  }
+}
+
+/* Fieldset Styling */
+.form-group {
+  border: 1px solid var(--ds-sys-color-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 0 0 1.5rem 0;
+}
+.form-group legend {
+  padding: 0 0.5rem;
+  font-weight: bold;
+  color: var(--ds-sys-color-primary);
+}
+
+/* Mandatory Star */
+.field__label.required::after {
+  content: " *";
+  color: var(--ds-sys-color-error);
+  font-weight: bold;
+}
+
+/* Label wrapper to align text and icon */
+.label-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.label-wrapper .field__label { margin-bottom: 0; }
+
+/* Tooltip Styles */
+.tooltip-wrapper {
+  position: relative;
+  display: inline-flex;
+  cursor: help;
+}
+.icon-help {
+  font-size: 1.1rem;
+  color: var(--ds-sys-color-on-surface-variant);
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.tooltip-wrapper:hover .icon-help { opacity: 1; color: var(--ds-sys-color-primary); }
+
+/* The Popover Content */
+.tooltip-content {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 140%; /* Show above */
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  width: 250px;
+  background: var(--ds-sys-color-surface-container-high, #333);
+  color: white; /* Always light text on dark tooltip */
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 100;
+  transition: all 0.2s ease;
+  pointer-events: none; /* Prevent getting stuck */
+}
+
+.tooltip-content p { margin: 0.5rem 0; line-height: 1.4; }
+.tooltip-content a { color: #8ab4f8; }
+
+/* Arrow */
+.tooltip-content::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--ds-sys-color-surface-container-high, #333) transparent transparent transparent;
+}
+
+/* Show on Hover */
+.tooltip-wrapper:hover .tooltip-content {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}

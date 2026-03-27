@@ -1,0 +1,88 @@
+/* css/components/layout/sidebar.css */
+@layer components {
+
+  :root {
+    --sidebar-width: 260px;
+    --sidebar-bg: var(--ds-sys-color-surface);
+    --sidebar-border: 1px solid var(--ds-sys-color-border);
+  }
+
+  /* 1. THE LAYOUT SHELL (Desktop First) */
+  .app-shell {
+    display: grid;
+    min-height: 100vh;
+    /* Default: Sidebar | Content */
+    grid-template-columns: var(--sidebar-width) 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  /* 2. THE SIDEBAR CONTAINER */
+  .sidebar {
+    background: var(--sidebar-bg);
+    border-right: var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* 3. RESPONSIVE (Mobile) */
+  @media (max-width: 768px) {
+    .app-shell {
+      display: block; /* Stack it */
+    }
+    .sidebar {
+      display: none; /* Hide on mobile (Trigger via Drawer/Modal instead) */
+    }
+    /* Note: On mobile, we usually swap .sidebar for the .nav-drawer we built earlier */
+  }
+
+  /* 4. INTERNAL PARTS */
+  .sidebar__header {
+    height: 4rem; /* Match Navbar height */
+    display: flex;
+    align-items: center;
+    padding-inline: var(--space-lg);
+    border-bottom: var(--sidebar-border);
+  }
+
+  .sidebar__content {
+    flex: 1;
+    padding: var(--space-md);
+  }
+
+  .sidebar__footer {
+    padding: var(--space-md);
+    border-top: var(--sidebar-border);
+  }
+
+  /* 5. VERTICAL NAVIGATION */
+  .nav-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .nav-vertical a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    text-decoration: none;
+    color: var(--ds-sys-color-on-surface);
+    border-radius: var(--ds-sys-radius-btn);
+    transition: background 0.2s;
+    font-weight: 500;
+  }
+
+  .nav-vertical a:hover {
+    background-color: var(--ds-sys-color-bg-app);
+  }
+  
+  .nav-vertical a.is-active {
+    background-color: color-mix(in srgb, var(--ds-sys-color-primary), transparent 90%);
+    color: var(--ds-sys-color-primary);
+  }
+}

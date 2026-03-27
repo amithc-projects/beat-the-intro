@@ -1,0 +1,209 @@
+/* css/themes/casual.css */
+[data-theme="casual"] {
+  /* --- REFERENCE LAYER --- */
+  /* Coral Red */
+  --ds-ref-primary: oklch(67% 0.19 23);
+
+  /* Sunny Yellow */
+  --ds-ref-secondary: oklch(89% 0.16 91);
+
+  /* Teal */
+  --ds-ref-tertiary: oklch(76% 0.15 170);
+
+  /* FIXED: Added missing mixing bases so buttons don't turn transparent */
+  --ds-ref-mix-tint: oklch(100% 0 0);
+  /* White */
+  --ds-ref-mix-shade: oklch(0% 0 0);
+  /* Black */
+
+  /* SPACING BASE */
+  --ds-ref-space-base: 1.5rem;
+
+  --font-heading: 'Comic Neue', 'Chalkboard SE', sans-serif;
+  --font-body: 'Varela Round', sans-serif;
+
+  /* --- GENERATIVE LAYER --- */
+  /* Mixing in OKLCH preserves the vivid nature of the colors */
+  --color-primary-500: var(--ds-ref-primary);
+  --color-primary-100: color-mix(in oklch, var(--ds-ref-primary), white 90%);
+  --color-primary-hover: color-mix(in oklch, var(--ds-ref-primary), var(--color-primary-100) 90%);
+
+  --color-secondary-500: var(--ds-ref-secondary);
+  --color-tertiary-500: var(--ds-ref-tertiary);
+
+  --space-3xs: calc(var(--ds-ref-space-base) * 0.25);
+  --space-2xs: calc(var(--ds-ref-space-base) * 0.50);
+  --space-xs: calc(var(--ds-ref-space-base) * 0.75);
+  --space-sm: calc(var(--ds-ref-space-base) * 0.875);
+  --space-md: var(--ds-ref-space-base);
+  --space-lg: calc(var(--ds-ref-space-base) * 1.25);
+  --space-xl: calc(var(--ds-ref-space-base) * 1.50);
+  --space-2xl: calc(var(--ds-ref-space-base) * 2.00);
+  --space-3xl: calc(var(--ds-ref-space-base) * 3.00);
+  --space-4xl: calc(var(--ds-ref-space-base) * 4.00);
+
+  --ds-sem-blog-main: var(--color-tertiary-500);
+
+  /* --- SYSTEM LAYER --- */
+  /* Background: Light = Yellow, Dark = Deep Purple */
+  --ds-sys-color-bg-app: light-dark(var(--color-secondary-500), oklch(20% 0.12 290));
+
+  /* Surface: Light = White, Dark = Indigo */
+  --ds-sys-color-surface: light-dark(oklch(100% 0 0), oklch(35% 0.18 290));
+  --ds-sys-color-on-surface: light-dark(oklch(20% 0 0), oklch(98% 0 0));
+  --ds-sys-color-on-surface-variant: light-dark(oklch(40% 0 0), oklch(90% 0 0));
+
+  /* Surface Container Scales */
+  --ds-sys-color-surface-container-low: light-dark(oklch(98% 0 0), oklch(30% 0.18 290));
+  --ds-sys-color-surface-container: light-dark(oklch(96% 0 0), oklch(38% 0.18 290));
+  --ds-sys-color-surface-container-high: light-dark(oklch(94% 0 0), oklch(43% 0.18 290));
+  --ds-sys-color-surface-container-highest: light-dark(oklch(90% 0 0), oklch(48% 0.18 290));
+
+  /* Inverse surface for high-contrast floating components like Toasts */
+  --ds-sys-color-surface-inverse: light-dark(oklch(25% 0.18 290), oklch(100% 0 0));
+  --ds-sys-color-on-surface-inverse: light-dark(oklch(100% 0 0), oklch(20% 0 0));
+
+
+  /* Primary: Light = Coral, Dark = Neon Cyan */
+  --ds-sys-color-primary: light-dark(var(--color-primary-500), oklch(85% 0.18 170));
+  --ds-sys-color-on-primary: light-dark(oklch(100% 0 0), oklch(0% 0 0));
+
+  --ds-sys-color-border: light-dark(var(--color-tertiary-500), oklch(100% 0 0));
+
+  /* Semantic Status Colors */
+  --ds-sys-color-success: light-dark(#10b981, #34d399);
+  --ds-sys-color-error: light-dark(#ef4444, #fca5a5);
+  --ds-sys-color-warning: light-dark(#f59e0b, #fcd34d);
+
+  /* -------------------------------------------------------------------------- */
+  /* 2. BASE THEME OVERRIDES                                                    */
+  /* -------------------------------------------------------------------------- */
+  
+  /* MOTION OVERRIDE: Expressive/Bouncy */
+  --ds-sys-motion-duration: var(--ds-ref-motion-duration-norm);
+  --ds-sys-motion-ease: var(--ds-ref-motion-ease-bounce);
+
+  --ds-sys-radius-btn: 999px;
+  --ds-sys-radius-card: 2rem;
+  --ds-sys-border-width: 8px;
+  --ds-sys-shadow-card: 8px 8px 0px rgba(0, 0, 0, 0.1);
+  --ds-sys-density: 1.5;
+
+  /* MOTION OVERRIDE: Bouncy/Bubbly */
+  --ds-motion-easing-active: var(--ds-motion-easing-bubbly);
+
+  --ds-cmp-slider-item-width: 85%;
+  --ds-cmp-slider-marker-size: 24px;
+
+  /* --- COMPONENT TOKEN LAYER --- */
+
+  /* Callout: Sticker style, dashed border, rotated */
+  --ds-cmp-callout-bg: var(--ds-sys-color-surface);
+  --ds-cmp-callout-border: var(--ds-sys-border-width) dashed var(--ds-sys-color-border);
+  --ds-cmp-callout-border-left: var(--ds-cmp-callout-border);
+  --ds-cmp-callout-shadow: var(--ds-sys-shadow-card);
+  --ds-cmp-callout-transform: rotate(-1deg);
+
+  /* Secondary Button: Hybrid Filled/Outline */
+  --ds-cmp-btn-sec-bg: light-dark(white, transparent);
+  --ds-cmp-btn-sec-text: light-dark(var(--ds-sys-color-on-surface), var(--ds-sys-color-primary));
+  --ds-cmp-btn-sec-border-width: var(--ds-sys-border-width);
+  --ds-cmp-btn-sec-border-color: light-dark(var(--ds-sem-blog-main), var(--ds-sys-color-primary));
+
+  --ds-cmp-btn-sec-hover-bg: light-dark(white, transparent);
+  --ds-cmp-btn-sec-hover-text: light-dark(var(--ds-sys-color-on-surface), var(--ds-sys-color-primary));
+  --ds-cmp-btn-sec-hover-border: var(--ds-sem-blog-main);
+  --ds-cmp-btn-sec-hover-transform: scale(1.05) rotate(-2deg);
+
+  /* ACCORDION: Chunky & Colorful */
+  --ds-cmp-accordion-bg: var(--ds-sys-color-surface);
+  --ds-cmp-accordion-border: var(--ds-sys-border-width) solid var(--ds-sys-color-border);
+  --ds-cmp-accordion-radius: var(--ds-sys-radius-card);
+
+  --ds-cmp-accordion-hover-bg: var(--ds-sys-color-bg-app);
+  --ds-cmp-accordion-active-header: transparent;
+
+  --ds-cmp-accordion-icon: "add";
+  --ds-cmp-accordion-icon-closed-rotation: rotate(0deg);
+  --ds-cmp-accordion-icon-open-rotation: rotate(135deg);
+
+  /* NAVIGATION: Colorful & Left Aligned */
+
+
+  /* NAVIGATION: Colorful & Left Aligned */
+  /* FIXED: Ensure Dark Mode background matches the App Background (Purple) explicitly */
+  --ds-cmp-nav-bg: light-dark(var(--color-secondary-500), oklch(20% 0.12 290));
+
+  --ds-cmp-nav-text: var(--ds-sys-color-on-surface);
+  --ds-cmp-nav-border: 4px solid var(--ds-sys-color-border);
+
+  /* MOBILE LAYOUT: LEFT ALIGNED */
+  --ds-cmp-nav-mobile-order-burger: 1;
+  --ds-cmp-nav-mobile-order-brand: 2;
+  --ds-cmp-nav-mobile-text-align: center;
+  --ds-cmp-nav-mobile-order-settings: 3;
+
+  /* DRAWER POSITION: From Left */
+  --ds-cmp-nav-mobile-left: 0;
+  --ds-cmp-nav-mobile-right: auto;
+  --ds-cmp-nav-mobile-transform-closed: translateX(-100%);
+
+  /* Inside [data-theme="casual"] */
+
+  /* TABS: Chunky & Separated */
+  --ds-cmp-tabs-gap: var(--space-sm);
+
+  /* Inactive: Ghost Pills */
+  --ds-cmp-tab-bg: rgba(255, 255, 255, 0.5);
+  --ds-cmp-tab-text: var(--ds-sys-color-on-surface);
+  --ds-cmp-tab-border: 2px solid transparent;
+  --ds-cmp-tab-radius: 99px;
+  /* Full pill shape */
+  --ds-cmp-tab-margin-bottom: var(--space-sm);
+
+  /* Active: Primary Pill */
+  --ds-cmp-tab-active-bg: var(--ds-sys-color-primary);
+  --ds-cmp-tab-active-text: var(--ds-sys-color-on-primary);
+  --ds-cmp-tab-active-border-color: transparent;
+  --ds-cmp-tab-active-transform: rotate(-2deg) scale(1.05);
+  /* Fun Pop! */
+
+  /* Panel: Card style */
+  --ds-cmp-tab-panel-bg: var(--ds-sys-color-surface);
+  --ds-cmp-tab-panel-border: var(--ds-sys-border-width) dashed var(--ds-sys-color-border);
+  --ds-cmp-tab-panel-radius-top-left: var(--ds-sys-radius-card);
+
+
+  /* Chunky, rounded inputs */
+  --ds-cmp-input-radius: 999px;
+  --ds-cmp-input-border-width: 4px;
+  --ds-cmp-input-border-color: var(--ds-ref-tertiary);
+
+  --ds-cmp-input-focus-transform: scale(1.02) rotate(-1deg);
+
+  /* FIXED: Use light-dark() so inputs aren't blinding in dark mode.
+     Light: Pure White (pop against the yellow bg)
+     Dark:  Deep Purple (slightly lighter than the app bg)
+  */
+  --ds-cmp-input-bg: light-dark(white,
+      color-mix(in oklch, var(--ds-sys-color-bg-app), white 10%));
+
+  /* Ensure text remains readable on the new backgrounds */
+  --ds-cmp-input-text: var(--ds-sys-color-on-surface);
+
+  /* --- COMPONENT OVERRIDES: MODAL --- */
+
+  /* 1. Extra Rounded Corners */
+  --modal-radius: 2.5rem;
+
+  /* 2. Chunky Border (Matches Buttons/Nav) */
+  --modal-border: 4px solid var(--ds-ref-tertiary);
+
+  /* 3. Hard Shadow (Sticker effect) */
+  --modal-shadow: 15px 15px 0px rgba(0, 0, 0, 0.15);
+
+  /* 4. Fun Backdrop (Purple Tint instead of black) */
+  --modal-backdrop-bg: color-mix(in srgb, var(--ds-ref-primary), transparent 80%);
+  --modal-backdrop-blur: 2px;
+
+}

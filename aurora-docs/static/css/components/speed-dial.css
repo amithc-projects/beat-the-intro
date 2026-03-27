@@ -1,0 +1,263 @@
+/* static/css/components/speed-dial.css */
+
+:root {
+  --ds-cmp-speed-dial-size: 3.5rem;
+  --ds-cmp-speed-dial-inner-size: calc(var(--ds-cmp-speed-dial-size) - 20px);
+  --ds-cmp-speed-dial-item-size: 3rem;
+  --ds-cmp-speed-dial-gap: var(--space-md);
+  --ds-cmp-speed-dial-rise: 20px;
+  
+  --ds-cmp-speed-dial-bg: var(--ds-sys-color-primary);
+  --ds-cmp-speed-dial-toggle-inner: color-mix(in oklch, var(--ds-sys-color-primary), white 10%);
+  --ds-cmp-speed-dial-on-bg: var(--ds-sys-color-on-primary);
+  
+  --ds-cmp-speed-dial-item-bg: var(--ds-sys-color-surface-container-high);
+  --ds-cmp-speed-dial-item-on-bg: var(--ds-sys-color-on-surface);
+  --ds-cmp-speed-dial-item-border: var(--ds-sys-color-border);
+  
+  --ds-cmp-speed-dial-shadow: var(--ds-sys-shadow-card, 0 8px 24px rgba(0,0,0,.24));
+  --ds-cmp-speed-dial-duration: var(--ds-sys-motion-duration, 400ms);
+  --ds-cmp-speed-dial-ease: var(--ds-sys-motion-ease, cubic-bezier(.22,.84,.24,1));
+}
+
+.speed-dial {
+  position: fixed;
+  right: var(--space-xl);
+  bottom: var(--space-xl);
+  z-index: 100;
+}
+
+.speed-dial--absolute {
+  position: absolute;
+  right: var(--space-md);
+  bottom: var(--space-md);
+}
+
+.speed-dial__menu[popover],
+.speed-dial__menu.popover {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  width: auto !important;
+  min-width: 0 !important;
+  
+  /* Layout must persist even when closing to avoid "horizontal jump" */
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--ds-cmp-speed-dial-gap) !important;
+  align-items: flex-end !important;
+
+  /* Fixed position by default */
+  inset: auto var(--space-xl) calc(var(--ds-cmp-speed-dial-size) + var(--space-xl) + var(--ds-cmp-speed-dial-gap)) auto !important;
+
+  /* Use visibility + opacity for Aurora-style (.is-open) popovers to allow exit animations */
+  visibility: hidden;
+  opacity: 0 !important;
+  transition: opacity 0.8s var(--ds-cmp-speed-dial-ease),
+              visibility 0.8s step-end,
+              display 0.8s allow-discrete,
+              overlay 0.8s allow-discrete;
+}
+
+.speed-dial__menu:popover-open,
+.speed-dial__menu.is-open {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: opacity 0.2s var(--ds-cmp-speed-dial-ease),
+              visibility 0s;
+}
+
+/* Base starting style for native popover opening animation */
+@starting-style {
+  .speed-dial__menu:popover-open {
+    opacity: 0 !important;
+  }
+}
+
+/* Allow absolute menu when the parent is absolute-positioned */
+.speed-dial--absolute .speed-dial__menu[popover],
+.speed-dial--absolute .speed-dial__menu.popover {
+  position: absolute !important;
+  inset: auto 0 calc(var(--ds-cmp-speed-dial-size) + var(--ds-cmp-speed-dial-gap)) auto !important;
+  transform: none !important; /* Bypass Aurora popover transforms */
+}
+
+.speed-dial__item {
+  width: var(--ds-cmp-speed-dial-item-size);
+  height: var(--ds-cmp-speed-dial-item-size);
+  border-radius: 999px;
+  border: var(--ds-sys-border-width, 1px) solid var(--ds-cmp-speed-dial-item-border);
+  background: var(--ds-cmp-speed-dial-item-bg);
+  color: var(--ds-cmp-speed-dial-item-on-bg);
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  box-shadow: var(--ds-cmp-speed-dial-shadow);
+  
+  opacity: 0;
+  transform: translateY(var(--ds-cmp-speed-dial-rise)) scale(.92);
+  pointer-events: none;
+
+  /* Use transitions instead of keyframes to allow for a reversible animation */
+  transition: opacity var(--ds-cmp-speed-dial-duration) var(--ds-cmp-speed-dial-ease),
+              transform var(--ds-cmp-speed-dial-duration) var(--ds-cmp-speed-dial-ease),
+              box-shadow 0.2s ease;
+  transition-delay: var(--delay-out, 0ms);
+}
+
+.speed-dial__menu:popover-open .speed-dial__item,
+.speed-dial__menu.is-open .speed-dial__item {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  transition-delay: var(--delay, 0ms) !important;
+}
+
+/* Keyframes are no longer strictly necessary for items but kept for reference or complex sequences if needed */
+@keyframes dial-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--ds-cmp-speed-dial-rise)) scale(.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.speed-dial__item:hover,
+.speed-dial__item:focus-visible {
+  outline: none;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--ds-sys-shadow-lg, 0 12px 30px rgba(0,0,0,.3));
+}
+
+.speed-dial__label {
+  position: absolute;
+  right: calc(100% + var(--space-sm));
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--ds-sys-color-surface-container-highest);
+  color: var(--ds-sys-color-on-surface);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--ds-sys-radius-btn, 4px);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  box-shadow: var(--ds-sys-shadow-sm, 0 2px 8px rgba(0,0,0,0.15));
+  pointer-events: none;
+
+  /* Wipe Animation Base */
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  transition: opacity 0.2s var(--ds-cmp-speed-dial-ease),
+              max-width 0.2s var(--ds-cmp-speed-dial-ease),
+              transform 0.2s var(--ds-cmp-speed-dial-ease);
+}
+
+.speed-dial__item:hover .speed-dial__label {
+  opacity: 1;
+  max-width: 200px;
+  transform: translateY(-50%) translateX(-4px);
+}
+
+/* Casual Theme Overrides for Labels */
+[data-theme="casual"] .speed-dial__label {
+  border: 2px solid var(--ds-sys-color-border);
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  background: var(--ds-sys-color-surface);
+}
+
+.speed-dial__toggle {
+  width: var(--ds-cmp-speed-dial-size);
+  height: var(--ds-cmp-speed-dial-size);
+  border: 0;
+  border-radius: 999px;
+  background: var(--ds-cmp-speed-dial-bg);
+  color: var(--ds-cmp-speed-dial-on-bg);
+  cursor: pointer;
+  position: relative;
+  box-shadow: var(--ds-sys-shadow-lg, 0 14px 30px rgba(0,0,0,.28));
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s var(--ds-cmp-speed-dial-ease);
+}
+
+.speed-dial__toggle::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: inherit;
+  background: var(--ds-cmp-speed-dial-toggle-inner);
+  opacity: 0.2;
+}
+
+.speed-dial__toggle:hover {
+  transform: scale(1.05);
+}
+
+.speed-dial__glyph {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+  z-index: 1;
+  transition: transform 0.24s ease, opacity 0.24s ease;
+}
+
+.speed-dial__glyph--close {
+  opacity: 0;
+  transform: rotate(-90deg) scale(.7);
+}
+
+/* Using :has to detect popover state or class-based open state on the toggle button's target */
+body:has(#dial:popover-open) .speed-dial__glyph--plus,
+body:has(#dial.is-open) .speed-dial__glyph--plus,
+.speed-dial:has(.is-open) .speed-dial__glyph--plus {
+  opacity: 0;
+  transform: rotate(90deg) scale(.7);
+}
+
+body:has(#dial:popover-open) .speed-dial__glyph--close,
+body:has(#dial.is-open) .speed-dial__glyph--close,
+.speed-dial:has(.is-open) .speed-dial__glyph--close {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+/* Casual Theme Overrides */
+[data-theme="casual"] .speed-dial__item {
+  border-width: var(--ds-sys-border-width, 4px);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="casual"] .speed-dial__toggle {
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .speed-dial__item,
+  .speed-dial__menu:popover-open .speed-dial__item,
+  .speed-dial__glyph {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}

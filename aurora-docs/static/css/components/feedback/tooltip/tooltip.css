@@ -1,0 +1,85 @@
+/* css/components/feedback/tooltip.css */
+@layer components {
+
+  :root {
+    --tooltip-bg: var(--ds-sys-color-surface);
+    --tooltip-text: var(--ds-sys-color-on-surface);
+    --tooltip-border: 1px solid var(--ds-sys-color-border);
+    --tooltip-radius: var(--ds-sys-radius-btn, 4px);
+    --tooltip-shadow: var(--ds-sys-shadow-card);
+    --tooltip-arrow-size: 8px;
+  }
+
+  /* 1. THE TRIGGER (Anchor) */
+  /* Usage: <button style="anchor-name: --my-tooltip"> */
+  .tooltip-trigger {
+    /* No styles needed, the anchor-name is set inline or via utility class */
+    cursor: help;
+  }
+
+  /* 2. THE TOOLTIP (The Popover) */
+  .tooltip {
+    /* Reset Native Popover Styles */
+    margin: 0;
+    border: none;
+    padding: 0;
+    
+    /* Paint */
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: var(--tooltip-border);
+    border-radius: var(--tooltip-radius);
+    box-shadow: var(--tooltip-shadow);
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.85rem;
+    max-width: 250px;
+    
+    /* --- CSS ANCHOR POSITIONING ENGINE --- */
+    
+    /* A. Link to the Anchor */
+    /* Note: 'position-anchor' must be set on the specific element ID or via inline style */
+    position: fixed; /* Anchors require fixed/absolute */
+    
+    /* B. Default Placement (Top Center) */
+    /* New Syntax: position-area (replaces inset-area) */
+    position-area: top center; 
+    
+    /* C. The "Try" Logic (Flip if no space) */
+    position-try-fallbacks: 
+      flip-block,   /* Try bottom if top is full */
+      flip-inline,  /* Try left/right */
+      bottom center;
+      
+    /* Smooth Entry */
+    opacity: 0;
+    transition: opacity 0.2s ease, display 0.2s allow-discrete, overlay 0.2s allow-discrete;
+  }
+
+  /* Open State */
+  .tooltip:popover-open {
+    opacity: 1;
+    
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  /* 3. OPTIONAL ARROW (Using CSS Shapes) */
+  /* Note: Anchoring arrows is complex in pure CSS right now, 
+     so we use a simple visual hack or rely on the background shape.
+     For this version, we stick to the clean "floating card" style. 
+  */
+  
+  /* 4. VARIANTS */
+  .tooltip--rich {
+    max-width: 320px;
+    padding: var(--space-md);
+  }
+  
+  .tooltip__title {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    display: block;
+    color: var(--ds-sys-color-primary);
+  }
+}

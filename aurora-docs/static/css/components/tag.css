@@ -1,0 +1,183 @@
+/* static/css/components/tag.css */
+:root {
+    --ds-cmp-tag-radius: var(--ds-sys-radius-full, 9999px);
+
+    /* Tag specific status palettes */
+    --ds-cmp-tag-neutral-bg: var(--ds-sys-color-surface-hover, #f3f4f6);
+    --ds-cmp-tag-neutral-border: var(--ds-sys-color-border, #d1d5db);
+    --ds-cmp-tag-neutral-text: var(--ds-sys-color-on-surface-subtle, #6b7280);
+
+    --ds-cmp-tag-brand-bg: #eff6ff;
+    --ds-cmp-tag-brand-border: #bfdbfe;
+    --ds-cmp-tag-brand-text: var(--ds-sys-color-primary, #2563eb);
+
+    --ds-cmp-tag-success-bg: #f0fdf4;
+    --ds-cmp-tag-success-border: #bbf7d0;
+    --ds-cmp-tag-success-text: #15803d;
+
+    --ds-cmp-tag-warning-bg: #fffbeb;
+    --ds-cmp-tag-warning-border: #fde68a;
+    --ds-cmp-tag-warning-text: #b45309;
+
+    --ds-cmp-tag-danger-bg: #fef2f2;
+    --ds-cmp-tag-danger-border: #fecaca;
+    --ds-cmp-tag-danger-text: var(--ds-sys-color-error, #ef4444);
+
+    --ds-cmp-tag-info-bg: #eff6ff;
+    --ds-cmp-tag-info-border: #bfdbfe;
+    --ds-cmp-tag-info-text: #1d4ed8;
+}
+
+[data-mode="dark"],
+[data-theme="dark"] {
+    --ds-cmp-tag-neutral-bg: var(--ds-sys-color-surface-hover, rgba(255, 255, 255, 0.05));
+    --ds-cmp-tag-neutral-border: var(--ds-sys-color-border, #475569);
+
+    --ds-cmp-tag-brand-bg: rgba(37, 99, 235, 0.15);
+    --ds-cmp-tag-brand-border: rgba(37, 99, 235, 0.3);
+    --ds-cmp-tag-brand-text: #60a5fa;
+
+    --ds-cmp-tag-success-bg: #052e16;
+    --ds-cmp-tag-success-border: #166534;
+    --ds-cmp-tag-success-text: #4ade80;
+
+    --ds-cmp-tag-warning-bg: #451a03;
+    --ds-cmp-tag-warning-border: #92400e;
+    --ds-cmp-tag-warning-text: #fbbf24;
+
+    --ds-cmp-tag-danger-bg: #450a0a;
+    --ds-cmp-tag-danger-border: #991b1b;
+    --ds-cmp-tag-danger-text: #f87171;
+
+    --ds-cmp-tag-info-bg: #172554;
+    --ds-cmp-tag-info-border: #1e40af;
+    --ds-cmp-tag-info-text: #93c5fd;
+}
+
+/* ══════════════════ TAGS ══════════════════ */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .3125rem;
+    padding: 0 .625rem;
+    height: 26px;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: var(--ds-cmp-tag-radius);
+    border: 1px solid transparent;
+    white-space: nowrap;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.tag-sm {
+    height: 20px;
+    padding: 0 .5rem;
+    font-size: .6875rem;
+}
+
+.tag-lg {
+    height: 32px;
+    padding: 0 .875rem;
+    font-size: 0.875rem;
+}
+
+/* Colours */
+.tag-neutral {
+    background: var(--ds-cmp-tag-neutral-bg);
+    border-color: var(--ds-cmp-tag-neutral-border);
+    color: var(--ds-cmp-tag-neutral-text);
+}
+
+.tag-brand {
+    background: var(--ds-cmp-tag-brand-bg);
+    border-color: var(--ds-cmp-tag-brand-border);
+    color: var(--ds-cmp-tag-brand-text);
+}
+
+.tag-success {
+    background: var(--ds-cmp-tag-success-bg);
+    border-color: var(--ds-cmp-tag-success-border);
+    color: var(--ds-cmp-tag-success-text);
+}
+
+.tag-warning {
+    background: var(--ds-cmp-tag-warning-bg);
+    border-color: var(--ds-cmp-tag-warning-border);
+    color: var(--ds-cmp-tag-warning-text);
+}
+
+.tag-danger {
+    background: var(--ds-cmp-tag-danger-bg);
+    border-color: var(--ds-cmp-tag-danger-border);
+    color: var(--ds-cmp-tag-danger-text);
+}
+
+.tag-info {
+    background: var(--ds-cmp-tag-info-bg);
+    border-color: var(--ds-cmp-tag-info-border);
+    color: var(--ds-cmp-tag-info-text);
+}
+
+/* Dot */
+.tag-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+}
+
+/* Interactive filter */
+button.tag.tag-filter,
+a.tag.tag-filter {
+    cursor: pointer;
+    transition: opacity 120ms;
+}
+
+button.tag.tag-filter[aria-pressed="false"] {
+    opacity: .55;
+}
+
+button.tag.tag-filter:hover,
+a.tag.tag-filter:hover {
+    opacity: 1;
+}
+
+button.tag.tag-filter:focus-visible,
+a.tag.tag-filter:focus-visible {
+    outline: 2px solid var(--ds-sys-color-primary, #2563eb);
+    outline-offset: 2px;
+}
+
+/* Removable */
+.tag-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: inherit;
+    opacity: .6;
+    transition: opacity 100ms, background 100ms;
+}
+
+.tag-remove:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, .12);
+}
+
+[data-mode="dark"] .tag-remove:hover {
+    background: rgba(255, 255, 255, .12);
+}
+
+.tag-remove:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
+}

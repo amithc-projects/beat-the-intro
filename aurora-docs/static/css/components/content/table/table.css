@@ -1,0 +1,267 @@
+/* css/components/content/table.css */
+@layer components {
+  
+  /* --- 1. BASE TABLE CONTAINER --- */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: var(--space-lg);
+    border: 1px solid var(--ds-sys-color-border);
+    border-radius: var(--ds-sys-radius-card);
+    box-shadow: var(--ds-sys-shadow-card);
+    background: var(--ds-sys-color-surface);
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0;         
+    min-width: 600px;
+    
+    /* Token Injection */
+    --table-header-bg: var(--ds-cmp-table-header-bg, var(--ds-sys-color-surface));
+    --table-row-bg: var(--ds-cmp-table-row-bg, transparent);
+    --table-stripe: var(--ds-cmp-table-stripe, transparent);
+    --table-row-hover: var(--ds-cmp-table-row-hover, rgba(0,0,0,0.02));
+    --table-padding: var(--ds-cmp-table-padding, var(--space-sm));
+    --table-border-color: var(--ds-cmp-table-border-color, var(--ds-sys-color-border));
+    
+    /* Border Config (Themeable defaults) */
+    /* 1px = show, 0px = hide */
+    --table-border-vertical: var(--ds-cmp-table-border-vertical, 0px); 
+    --table-border-horizontal: var(--ds-cmp-table-border-horizontal, 1px);
+    
+    /* Sticky Tokens */
+    --table-header-position: var(--ds-cmp-table-header-position, static);
+    --table-header-top: 0;
+    --table-header-z: 10;
+    
+    /* Width control for sticky columns */
+    --table-fixed-col-width: 150px; 
+  }
+
+  /* --- PHASE 2: BORDER VARIANTS --- */
+  /* These override the variables to change the grid style */
+  
+  /* Full Grid (Excel style) */
+  .table--bordered {
+    --table-border-vertical: 1px;
+    --table-border-horizontal: 1px;
+  }
+  
+  /* Borderless (Clean, good for landing pages) */
+  .table--borderless {
+    --table-border-vertical: 0px;
+    --table-border-horizontal: 0px;
+    /* Remove outer container border if inside one */
+  }
+  .table-container:has(.table--borderless) {
+    border: none;
+    box-shadow: none;
+  }
+
+  /* Gridless (Striped Only usually) */
+  .table--gridless {
+    --table-border-vertical: 0px;
+    --table-border-horizontal: 0px;
+  }
+
+  /* --- PHASE 1: FOUNDATIONS (Caption, Footer) --- */
+  .table caption {
+    padding: var(--space-md);
+    font-weight: 800;
+    text-align: left;
+    color: var(--ds-sys-color-primary);
+    background: var(--ds-sys-color-surface);
+    caption-side: top;
+  }
+  .table--caption-bottom caption { caption-side: bottom; border-top: 1px solid var(--table-border-color); }
+  .table--caption-hidden caption {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
+
+  .table tfoot th,
+  .table tfoot td {
+    background: var(--table-header-bg);
+    font-weight: 700;
+    color: var(--ds-sys-color-primary);
+    padding: var(--table-padding);
+    border-top: 2px solid var(--table-border-color);
+    border-bottom: none;
+  }
+
+  /* --- DESKTOP / DEFAULT VIEW --- */
+  .table th {
+    text-align: left;
+    font-weight: 700;
+    padding: var(--table-padding);
+    background: var(--table-header-bg);
+    
+    /* Dynamic Border Handling */
+    border-bottom: 2px solid var(--table-border-color); /* Header always needs separation */
+    border-right: var(--table-border-vertical) solid var(--table-border-color);
+    
+    white-space: nowrap;
+    color: var(--ds-sys-color-primary);
+    
+    position: var(--table-header-position);
+    top: var(--table-header-top);
+    z-index: var(--table-header-z);
+    box-shadow: 0 1px 0 var(--table-border-color); 
+    
+    transition: background 0.2s, color 0.2s;
+  }
+  
+  /* Remove right border from last header to prevent double borders */
+  .table th:last-child { border-right: none; }
+
+  .table td {
+    padding: var(--table-padding);
+    
+    /* Dynamic Border Handling */
+    border-bottom: var(--table-border-horizontal) solid var(--table-border-color);
+    border-right: var(--table-border-vertical) solid var(--table-border-color);
+    
+    vertical-align: middle;
+    color: var(--ds-sys-color-on-surface);
+  }
+  
+  .table td:last-child { border-right: none; }
+  
+  /* --- PHASE 2: STATE STYLING --- */
+  /* We use color-mix to tint the background while keeping text readable */
+  
+  .table-row--success > td, 
+  .table-row--success > th {
+    background-color: color-mix(in srgb, green, transparent 90%) !important;
+    color: darkgreen;
+  }
+  
+  .table-row--warning > td,
+  .table-row--warning > th {
+    background-color: color-mix(in srgb, orange, transparent 90%) !important;
+    color: darkorange; /* Or a darker accessible orange */
+  }
+  
+  .table-row--error > td,
+  .table-row--error > th {
+    background-color: color-mix(in srgb, red, transparent 90%) !important;
+    color: darkred;
+  }
+
+  /* --- PHASE 2: CELL VARIANTS --- */
+  
+  /* Badge: Small pill */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25em 0.6em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    border-radius: 99px;
+    background: var(--ds-sys-color-border);
+    color: var(--ds-sys-color-on-surface);
+    white-space: nowrap;
+  }
+  .badge--primary { background: var(--ds-sys-color-primary); color: var(--ds-sys-color-on-primary); }
+  .badge--success { background: color-mix(in srgb, green, white 80%); color: darkgreen; border: 1px solid green; }
+  .badge--warning { background: color-mix(in srgb, orange, white 80%); color: chocolate; border: 1px solid orange; }
+  
+  /* Status Dot */
+  .status-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+  .status-dot::before {
+    content: '';
+    width: 0.6em; height: 0.6em;
+    border-radius: 50%;
+    background-color: var(--ds-sys-color-border); /* Default gray */
+  }
+  .status-dot.is-active::before { background-color: green; box-shadow: 0 0 0 2px color-mix(in srgb, green, transparent 80%); }
+  .status-dot.is-offline::before { background-color: red; }
+  .status-dot.is-idle::before { background-color: orange; }
+
+  /* Avatar Cell */
+  .avatar-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .avatar-cell img {
+    width: 2rem; height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--ds-sys-color-border);
+  }
+  .avatar-cell span { font-weight: 600; }
+
+  /* --- PHASE 2: ACCESSIBILITY (Focus) --- */
+  .table :focus-visible {
+    outline: 2px solid var(--ds-sys-color-primary);
+    outline-offset: -2px;
+    background-color: color-mix(in srgb, var(--ds-sys-color-primary), transparent 95%);
+  }
+  
+  /* --- UTILITIES --- */
+  .cell-truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+  .cell-break { overflow-wrap: anywhere; word-break: break-word; min-width: 0; }
+  .cell-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .cell-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* --- SORTING --- */
+  .table th[data-sort] { cursor: pointer; padding-right: 2rem; user-select: none; }
+  .table th[data-sort]:hover { background-color: color-mix(in srgb, var(--table-header-bg), black 5%); }
+  .table th[aria-sort="ascending"], .table th[aria-sort="descending"] { background-color: var(--ds-sys-color-bg-app); color: var(--ds-sys-color-primary); border-bottom-color: var(--ds-sys-color-primary); }
+  .table th[data-sort]::after { font-family: "Material Symbols Outlined"; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); font-size: 1rem; opacity: 0.3; content: "unfold_more"; }
+  .table th[aria-sort="ascending"]::after { content: "arrow_upward"; opacity: 1; color: var(--ds-sys-color-primary); }
+  .table th[aria-sort="descending"]::after { content: "arrow_downward"; opacity: 1; color: var(--ds-sys-color-primary); }
+
+  /* --- ZEBRA STRIPING --- */
+  .table tbody tr:nth-child(even) td, .table tbody tr:nth-child(even) th { background-color: var(--table-stripe); }
+  .table tbody tr:hover td, .table tbody tr:hover th { background-color: var(--table-row-hover); }
+  
+  /* --- STICKY MODIFIERS --- */
+  .table--sticky thead th, .table--fixed-row thead th { position: sticky; top: 0; z-index: 10; background: var(--table-header-bg); box-shadow: 0 2px 0 var(--table-border-color); border-bottom: none; }
+  .table--sticky-footer tfoot th, .table--sticky-footer tfoot td { position: sticky; bottom: 0; z-index: 10; background: var(--table-header-bg); box-shadow: 0 -2px 0 var(--table-border-color); }
+  .table--fixed-col thead th:first-child { position: sticky; left: 0; z-index: 20; border-right: 1px solid var(--ds-sys-color-border); min-width: var(--table-fixed-col-width); }
+  .table--fixed-col tbody th:first-child, .table--fixed-col tbody td:first-child, .table--fixed-col tfoot th:first-child, .table--fixed-col tfoot td:first-child { position: sticky; left: 0; z-index: 5; background: var(--ds-sys-color-surface); border-right: 1px solid var(--ds-sys-color-border); text-align: left; min-width: var(--table-fixed-col-width); }
+  .table--sticky.table--fixed-col thead th:first-child, .table--fixed-row.table--fixed-col thead th:first-child { z-index: 30; }
+  .table--sticky-footer.table--fixed-col tfoot th:first-child, .table--sticky-footer.table--fixed-col tfoot td:first-child { z-index: 30; }
+
+  /* --- VARIANTS --- */
+  .table--matrix { --table-fixed-col-width: 180px; }
+  .table--matrix th:not(:first-child), .table--matrix td:not(:first-child) { text-align: center; }
+  .table--ledger { --table-fixed-col-width: 100px; }
+  .table--ledger th:last-child, .table--ledger td:last-child { text-align: right; }
+
+  /* --- ALIGNMENT ENGINE --- */
+  .table:has(th:nth-child(1)[data-align="center"]) td:nth-child(1) { text-align: center; }
+  .table:has(th:nth-child(1)[data-align="right"])  td:nth-child(1) { text-align: right; }
+  .table:has(th:nth-child(2)[data-align="center"]) td:nth-child(2) { text-align: center; }
+  .table:has(th:nth-child(2)[data-align="right"])  td:nth-child(2) { text-align: right; }
+  .table:has(th:nth-child(3)[data-align="center"]) td:nth-child(3) { text-align: center; }
+  .table:has(th:nth-child(3)[data-align="right"])  td:nth-child(3) { text-align: right; }
+  .table:has(th:nth-child(4)[data-align="center"]) td:nth-child(4) { text-align: center; }
+  .table:has(th:nth-child(4)[data-align="right"])  td:nth-child(4) { text-align: right; }
+  .table:has(th:nth-child(5)[data-align="center"]) td:nth-child(5) { text-align: center; }
+  .table:has(th:nth-child(5)[data-align="right"])  td:nth-child(5) { text-align: right; }
+  .table:has(th:nth-child(6)[data-align="center"]) td:nth-child(6) { text-align: center; }
+  .table:has(th:nth-child(6)[data-align="right"])  td:nth-child(6) { text-align: right; }
+  .table th[data-align="center"] { text-align: center; }
+  .table th[data-align="right"]  { text-align: right; }
+
+  /* --- MOBILE REFLOW --- */
+  @media (max-width: 768px) {
+    .table--reflow thead, .table--reflow tfoot { display: none; }
+    .table--reflow, .table--reflow tbody, .table--reflow tr, .table--reflow td { display: block; width: 100%; }
+    .table-container:has(.table--reflow) { border: none; box-shadow: none; background: transparent; overflow: visible; }
+    .table--reflow tr { margin-bottom: var(--space-md); border: 1px solid var(--table-border-color); border-radius: var(--ds-sys-radius-card); background: var(--ds-sys-color-surface); box-shadow: var(--ds-sys-shadow-card); overflow: hidden; }
+    .table--reflow td { display: flex; justify-content: space-between; align-items: center; text-align: right; border-bottom: 1px solid var(--table-border-color); padding: var(--space-md); }
+    .table--reflow td:last-child { border-bottom: none; }
+    .table--reflow td::before { content: attr(data-label); font-weight: 700; text-align: left; }
+  }
+}

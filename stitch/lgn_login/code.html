@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LGN: Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#aed500",
+              "primary-fixed-dim": "#aed500",
+              "surface": "#131313",
+              "surface-container-lowest": "#0e0e0e",
+              "error-container": "#93000a",
+              "inverse-surface": "#e2e2e2",
+              "on-primary-container": "#000000",
+              "surface-variant": "#353535",
+              "tertiary": "#ffffff",
+              "inverse-on-surface": "#303030",
+              "primary-fixed": "#c7f300",
+              "on-tertiary-fixed-variant": "#454747",
+              "on-error": "#690005",
+              "on-tertiary": "#2f3131",
+              "on-background": "#e2e2e2",
+              "on-secondary": "#002e6a",
+              "on-tertiary-container": "#636565",
+              "on-primary": "#293500",
+              "surface-container-low": "#1b1b1b",
+              "secondary": "#adc6ff",
+              "secondary-fixed-dim": "#adc6ff",
+              "surface-dim": "#131313",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed": "#001a42",
+              "primary-container": "#D1FF00",
+              "background": "#131313",
+              "on-surface-variant": "#c5c9ac",
+              "surface-container-high": "#2a2a2a",
+              "outline-variant": "#444933",
+              "on-surface": "#e2e2e2",
+              "on-secondary-fixed-variant": "#004395",
+              "tertiary-container": "#e2e2e2",
+              "on-secondary-container": "#e6ecff",
+              "primary": "#ffffff",
+              "surface-bright": "#393939",
+              "error": "#ffb4ab",
+              "secondary-fixed": "#d8e2ff",
+              "tertiary-fixed": "#e2e2e2",
+              "secondary-container": "#0566d9",
+              "surface-container-highest": "#353535",
+              "on-tertiary-fixed": "#1a1c1c",
+              "outline": "#8e9378",
+              "surface-container": "#1f1f1f",
+              "on-primary-fixed-variant": "#3d4d00",
+              "tertiary-fixed-dim": "#c6c6c7",
+              "inverse-primary": "#526600",
+              "on-primary-fixed": "#171e00"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grainy-bg {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            pointer-events: none;
+        }
+        .zine-skew {
+            transform: skewY(-2deg);
+        }
+        .offset-border {
+            box-shadow: 4px 4px 0px 0px #D1FF00;
+        }
+        .active-glitch:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px 0px #D1FF00;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-hidden">
+<!-- Static Grain Overlay -->
+<div class="fixed inset-0 grainy-bg z-[100]"></div>
+<!-- Main Container: Handles Mobile Portrait and Desktop Landscape -->
+<main class="relative h-screen w-full flex flex-col md:flex-row overflow-hidden">
+<!-- Hero Section: Left/Top Branding -->
+<section class="relative w-full h-1/2 md:h-full md:w-1/2 flex items-center justify-center p-8 bg-surface overflow-hidden">
+<!-- Background Artwork -->
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-40 grayscale contrast-150" data-alt="Abstract high-contrast black and volt green punk rock zine graphic with distorted halftone patterns and spray paint textures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyGSG5BCBifY11f8Od4D85RmYrMFrjZzsNRC2syyFy8vcFMTcmuZgA4QpoahAV79tmDJ6Lx9pZKb8kYjEsK-M0IlwZGlqEGCavB7m8Ls96wOv6JsRYpmFJIFE2a4qnLhRBAK0ctD3RqtPtDU2VBbrU182LMdqO_aqqjHMN2I8YImTYGSPWV3Nf32dyJvTLqDBZXZcYubmxOtgZaSDN0q8IA_r8uitoruv2X7pt6lGORTf-KasB35lj7Dc2hHHOZJ3I62rv7XsciEU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+</div>
+<!-- Kinetic Branding -->
+<div class="relative z-10 zine-skew text-center md:text-left">
+<div class="bg-primary-container inline-block px-4 py-2 mb-2">
+<span class="text-black font-black text-xl tracking-widest uppercase italic">SIGNAL DETECTED</span>
+</div>
+<h1 class="text-6xl md:text-8xl lg:text-9xl font-black italic tracking-tighter leading-none text-white uppercase">
+                    BEAT THE <br/>
+<span class="text-primary-container">INTRO</span>
+</h1>
+<p class="mt-4 font-bold text-lg md:text-xl tracking-wider text-on-surface opacity-80 uppercase bg-surface inline-block px-2">
+                    FAST-PACED AUDIOPHILE COMBAT
+                </p>
+</div>
+</section>
+<!-- Interaction Section: Right/Bottom Login -->
+<section class="relative w-full h-1/2 md:h-full md:w-1/2 flex flex-col justify-center items-center md:items-start p-8 md:p-16 bg-surface-container-lowest border-t-4 md:border-t-0 md:border-l-4 border-primary-container">
+<div class="w-full max-w-sm space-y-12">
+<!-- Login Message -->
+<div class="space-y-4">
+<h2 class="text-4xl font-black uppercase tracking-tighter leading-tight">
+                        UNAUTHORIZED <br/> <span class="text-primary-container">ACCESS PROHIBITED</span>
+</h2>
+<p class="text-on-surface-variant font-medium tracking-tight border-l-2 border-primary-container pl-4">
+                        Connect your frequency to the underground network. High-fidelity connection via Spotify required for entry.
+                    </p>
+</div>
+<!-- Primary Action -->
+<div class="space-y-6">
+<button class="w-full bg-primary-container text-black font-black text-xl py-6 flex items-center justify-center gap-4 offset-border active-glitch transition-all uppercase tracking-tighter">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+                        Connect with Spotify
+                    </button>
+<div class="flex items-center gap-4 text-xs font-bold tracking-[0.2em] text-on-surface opacity-40 uppercase">
+<div class="h-[2px] flex-1 bg-on-surface opacity-20"></div>
+                        SECURE AUTHENTICATION
+                        <div class="h-[2px] flex-1 bg-on-surface opacity-20"></div>
+</div>
+</div>
+<!-- Manual Access / Support -->
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 bg-surface-container-high border border-outline-variant/30 hover:border-primary-container transition-colors cursor-pointer group">
+<span class="block text-[10px] font-bold tracking-widest text-primary-container uppercase mb-2">Help</span>
+<span class="text-sm font-bold uppercase group-hover:text-primary-container transition-colors">Access Issues?</span>
+</div>
+<div class="p-4 bg-surface-container-high border border-outline-variant/30 hover:border-primary-container transition-colors cursor-pointer group">
+<span class="block text-[10px] font-bold tracking-widest text-primary-container uppercase mb-2">Social</span>
+<span class="text-sm font-bold uppercase group-hover:text-primary-container transition-colors">Join Discord</span>
+</div>
+</div>
+</div>
+<!-- Footer Links -->
+<footer class="absolute bottom-8 left-8 right-8 md:left-16 md:right-auto">
+<nav class="flex flex-wrap gap-x-8 gap-y-2">
+<a class="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface hover:text-primary-container transition-colors underline decoration-2 underline-offset-4" href="#">Cookie Policy</a>
+<a class="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface hover:text-primary-container transition-colors underline decoration-2 underline-offset-4" href="#">Privacy Policy</a>
+<a class="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface hover:text-primary-container transition-colors underline decoration-2 underline-offset-4" href="#">Terms of War</a>
+</nav>
+<div class="mt-4 text-[10px] font-medium tracking-widest text-on-surface opacity-30 uppercase">
+                    © 2024 BEAT THE INTRO / VOLT_ZINE_SYSTEM
+                </div>
+</footer>
+</section>
+</main>
+<!-- UI Elements: Floating Decorative HUD -->
+<div class="hidden lg:block fixed top-12 right-12 z-50 pointer-events-none">
+<div class="bg-surface-container-highest/80 backdrop-blur-md p-4 border-r-4 border-primary-container">
+<div class="flex items-center gap-6">
+<div>
+<span class="block text-[8px] font-black text-primary-container uppercase tracking-widest">Latency</span>
+<span class="text-xs font-mono font-bold text-white tracking-tighter">0.024ms</span>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div>
+<span class="block text-[8px] font-black text-primary-container uppercase tracking-widest">Status</span>
+<span class="text-xs font-mono font-bold text-white tracking-tighter">STANDBY</span>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div class="flex gap-1">
+<div class="w-1 h-4 bg-primary-container"></div>
+<div class="w-1 h-4 bg-primary-container"></div>
+<div class="w-1 h-4 bg-primary-container/30"></div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

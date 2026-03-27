@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#aed500",
+              "primary-fixed-dim": "#aed500",
+              "surface": "#131313",
+              "surface-container-lowest": "#0e0e0e",
+              "error-container": "#93000a",
+              "inverse-surface": "#e2e2e2",
+              "on-primary-container": "#576c00",
+              "surface-variant": "#353535",
+              "tertiary": "#ffffff",
+              "inverse-on-surface": "#303030",
+              "primary-fixed": "#c7f300",
+              "on-tertiary-fixed-variant": "#454747",
+              "on-error": "#690005",
+              "on-tertiary": "#2f3131",
+              "on-background": "#e2e2e2",
+              "on-secondary": "#002e6a",
+              "on-tertiary-container": "#636565",
+              "on-primary": "#293500",
+              "surface-container-low": "#1b1b1b",
+              "secondary": "#adc6ff",
+              "secondary-fixed-dim": "#adc6ff",
+              "surface-dim": "#131313",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed": "#001a42",
+              "primary-container": "#c7f300",
+              "background": "#131313",
+              "on-surface-variant": "#c5c9ac",
+              "surface-container-high": "#2a2a2a",
+              "outline-variant": "#444933",
+              "on-surface": "#e2e2e2",
+              "on-secondary-fixed-variant": "#004395",
+              "tertiary-container": "#e2e2e2",
+              "on-secondary-container": "#e6ecff",
+              "primary": "#ffffff",
+              "surface-bright": "#393939",
+              "error": "#ffb4ab",
+              "secondary-fixed": "#d8e2ff",
+              "tertiary-fixed": "#e2e2e2",
+              "secondary-container": "#0566d9",
+              "surface-container-highest": "#353535",
+              "on-tertiary-fixed": "#1a1c1c",
+              "outline": "#8e9378",
+              "surface-container": "#1f1f1f",
+              "on-primary-fixed-variant": "#3d4d00",
+              "tertiary-fixed-dim": "#c6c6c7",
+              "inverse-primary": "#526600",
+              "on-primary-fixed": "#171e00"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0rem", "lg": "0rem", "xl": "0rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCcu_rwGJEVTaH-5PbQTYo382iyq9cy1p2X3EpRwVZxCLWdVvIkomSDgVu-YBGKkwSmzJAJUFLnpJIc-DAOqCzNXSErLv53nkIff3NWlgcaO0FxmHB-EH9j_jRTi4Cxt8cvvuTSPq40UK9MK8-H8pS1Hb581uPCKPuS3bWgWUpc27U2wYGbsfHb3tKFyx2YCF9Qi4lj5J2oc6evtcivLkU-1zJRifRgprWZp9gG0KA3qgT98z5ZrjDsGmhpy1mNsTocuPtg92G-GYA);
+    opacity: 0.05;
+    pointer-events: none
+    }
+.skew-hover:hover {
+    transform: skewx(-12deg)
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-black min-h-screen overflow-x-hidden">
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-[#131313] border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-high flex items-center justify-center border-2 border-primary-container overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" data-alt="Close up portrait of a young man with cool lighting and grainy texture for a music app profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKW2MkJAvZba-TjGbDj6577VD1SEPPY05orVzHVj-5_YLXMhadWu77dgB76X9tW8ydZvvMj3mAtvND7KSgtaLn9PUTtrdLj3LLfT0jPVn2e5hgAPEeZhs6Kx3BgIJmksSy6K5CtodAE5VuJN-bxdD7yfcgHxkltys1PLrx9S3DBgW8z6-EV951c7ZxekHuvXe4PAbgO3O-tDM6STC0j_gGmzhKnV_RkHpOjcChE5YN4QlAHdBJIj5BSqdOSDEaN1aM1KhwPJ8JcAQ"/>
+</div>
+<h1 class="text-2xl font-black italic tracking-tighter text-[#D1FF00] hover:skew-x-12 transition-transform font-['Space_Grotesk'] uppercase">PLY: Playing</h1>
+</div>
+<button class="text-white hover:bg-[#D1FF00] hover:text-black transition-all duration-75 p-2 active:translate-x-1 active:translate-y-1">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</header>
+<main class="pt-24 pb-20 px-6 max-w-5xl mx-auto min-h-screen flex flex-col items-center justify-center">
+<!-- Portrait Layout (Mobile/Default) -->
+<div class="flex flex-col items-center w-full max-w-[390px] md:hidden">
+<!-- Aurora Badge / Status -->
+<div class="bg-primary-container text-black px-4 py-1 self-start mb-8 border-r-4 border-b-4 border-white">
+<span class="font-black text-xs tracking-widest uppercase">Round 04 of 10</span>
+</div>
+<!-- Brutalist Album Art Card -->
+<div class="relative w-full aspect-square bg-surface-container-highest border-4 border-white mb-10 overflow-hidden transform -rotate-1">
+<div class="absolute inset-0 flex items-center justify-center bg-surface-container-low/80 backdrop-blur-xl z-10">
+<span class="material-symbols-outlined text-primary-container text-8xl opacity-20" style="font-variation-settings: 'FILL' 1;">music_note</span>
+</div>
+<img alt="Album Art" class="w-full h-full object-cover scale-110 grayscale" data-alt="Abstract blurry neon lights against a dark background, high contrast cinematic photography with film grain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd_KVw7neetKVAPPkARtuyJPFTmfNfunt3dkLwUXLdyl9w-zchcmlNHwTqSAVoMPSCCWnfOd39Gr8nNMWepCE0lkcDUVKMai4M_KOy6Ebz7fcIzWnRzve6BgfKHsYpNiWHmwU4KU15ZIRk8pgkcYILICneowM1dViadk_4TobUAKefv4qi_VH_d3bL7NJISZbwnZX6JKzcnpY2u6flCs-fxE3XPd5s3Ur1kTqN4CI1qAUro9FVncDGDGGTK0cCuHIAR3hl4kGNPTw"/>
+<div class="absolute bottom-4 left-4 z-20 bg-black p-2 border-l-4 border-primary-container">
+<p class="font-black text-xs text-white uppercase tracking-tighter italic">LOCKED DATA // 128BPM</p>
+</div>
+</div>
+<!-- Timer -->
+<div class="mb-10 text-center w-full">
+<div class="text-[120px] font-black leading-none tracking-tighter italic text-white relative inline-block">
+                    04<span class="text-primary-container">.</span>22
+                    <div class="absolute -top-4 -right-8 bg-white text-black px-2 py-0.5 text-[10px] font-bold tracking-widest rotate-12">
+                        SECONDS
+                    </div>
+</div>
+</div>
+<!-- Playback Controls -->
+<div class="w-full space-y-8">
+<!-- Pulse Progress Bar -->
+<div class="relative h-4 w-full bg-surface-container-highest border-2 border-white/10 overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-primary-container w-[42%]" style="box-shadow: 0 0 20px #D1FF00;"></div>
+<div class="absolute inset-0 flex justify-between px-2">
+<div class="h-full w-1 bg-black/20"></div>
+<div class="h-full w-1 bg-black/20"></div>
+<div class="h-full w-1 bg-black/20"></div>
+<div class="h-full w-1 bg-black/20"></div>
+</div>
+</div>
+<!-- Primary Action -->
+<button class="w-full bg-primary-container text-black font-black py-6 text-2xl uppercase tracking-tighter italic border-b-8 border-r-8 border-white active:border-b-0 active:border-r-0 active:translate-x-1 active:translate-y-1 transition-all group overflow-hidden relative">
+<span class="relative z-10">Pause &amp; Guess</span>
+<div class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-75"></div>
+</button>
+</div>
+</div>
+<!-- Landscape Layout (Desktop/Tablets) -->
+<div class="hidden md:flex flex-row items-stretch w-full gap-12 h-[390px]">
+<!-- Left Side: Status & Timer -->
+<div class="flex-1 flex flex-col justify-between items-start border-r-4 border-primary-container pr-12 py-4">
+<div class="bg-white text-black px-6 py-2 border-l-8 border-primary-container">
+<span class="font-black text-xl tracking-tighter uppercase italic">Phase 02: The Gauntlet</span>
+<p class="text-[10px] font-bold tracking-[0.2em] opacity-60">ROUND 04 // TOTAL 10</p>
+</div>
+<div class="w-full">
+<div class="text-[160px] font-black leading-none tracking-tighter italic text-white flex items-baseline">
+                        04<span class="text-primary-container">.</span>22
+                        <span class="text-2xl font-bold ml-4 tracking-widest text-primary-container opacity-50">S</span>
+</div>
+</div>
+</div>
+<!-- Right Side: Visuals & Controls -->
+<div class="flex-1 flex flex-col justify-center gap-8 pl-4">
+<div class="flex items-center gap-6">
+<div class="w-32 h-32 bg-surface-container-highest border-4 border-white flex-shrink-0 relative overflow-hidden group">
+<img alt="Thumbnail" class="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all" data-alt="Distant blurred DJ in a dark club with strobe lights and haze, high energy music photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJZhKs1DA1Fie1WWrzD1pyacQT2HL8rBF0YhahqvM0ow_-hO-S-i8OfD_MdiE0v6caQ0tpbhz7pHwvtVUwy6U_2iKcG1MzZRPLj5_YlZERWLzSfW4lBtY9qGynE6t6rsne8xVMArR6lUwWte2vgsEQkPeCYoGq1jgWP4Cq8jOb7e30nMKozUJhWF84TC3wL5QyvAB6-wOAQCURwEhBWQ5U8Mn4HC_cBDn9nafhk_WAcVoSBWRa1K82jWD_0czzQcxNvZ-7s_4b9pU"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-4xl">lock</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="bg-primary-container text-black inline-block px-3 py-1 font-black text-xs uppercase italic">Streaming Now</div>
+<h2 class="text-4xl font-black italic uppercase tracking-tighter">Mystery Track #4</h2>
+<p class="font-bold tracking-widest text-xs opacity-50 uppercase">Analysis in progress...</p>
+</div>
+</div>
+<!-- Playback & Button -->
+<div class="space-y-6">
+<div class="relative h-6 w-full bg-surface-container-highest overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-primary-container w-[42%]"></div>
+<div class="absolute inset-0 flex justify-between">
+<div class="h-full w-[2px] bg-white/20"></div>
+<div class="h-full w-[2px] bg-white/20"></div>
+<div class="h-full w-[2px] bg-white/20"></div>
+<div class="h-full w-[2px] bg-white/20"></div>
+<div class="h-full w-[2px] bg-white/20"></div>
+</div>
+</div>
+<button class="w-full bg-primary-container text-black font-black py-8 text-4xl uppercase tracking-tighter italic border-b-8 border-r-8 border-white hover:bg-white active:translate-y-1 active:translate-x-1 active:border-0 transition-all">
+                        Pause &amp; Guess
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full h-16 z-50 flex justify-around items-stretch bg-[#131313] border-t-4 border-[#D1FF00]">
+<a class="flex flex-col items-center justify-center bg-[#D1FF00] text-black h-full px-4 transform scale-110 active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PLAY</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 hover:bg-white hover:text-black transition-colors duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">DISCOVER</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 hover:bg-white hover:text-black transition-colors duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">RANK</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 hover:bg-white hover:text-black transition-colors duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PROFILE</span>
+</a>
+</nav>
+<!-- Grain Texture Overlay -->
+<div class="fixed inset-0 grain-overlay z-[100]"></div>
+</body></html>

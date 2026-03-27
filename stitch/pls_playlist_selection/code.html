@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#aed500",
+              "primary-fixed-dim": "#aed500",
+              "surface": "#131313",
+              "surface-container-lowest": "#0e0e0e",
+              "error-container": "#93000a",
+              "inverse-surface": "#e2e2e2",
+              "on-primary-container": "#576c00",
+              "surface-variant": "#353535",
+              "tertiary": "#ffffff",
+              "inverse-on-surface": "#303030",
+              "primary-fixed": "#c7f300",
+              "on-tertiary-fixed-variant": "#454747",
+              "on-error": "#690005",
+              "on-tertiary": "#2f3131",
+              "on-background": "#e2e2e2",
+              "on-secondary": "#002e6a",
+              "on-tertiary-container": "#636565",
+              "on-primary": "#293500",
+              "surface-container-low": "#1b1b1b",
+              "secondary": "#adc6ff",
+              "secondary-fixed-dim": "#adc6ff",
+              "surface-dim": "#131313",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed": "#001a42",
+              "primary-container": "#c7f300",
+              "background": "#131313",
+              "on-surface-variant": "#c5c9ac",
+              "surface-container-high": "#2a2a2a",
+              "outline-variant": "#444933",
+              "on-surface": "#e2e2e2",
+              "on-secondary-fixed-variant": "#004395",
+              "tertiary-container": "#e2e2e2",
+              "on-secondary-container": "#e6ecff",
+              "primary": "#ffffff",
+              "surface-bright": "#393939",
+              "error": "#ffb4ab",
+              "secondary-fixed": "#d8e2ff",
+              "tertiary-fixed": "#e2e2e2",
+              "secondary-container": "#0566d9",
+              "surface-container-highest": "#353535",
+              "on-tertiary-fixed": "#1a1c1c",
+              "outline": "#8e9378",
+              "surface-container": "#1f1f1f",
+              "on-primary-fixed-variant": "#3d4d00",
+              "tertiary-fixed-dim": "#c6c6c7",
+              "inverse-primary": "#526600",
+              "on-primary-fixed": "#171e00"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .zine-texture {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+        }
+        .offset-shadow {
+            box-shadow: 4px 4px 0px 0px #c7f300;
+        }
+        .active-tab-scale {
+            transform: scale(1.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-fixed min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-[#131313] border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-high border-2 border-[#D1FF00] overflow-hidden">
+<img alt="Spotify User Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a young man with a modern haircut against a neutral grey studio background with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJstxU4gS_mSybvPMmUgKQqTUnbQ9edVs-4k36hWlc3gIL_WtGLQhcrRso27HCLj5VRM6HVLCZhdEEzgwwc2by2ed4WFXmNps28-6T31Vm1kJ3lviBaA6zB4Hvb-kz0eeAZPM0F3SpJwqQPDknAgKkVkVlNUbONwak_LGsIuAYWKxC2w4OF6QGKPKCGgHIf5BEvlGSN8B2Rs_henTXQj-XxLW835jte6febZBPoeUL61g8WezFiUBrGk5wSGHhBSnJpumO4UwGVhs"/>
+</div>
+<h1 class="text-2xl font-black italic tracking-tighter text-[#D1FF00] hover:skew-x-12 transition-transform font-['Space_Grotesk'] uppercase">
+                BEAT THE INTRO
+            </h1>
+</div>
+<button class="material-symbols-outlined text-[#D1FF00] text-3xl hover:bg-[#D1FF00] hover:text-black transition-all duration-75 p-1 active:translate-x-1 active:translate-y-1">
+            settings
+        </button>
+</header>
+<!-- NavigationDrawer (Visible on Desktop/Landscape) -->
+<aside class="hidden md:flex fixed inset-y-0 left-0 z-[60] w-80 flex-col bg-[#131313] border-r-4 border-[#D1FF00]">
+<div class="p-8 border-b-4 border-[#D1FF00] bg-surface-container-low">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 bg-primary-container p-1">
+<img alt="Spotify User" class="w-full h-full object-cover" data-alt="Close up portrait of a young man with a modern haircut against a neutral grey studio background with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqHEQTgttaPwoCbfpeZdytGxpZHML84pmqiyzz-vnADKIQNGzVC2G0_HtDqpMTZaS_GoPNa8nyrZ51-qHjjHbaLqrpOMkbOznIaNBOxCDJojM2IMnV-3SQH_jM10zW6dMGxQ3vjL0kIA3ktmIOpF_sAxhUqmtwdP48BRqz2mEsSZu3iFW_1hPbOtBiEwnvkUPrIEO42eDwax9T-VyltZou4KaGlNdai3352VH8xLU1jMhMKsEcAyDABviiDLDaX8Qk01E5iwbXRJw"/>
+</div>
+<div>
+<p class="text-[#D1FF00] font-black text-xl font-['Space_Grotesk'] uppercase leading-none">USER_01</p>
+<p class="text-white opacity-60 text-xs font-bold tracking-widest uppercase mt-1">Premium Member</p>
+</div>
+</div>
+</div>
+<nav class="flex-grow py-4">
+<a class="flex items-center gap-4 text-white p-4 border-b border-white/10 hover:bg-white hover:text-black hover:translate-x-2 transition-transform font-['Space_Grotesk'] font-bold uppercase" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-4 text-white p-4 border-b border-white/10 hover:bg-white hover:text-black hover:translate-x-2 transition-transform font-['Space_Grotesk'] font-bold uppercase" href="#">
+<span class="material-symbols-outlined">cookie</span>
+<span>Cookies</span>
+</a>
+<a class="flex items-center gap-4 text-white p-4 border-b border-white/10 hover:bg-white hover:text-black hover:translate-x-2 transition-transform font-['Space_Grotesk'] font-bold uppercase" href="#">
+<span class="material-symbols-outlined">security</span>
+<span>Privacy</span>
+</a>
+</nav>
+<div class="p-6 mt-auto">
+<div class="bg-[#D1FF00] text-black font-black p-4 text-center transform -rotate-1 skew-x-2">
+                BETA v0.9.2
+            </div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="pt-24 pb-24 md:pb-8 md:pl-80 px-6 max-w-7xl mx-auto">
+<!-- Screen Title Section -->
+<div class="mb-10 relative">
+<h2 class="text-5xl md:text-7xl font-black italic uppercase tracking-tighter leading-none mb-2 z-10 relative">PLS: <span class="text-[#D1FF00]">Playlist Selection</span></h2>
+<div class="absolute -top-4 -left-4 w-32 h-12 bg-white/5 skew-x-12 -z-0"></div>
+<p class="font-label text-sm font-bold tracking-[0.2em] text-on-surface-variant uppercase bg-surface-container-high inline-block px-2 py-1">
+                48 PLAYLISTS FOUND // SYNCED VIA SPOTIFY
+            </p>
+</div>
+<!-- Playlist Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Skeleton Loader Card 1 -->
+<div class="bg-surface-container-high border-b-4 border-surface-container-highest p-4 flex gap-4 animate-pulse">
+<div class="w-20 h-20 bg-surface-container-highest shrink-0"></div>
+<div class="flex flex-col justify-center gap-2 w-full">
+<div class="h-4 bg-surface-container-highest w-3/4"></div>
+<div class="h-3 bg-surface-container-highest w-1/2"></div>
+</div>
+</div>
+<!-- Playlist Card 1 (Active/Hover State Example) -->
+<div class="group relative bg-surface-container-low hover:bg-[#D1FF00] transition-all duration-100 cursor-pointer border-l-4 border-transparent hover:border-black active:translate-x-1 active:translate-y-1">
+<div class="flex gap-0 h-full">
+<div class="w-24 h-24 bg-surface-container-highest shrink-0 grayscale group-hover:grayscale-0 transition-all">
+<img alt="Hyperpop Playlist" class="w-full h-full object-cover" data-alt="Abstract neon digital art with glitch effects and vibrant pink and green colors on a black background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARHY1FDDveLxrNwQVYACXwKUZG2mPTRnhq6_oo280R51FqucNtoiHJqQQNDtJqK2e60Cvy3iUR6IhHo_Nx5E9ZQ8kkBDgZ9srH3ELd9EMsIs-ZQjCpRe7Cf9C_IID5-w7Vv6k44iTgin7uTEwGVftd_eHbvL7TvDClEYMppMaKmIwUkSpKAgSAogFKcW8hNh6gEVQ5Zc6dBl2hKRWiwf7dlj0JcZMSAH2QBkTiQxzbOEbAuLXKFeOh7adyXyBnGmxQ1uGQZr5q4CE"/>
+</div>
+<div class="flex flex-col justify-between p-4 flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-black uppercase text-lg leading-tight group-hover:text-black">HYPERPOP CHAOS</h3>
+<span class="bg-black text-[#D1FF00] text-[10px] font-black px-2 py-0.5">142 TRKS</span>
+</div>
+<div class="flex items-center gap-1 group-hover:text-black opacity-60 group-hover:opacity-100">
+<span class="material-symbols-outlined text-sm">history</span>
+<span class="text-[10px] font-bold tracking-widest uppercase">LAST PLAYED 2H AGO</span>
+</div>
+</div>
+</div>
+<!-- Offset decorative line -->
+<div class="absolute -bottom-1 -right-1 w-full h-full border border-white/10 pointer-events-none group-hover:border-[#D1FF00]/40 transition-colors"></div>
+</div>
+<!-- Playlist Card 2 -->
+<div class="group relative bg-surface-container-low hover:bg-[#D1FF00] transition-all duration-100 cursor-pointer border-l-4 border-transparent hover:border-black active:translate-x-1 active:translate-y-1">
+<div class="flex gap-0 h-full">
+<div class="w-24 h-24 bg-surface-container-highest shrink-0 grayscale group-hover:grayscale-0 transition-all">
+<img alt="Techno Bunker" class="w-full h-full object-cover" data-alt="Monochrome photograph of a dark warehouse interior with sharp shadows and industrial architecture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJ9Kzjor2Acn0TLTLOVoLdWwxpNoAwPSLum_M53EAZmffxkbUzsk2MGBCLinVeWHuHwejEFBntR19VQoqI2A5Nekp3JDS15l6-G2PTKo4q1jULDZtwj-tXxg5Yfhi8Ty8JC4S5DiF04rlt8lNdFgS0k9eVHXp_neqEWzk-mGBkOvXaLtwA2pQWYXPQxgfJLaRDvFZX2Pi4XWqjGnb_daaZWToVrNa00IXUYz_ziyxxPfR2GUhpAu8-oJG13agSpNgVwhT8BAwGyj4"/>
+</div>
+<div class="flex flex-col justify-between p-4 flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-black uppercase text-lg leading-tight group-hover:text-black">BERLIN BUNKER</h3>
+<span class="bg-black text-[#D1FF00] text-[10px] font-black px-2 py-0.5">89 TRKS</span>
+</div>
+<div class="flex items-center gap-1 group-hover:text-black opacity-60 group-hover:opacity-100">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="text-[10px] font-bold tracking-widest uppercase">FAVORITE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Playlist Card 3 -->
+<div class="group relative bg-surface-container-low hover:bg-[#D1FF00] transition-all duration-100 cursor-pointer border-l-4 border-transparent hover:border-black active:translate-x-1 active:translate-y-1">
+<div class="flex gap-0 h-full">
+<div class="w-24 h-24 bg-surface-container-highest shrink-0 grayscale group-hover:grayscale-0 transition-all">
+<img alt="Lo-fi Beats" class="w-calc h-full object-cover" data-alt="Cozy dimly lit bedroom with neon blue lights and a computer desk with several monitors showing code" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7_cT-OD3rJgB263Cp_ZAAanwh-1qVzHRJJvbrjNETx1FWhsoqe87iZ4txxinT2DuepO7fUcX3tTt8TU0HwhzeRNdg3EEepppkt2DGawiUUuQ36qP2Ho04jEtPhANLJIiBTnFYAB11V5Bkjg5drcYe0wkvfp0Fb-90l3ZewkwGVunEZgT2dKnYILGpLrchoQyQpnpbugtuiuOuNfRx-owGLduCIUJeLHBKcqCVyYg1S-rxO93M7h5zLgWeYb5OHl1aV8wNBZ0HNWw"/>
+</div>
+<div class="flex flex-col justify-between p-4 flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-black uppercase text-lg leading-tight group-hover:text-black">LO-FI STATIC</h3>
+<span class="bg-black text-[#D1FF00] text-[10px] font-black px-2 py-0.5">250 TRKS</span>
+</div>
+<div class="flex items-center gap-1 group-hover:text-black opacity-60 group-hover:opacity-100">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-[10px] font-bold tracking-widest uppercase">CHILL VIBE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Playlist Card 4 -->
+<div class="group relative bg-surface-container-low hover:bg-[#D1FF00] transition-all duration-100 cursor-pointer border-l-4 border-transparent hover:border-black active:translate-x-1 active:translate-y-1">
+<div class="flex gap-0 h-full">
+<div class="w-24 h-24 bg-surface-container-highest shrink-0 grayscale group-hover:grayscale-0 transition-all">
+<img alt="Synthwave" class="w-full h-full object-cover" data-alt="Retro 80s synthwave grid with a sunset and palm tree silhouettes in vibrant purple and orange colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzRKcz7fo2coVFN2ufocIHWNr6Tjk5FiqBrD43FR7dOsGuuTONxkFxkAqya3N-yr4dqmpXK8xSlGPix_UU6P5nzUL2usbba9PK3GlHlHmTyHvz5lhQ4MnThWHxfO2hStTLRaI2j2pODScjMBXjoBm_v9i0JOm7mW6UXZQ7-b906_PQ9C6jya3giedfRm4fhTpfsl1ugbQHEbZ4dQEXVzMw9VIjz_68deR2OXGih8gBG8dYKh1ZX5Im5S1QE_tJ2OOHfwUrf9uAVRY"/>
+</div>
+<div class="flex flex-col justify-between p-4 flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-black uppercase text-lg leading-tight group-hover:text-black">NEON DRIVE</h3>
+<span class="bg-black text-[#D1FF00] text-[10px] font-black px-2 py-0.5">64 TRKS</span>
+</div>
+<div class="flex items-center gap-1 group-hover:text-black opacity-60 group-hover:opacity-100">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span class="text-[10px] font-bold tracking-widest uppercase">FAST PACE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- More skeleton loaders to fill space -->
+<div class="bg-surface-container-high border-b-4 border-surface-container-highest p-4 flex gap-4 animate-pulse opacity-50">
+<div class="w-20 h-20 bg-surface-container-highest shrink-0"></div>
+<div class="flex flex-col justify-center gap-2 w-full">
+<div class="h-4 bg-surface-container-highest w-1/2"></div>
+<div class="h-3 bg-surface-container-highest w-1/3"></div>
+</div>
+</div>
+<div class="bg-surface-container-high border-b-4 border-surface-container-highest p-4 flex gap-4 animate-pulse opacity-30">
+<div class="w-20 h-20 bg-surface-container-highest shrink-0"></div>
+<div class="flex flex-col justify-center gap-2 w-full">
+<div class="h-4 bg-surface-container-highest w-3/4"></div>
+<div class="h-3 bg-surface-container-highest w-1/2"></div>
+</div>
+</div>
+<div class="bg-surface-container-high border-b-4 border-surface-container-highest p-4 flex gap-4 animate-pulse opacity-10">
+<div class="w-20 h-20 bg-surface-container-highest shrink-0"></div>
+<div class="flex flex-col justify-center gap-2 w-full">
+<div class="h-4 bg-surface-container-highest w-2/3"></div>
+<div class="h-3 bg-surface-container-highest w-1/4"></div>
+</div>
+</div>
+</div>
+<!-- Call to Action / Footer content -->
+<div class="mt-16 p-8 border-4 border-dashed border-[#D1FF00]/30 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-6xl text-[#D1FF00] mb-4">add_circle</span>
+<p class="font-black text-2xl uppercase italic tracking-tighter mb-4">WANT MORE NOISE?</p>
+<button class="bg-white text-black font-black uppercase px-8 py-3 hover:bg-[#D1FF00] transition-colors active:scale-95">
+                SYNC NEW PLAYLISTS
+            </button>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full h-16 z-50 flex justify-around items-stretch bg-[#131313] border-t-4 border-[#D1FF00]">
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 hover:bg-white hover:text-black transition-colors duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined">play_arrow</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PLAY</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#D1FF00] text-black h-full px-4 transform active-tab-scale font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span>DISCOVER</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 hover:bg-white hover:text-black transition-colors duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">RANK</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 hover:bg-white hover:text-black transition-colors duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PROFILE</span>
+</a>
+</nav>
+<!-- HUD Elements / Floating metadata -->
+<div class="fixed bottom-20 left-6 pointer-events-none hidden lg:block">
+<div class="bg-black/80 backdrop-blur-md p-4 border-l-4 border-[#D1FF00] text-[10px] font-bold tracking-widest text-[#D1FF00] uppercase space-y-1">
+<p>LATENCY: 12ms</p>
+<p>PACKET_LOSS: 0%</p>
+<p>STATUS: READY_TO_JAM</p>
+</div>
+</div>
+<div class="fixed top-24 right-6 pointer-events-none hidden md:block">
+<div class="text-[150px] font-black text-white/5 leading-none select-none italic">
+            VOLTAGE
+        </div>
+</div>
+<!-- Static Texture Overlay -->
+<div class="zine-texture fixed inset-0 pointer-events-none z-[100]"></div>
+</body></html>

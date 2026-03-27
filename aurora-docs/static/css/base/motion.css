@@ -1,0 +1,43 @@
+/* css/base/motion.css */
+@layer base {
+  :root {
+    /* --- SYSTEM MOTION TOKENS (Sourced from Reference Layer or Theme Overrides) --- */
+    /* If a theme doesn't define these, they fallback to these standard reference values */
+    --ds-sys-motion-duration: var(--ds-ref-motion-duration-norm);
+    --ds-sys-motion-ease: var(--ds-ref-motion-ease-out);
+
+    /* --- ALIASES (For specific component needs) --- */
+    --ds-motion-duration-fast: var(--ds-ref-motion-duration-fast);
+    --ds-motion-duration-norm: var(--ds-sys-motion-duration);
+    --ds-motion-duration-slow: var(--ds-ref-motion-duration-slow);
+
+    /* --- SELECTION PRIMITIVES (Highlight & Halo) --- */
+    --ds-motion-scale-focus: 1.05;
+    --ds-motion-halo-glow: 0 0 15px var(--ds-sys-color-primary);
+  }
+
+  /* Accessibility: Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    
+    :root {
+      /* Force system tokens to zero just in case JS reads them */
+      --ds-sys-motion-duration: 0ms !important;
+      --ds-ref-motion-duration-fast: 0ms !important;
+      --ds-ref-motion-duration-norm: 0ms !important;
+      --ds-ref-motion-duration-slow: 0ms !important;
+    }
+  }
+}
+
+/* Global Transition Utility (The new Engine standard) */
+.motion-safe {
+  transition-property: transform, opacity, background-color, border-color, box-shadow, outline;
+  transition-duration: var(--ds-sys-motion-duration);
+  transition-timing-function: var(--ds-sys-motion-ease);
+}

@@ -1,0 +1,91 @@
+/* css/components/slider.css */
+@layer components {
+  .slider-container { position: relative; width: 100%; }
+  
+  .slider { 
+    display: flex; 
+    gap: var(--space-md); /* Consistent gap */
+    overflow-x: auto; 
+    scroll-snap-type: x mandatory; 
+    scroll-behavior: smooth; 
+    padding: var(--space-md) 0; 
+    scrollbar-width: none; 
+    anchor-name: --slider-carousel; 
+    scroll-marker-group: after; 
+  }
+  
+  /* ... (Buttons remain mostly the same, maybe size via variables?) ... */
+  .slider::scroll-button(left) { content: "arrow_back_ios" / ""; left: 0; }
+  .slider::scroll-button(right) { content: "arrow_forward_ios" / ""; right: 0; }
+  
+  .slider::scroll-button(*) { 
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    z-index: 10; 
+    display: grid; 
+    place-items: center; 
+    width: 3rem; 
+    height: 3rem; 
+    cursor: pointer;
+    border: var(--ds-sys-border-width) solid var(--ds-sys-color-border);
+    background: var(--ds-sys-color-surface);
+    color: var(--ds-sys-color-on-surface);
+    border-radius: 50%; 
+    box-shadow: var(--ds-sys-shadow-card);
+    font-family: "Material Symbols Outlined";
+    font-size: 1.5rem;
+    transition: transform 0.2s ease, opacity 0.2s;
+  }
+  .slider::scroll-button(*):hover {
+    background: var(--ds-sys-color-primary);
+    color: var(--ds-sys-color-on-primary);
+    border-color: var(--ds-sys-color-primary);
+  }
+  .slider::scroll-button(*):disabled { opacity: 0; pointer-events: none; }
+
+  .slider::scroll-marker-group { 
+    display: flex; 
+    justify-content: center; 
+    gap: var(--space-2xs); /* Tight gap for dots */
+    margin-top: var(--space-md); 
+    width: 100%;
+    height: 2rem; 
+  }
+  
+  .slider__item::scroll-marker { 
+    content: ''; display: block; 
+    width: var(--ds-cmp-slider-marker-size);
+    height: var(--ds-cmp-slider-marker-size);
+    background-color: var(--ds-sys-color-border);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  .slider__item::scroll-marker:target-current {
+    background-color: var(--ds-sys-color-primary);
+    transform: scale(1.3);
+  }
+
+  .slider__item { 
+    scroll-snap-align: center; 
+    flex: 0 0 auto; 
+    width: var(--ds-cmp-slider-item-width, 300px); 
+    display: flex; 
+    flex-direction: column;
+    background: var(--ds-sys-color-surface);
+    border: var(--ds-sys-border-width) solid var(--ds-sys-color-border);
+    border-radius: var(--ds-sys-radius-card);
+    box-shadow: var(--ds-sys-shadow-card);
+    overflow: hidden;
+  }
+  
+  .slider__content { 
+    padding: var(--space-lg); /* Consistent Padding */
+    display: flex; 
+    flex-direction: column; 
+    flex-grow: 1; 
+  }
+  .slider__media { width: 100%; height: 200px; object-fit: cover; }
+  .slider__content .primary { margin-top: auto; align-self: flex-start; }
+}

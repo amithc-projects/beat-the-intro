@@ -1,0 +1,45 @@
+/* MASONRY (DENSE) GRID 
+   Uses 'grid-auto-flow: dense' to pack items tightly.
+   Best for portfolios, galleries, and dashboards.
+*/
+
+.l-masonry {
+  display: grid;
+  /* Auto-fit columns ~250px wide */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  
+  /* The Secret Sauce: dense packing fills holes */
+  grid-auto-flow: dense;
+  
+  gap: 1.5rem;
+  
+  /* Optional: align items to start to prevent stretching */
+  align-items: start;
+}
+
+/* --- SPANNING UTILITIES --- */
+/* Use these to create visual interest */
+
+/* Horizontal Spans */
+.span-h-2 { grid-column: span 2; }
+.span-h-3 { grid-column: span 3; }
+
+/* Vertical Spans */
+.span-v-2 { grid-row: span 2; }
+.span-v-3 { grid-row: span 3; }
+
+/* Full Block (2x2) */
+.span-block { 
+  grid-column: span 2; 
+  grid-row: span 2; 
+}
+
+/* Mobile Reset: On small screens, stack everything */
+@media (max-width: 600px) {
+  .span-h-2, .span-h-3, 
+  .span-v-2, .span-v-3, 
+  .span-block {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}

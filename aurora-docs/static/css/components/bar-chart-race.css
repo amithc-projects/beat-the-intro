@@ -1,0 +1,149 @@
+.bar-chart-race {
+  width: 100%;
+  position: relative;
+  /* Allow the container to grow, but set a sensible min/max */
+  min-height: 400px;
+  max-height: 800px; 
+  background: var(--ds-sys-color-surface-container);
+  border-radius: var(--ds-sys-radius-xl, 16px);
+  padding: var(--ds-sys-spacing-lg, 20px);
+  border: 1px solid var(--ds-sys-color-outline-variant);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.bar-chart-race-header {
+  text-align: center;
+  margin-bottom: var(--ds-sys-spacing-xl, 40px);
+}
+
+.bar-chart-race-title {
+  font-weight: 300;
+  letter-spacing: 4px;
+  color: var(--ds-sys-color-primary);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.bar-chart-race-label {
+  font-size: var(--ds-sys-typography-display-md, 36px);
+  font-weight: 800;
+  margin: var(--ds-sys-spacing-xs, 8px) 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-sys-color-on-surface);
+}
+
+.bar-chart-race-container {
+  position: relative;
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden;
+  /* Create an inner wrapper that has the actual height required for all teams */
+}
+
+/* We need an inner track to ensure the container stretches enough for all absolute rows */
+.bar-chart-race-track {
+  position: relative;
+  width: 100%;
+  /* Height will be injected dynamically via JS based on row count */
+}
+
+.bar-chart-race-row {
+  position: absolute;
+  left: var(--ds-sys-spacing-md, 16px);
+  right: var(--ds-sys-spacing-md, 16px);
+  height: 32px;
+  display: flex;
+  align-items: center;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.bar-chart-race-name {
+  width: 160px;
+  text-align: right;
+  padding-right: var(--ds-sys-spacing-md, 16px);
+  font-weight: 600;
+  font-size: var(--ds-sys-typography-body-sm, 14px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--ds-sys-color-on-surface-variant);
+  transition: color 0.3s;
+  flex-shrink: 0;
+}
+
+/* Adjust layout on small screens */
+@media (max-width: 600px) {
+  .bar-chart-race-name {
+    width: 100px;
+    font-size: var(--ds-sys-typography-label-md, 12px);
+  }
+}
+
+.bar-chart-race-bar-wrapper {
+  flex-grow: 1;
+  height: 100%;
+  position: relative;
+}
+
+.bar-chart-race-bar {
+  height: 100%;
+  border-radius: var(--ds-sys-radius-sm, 4px);
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--ds-sys-spacing-sm, 10px);
+  box-sizing: border-box;
+  position: relative;
+  box-shadow: var(--ds-sys-elevation-sm);
+}
+
+.bar-chart-race-points {
+  position: absolute;
+  right: -40px;
+  font-weight: 800;
+  color: var(--ds-sys-color-primary);
+  font-size: var(--ds-sys-typography-body-md, 16px);
+  font-family: monospace;
+}
+
+.bar-chart-race-controls {
+  margin-top: var(--ds-sys-spacing-lg, 24px);
+  display: flex;
+  justify-content: center;
+}
+
+.bar-chart-race-btn {
+  background: var(--ds-sys-color-surface-container-high);
+  color: var(--ds-sys-color-primary);
+  border: 1px solid var(--ds-sys-color-primary);
+  padding: var(--ds-sys-spacing-sm, 8px) var(--ds-sys-spacing-lg, 24px);
+  border-radius: var(--ds-sys-radius-full, 99px);
+  cursor: pointer;
+  font-size: var(--ds-sys-typography-label-lg, 14px);
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bar-chart-race-btn:hover {
+  background: var(--ds-sys-color-primary);
+  color: var(--ds-sys-color-on-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(var(--ds-sys-color-primary-rgb, 0,255,133), 0.3);
+}
+
+.bar-chart-race-row.top-3 .bar-chart-race-name {
+  color: var(--ds-sys-color-on-surface);
+}
+
+.bar-chart-race-row.rank-1 .bar-chart-race-bar {
+  box-shadow: 0 0 15px rgba(var(--ds-sys-color-primary-rgb, 0,255,133), 0.2);
+}
+
+/* Fallback default colors if no team colors are passed */
+:root {
+  --chart-race-fallback-color: var(--ds-sys-color-primary);
+}

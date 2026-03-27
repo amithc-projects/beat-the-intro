@@ -1,0 +1,48 @@
+/* ════════════════════════════════
+   DIVIDER
+════════════════════════════════ */
+.divider {
+    display: block;
+    height: 1px;
+    background: var(--divider-color, var(--ds-sys-color-border));
+    margin: var(--space-4) 0;
+    border: none;
+}
+
+.divider-subtle {
+    opacity: .5;
+}
+
+/* Divider with label */
+.divider-labeled {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: var(--space-4) 0;
+}
+
+.divider-labeled::before,
+.divider-labeled::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--divider-color, var(--ds-sys-color-border));
+}
+
+.divider-labeled-text {
+    font-size: var(--text-xs);
+    color: var(--divider-label-color, var(--ds-sys-color-on-surface-variant));
+    white-space: nowrap;
+    font-weight: 500;
+    letter-spacing: .04em;
+}
+
+/* Vertical divider */
+.divider-vertical {
+    display: inline-block;
+    width: 1px;
+    background: var(--divider-color, var(--ds-sys-color-border));
+    height: 1em;
+    align-self: stretch;
+    margin: 0 var(--space-3);
+}

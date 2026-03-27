@@ -1,0 +1,23 @@
+/* css/components/aurora-charts.css */
+
+.aurora-chart-container {
+  width: 100%;
+  position: relative;
+  /* Allow canvas to shrink inside flex/grid containers */
+  min-height: 300px;
+  /* Default min-height, can be overridden by inline styles */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ensure the ECharts canvas resizes responsively */
+.aurora-chart-container > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.aurora-chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}

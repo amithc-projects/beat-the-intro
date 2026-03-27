@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RND: Round Result</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#aed500",
+              "primary-fixed-dim": "#aed500",
+              "surface": "#131313",
+              "surface-container-lowest": "#0e0e0e",
+              "error-container": "#93000a",
+              "inverse-surface": "#e2e2e2",
+              "on-primary-container": "#576c00",
+              "surface-variant": "#353535",
+              "tertiary": "#ffffff",
+              "inverse-on-surface": "#303030",
+              "primary-fixed": "#c7f300",
+              "on-tertiary-fixed-variant": "#454747",
+              "on-error": "#690005",
+              "on-tertiary": "#2f3131",
+              "on-background": "#e2e2e2",
+              "on-secondary": "#002e6a",
+              "on-tertiary-container": "#636565",
+              "on-primary": "#293500",
+              "surface-container-low": "#1b1b1b",
+              "secondary": "#adc6ff",
+              "secondary-fixed-dim": "#adc6ff",
+              "surface-dim": "#131313",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed": "#001a42",
+              "primary-container": "#c7f300",
+              "background": "#131313",
+              "on-surface-variant": "#c5c9ac",
+              "surface-container-high": "#2a2a2a",
+              "outline-variant": "#444933",
+              "on-surface": "#e2e2e2",
+              "on-secondary-fixed-variant": "#004395",
+              "tertiary-container": "#e2e2e2",
+              "on-secondary-container": "#e6ecff",
+              "primary": "#ffffff",
+              "surface-bright": "#393939",
+              "error": "#ffb4ab",
+              "secondary-fixed": "#d8e2ff",
+              "tertiary-fixed": "#e2e2e2",
+              "secondary-container": "#0566d9",
+              "surface-container-highest": "#353535",
+              "on-tertiary-fixed": "#1a1c1c",
+              "outline": "#8e9378",
+              "surface-container": "#1f1f1f",
+              "on-primary-fixed-variant": "#3d4d00",
+              "tertiary-fixed-dim": "#c6c6c7",
+              "inverse-primary": "#526600",
+              "on-primary-fixed": "#171e00"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .grainy-bg {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.05;
+      }
+      .aurora-correct {
+        background: radial-gradient(circle at 50% 50%, #D1FF00 0%, transparent 70%);
+        filter: blur(40px);
+        opacity: 0.3;
+      }
+      .hard-shadow {
+        box-shadow: 6px 6px 0px 0px #D1FF00;
+      }
+      .hard-shadow-white {
+        box-shadow: 4px 4px 0px 0px #ffffff;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-[#131313] border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-high border-2 border-[#D1FF00] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#D1FF00]">person</span>
+</div>
+<h1 class="font-['Space_Grotesk'] uppercase tracking-[-2%] font-black italic text-2xl text-[#D1FF00] hover:skew-x-12 transition-transform">BEAT THE INTRO</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center text-white opacity-70 hover:bg-[#D1FF00] hover:text-black transition-all duration-75 active:translate-x-1 active:translate-y-1">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</header>
+<main class="min-h-screen pt-24 pb-20 px-6 flex flex-col items-center justify-center relative">
+<div class="grainy-bg absolute inset-0 pointer-events-none"></div>
+<!-- Aurora Feedback Effect (Success State Shown) -->
+<div class="aurora-correct absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-md max-h-md pointer-events-none"></div>
+<!-- Layout Container -->
+<div class="w-full max-w-5xl flex flex-col md:flex-row gap-12 items-center md:items-stretch">
+<!-- Left Column: Album & Track Info -->
+<div class="w-full md:w-1/2 flex flex-col items-start gap-8">
+<!-- Revealed Artwork -->
+<div class="relative w-full aspect-square bg-surface-container-lowest border-4 border-primary p-2">
+<img alt="Album Artwork" class="w-full h-full object-cover" data-alt="Close-up of a high-contrast vinyl record spinning with vibrant yellow and black graphic elements, sharp focus, technical lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBF1-8fm0BiZOUyhfsvSpxHfUQHcmwbQRS-b5qosj3RNK_2Id-mEw8AjCUbXU6zljt4eWI5Thmj9QzDrsfBUc-c9TkLxx4JIyAAcJMGMJo9EA2mOpI_LvVx4SU9dviNXP5y4eDVlIqiQifA6V26BJ65k1aUrEADYCDOogqg3P4Ty0IFuYOzufFDJApUBV81DnJ6KpBqK-b4vqn4hcFOD4PKezLXZmuztTHQ29idRq4FWYD0WY2bC0ZyNikh3nme0Tp4RPU-Vdq-pUE"/>
+<div class="absolute -bottom-4 -right-4 bg-primary-container text-on-primary-container px-4 py-1 font-black italic tracking-tighter text-xl uppercase">
+                        REVEALED
+                    </div>
+</div>
+<!-- Track Metadata -->
+<div class="space-y-2">
+<p class="font-label text-primary-container tracking-[5%] font-bold uppercase text-sm">Now Playing</p>
+<h2 class="font-headline font-black text-5xl md:text-7xl uppercase leading-none tracking-tighter">Hyperlight</h2>
+<h3 class="font-headline font-bold text-2xl md:text-3xl text-primary opacity-80 uppercase tracking-tight">Neon Syndicate</h3>
+</div>
+</div>
+<!-- Right Column: Feedback & Stats -->
+<div class="w-full md:w-1/2 flex flex-col justify-between gap-12">
+<!-- Feedback Badge -->
+<div class="relative">
+<div class="bg-primary-container text-on-primary-container p-8 flex flex-col items-center justify-center gap-4 hard-shadow border-4 border-black">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="text-center">
+<h4 class="font-headline font-black text-4xl uppercase italic leading-none">Correct</h4>
+<p class="font-label tracking-[10%] text-xs font-bold mt-2 opacity-80">STREAK: 05 ROUNDS</p>
+</div>
+</div>
+</div>
+<!-- Stats & Progress -->
+<div class="space-y-6">
+<div class="bg-surface-container-high p-6 border-l-8 border-primary-container">
+<div class="flex justify-between items-end mb-4">
+<span class="font-label font-black text-2xl tracking-tighter uppercase">2 CORRECT SO FAR</span>
+<span class="font-label font-bold text-sm opacity-50 uppercase">Session XP +450</span>
+</div>
+<!-- Pulse Progress Bar -->
+<div class="h-4 w-full bg-surface-container-highest">
+<div class="h-full bg-primary-container w-2/3"></div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col gap-4">
+<button class="w-full bg-primary-container text-on-primary-container py-6 px-8 flex items-center justify-between group hover:translate-x-1 hover:-translate-y-1 transition-transform border-4 border-black hard-shadow">
+<span class="font-headline font-black text-3xl uppercase italic tracking-tighter">Next Round</span>
+<span class="material-symbols-outlined text-4xl group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</button>
+<button class="w-full bg-transparent text-primary py-4 px-8 border-4 border-primary flex items-center justify-center hover:bg-primary hover:text-black transition-all">
+<span class="font-label font-bold uppercase tracking-widest text-sm">See Full Summary</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Drawer (Overlay Menu) - Hidden by default, showing structure -->
+<aside class="hidden fixed inset-y-0 left-0 z-[60] flex flex-col h-full w-80 border-r-4 border-[#D1FF00] bg-[#131313]">
+<div class="p-8 border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 bg-primary-container rounded-full overflow-hidden border-2 border-black">
+<img alt="Spotify User" class="w-full h-full object-cover" data-alt="Portrait of a young gamer with neon rim lighting, high contrast photography, futuristic aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeEx9tLXp18YdxWCbbf4WYGG6qkYywpLBFzY9mE7733sgC_TrjaLOVJMes6zU78dCRhyUWKUzZMqvWQzl4Rtl4r2CUfHvMHUpUONqjd06oMHTbOZiKecJTcA9NDEd9K3gcr_TkoWI4Npm8ZUPltl2_iFWk2AmtmW6YW9iwelJvJfG_rnr7Wm5RRkPBwwnX8BOQkyfLjTjjh9AslXi95T4G-WTUDJyHN1gwtt-Z5IFg1lBs4xflJS9jZoYiKkHfg0x0D6u9xUNVLpk"/>
+</div>
+<div>
+<h3 class="font-['Space_Grotesk'] font-black text-xl text-[#D1FF00]">USER_01</h3>
+<p class="text-xs text-white opacity-50 font-bold tracking-widest uppercase">Premium Member</p>
+</div>
+</div>
+</div>
+<nav class="flex-grow">
+<a class="flex items-center gap-4 bg-[#D1FF00] text-black font-black p-4 uppercase font-['Space_Grotesk'] hover:translate-x-2 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+<a class="flex items-center gap-4 text-white p-4 border-b border-white/10 uppercase font-['Space_Grotesk'] font-bold hover:bg-white hover:text-black hover:translate-x-2 transition-transform" href="#">
+<span class="material-symbols-outlined">cookie</span> Cookies
+            </a>
+<a class="flex items-center gap-4 text-white p-4 border-b border-white/10 uppercase font-['Space_Grotesk'] font-bold hover:bg-white hover:text-black hover:translate-x-2 transition-transform" href="#">
+<span class="material-symbols-outlined">security</span> Privacy
+            </a>
+</nav>
+</aside>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full h-16 z-50 flex justify-around items-stretch bg-[#131313] border-t-4 border-[#D1FF00]">
+<!-- PLAY - ACTIVE -->
+<a class="flex flex-col items-center justify-center bg-[#D1FF00] text-black h-full px-4 transform scale-110 active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PLAY</span>
+</a>
+<!-- DISCOVER -->
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 hover:bg-white hover:text-black active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined text-2xl">explore</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">DISCOVER</span>
+</a>
+<!-- RANK -->
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 hover:bg-white hover:text-black active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined text-2xl">leaderboard</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">RANK</span>
+</a>
+<!-- PROFILE -->
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 hover:bg-white hover:text-black active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PROFILE</span>
+</a>
+</nav>
+</body></html>

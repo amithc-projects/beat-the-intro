@@ -1,0 +1,101 @@
+/* css/components/content/avatar.css */
+@layer components {
+
+  /* --- 1. BASE AVATAR --- */
+  .avatar {
+    /* Layout */
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    
+    /* CRITICAL: We need visible overflow for status dots, 
+       so we can't just clip the image with overflow:hidden here. */
+    overflow: visible; 
+    
+    /* Shape */
+    width: var(--size, 2.5rem);
+    height: var(--size, 2.5rem);
+    
+    /* Define the radius as a variable so children can use it */
+    --avatar-radius: var(--ds-cmp-avatar-radius, 50%);
+    border-radius: var(--avatar-radius);
+    
+    /* Paint */
+    background-color: var(--ds-sys-color-border);
+    color: var(--ds-sys-color-on-surface);
+    font-weight: 700;
+    font-size: calc(var(--size) * 0.4);
+    text-transform: uppercase;
+    
+    /* Border */
+    border: 2px solid var(--ds-sys-color-surface);
+    
+    /* Reset box sizing to ensure border doesn't shrink content */
+    box-sizing: content-box; 
+  }
+
+  /* Image inside Avatar */
+  .avatar img {
+    display: block; /* Removes inline spacing gaps */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+    /* FORCE the radius on the image itself since parent is overflow:visible */
+    border-radius: var(--avatar-radius);
+  }
+
+  /* ... (Rest of file sizes/shapes remain the same) ... */
+  
+  /* --- SIZES --- */
+  .avatar--xs { --size: 1.5rem; }
+  .avatar--sm { --size: 2rem; }
+  .avatar--md { --size: 2.5rem; }
+  .avatar--lg { --size: 3.5rem; }
+  .avatar--xl { --size: 5rem; }
+
+  /* --- SHAPES --- */
+  .avatar--square { --ds-cmp-avatar-radius: var(--ds-sys-radius-card); }
+
+  /* ... (Status Indicator & Groups remain same) ... */
+  /* --- STATUS INDICATOR (The Dot) --- */
+  .avatar__status {
+    position: absolute;
+    bottom: -2px; /* Push it slightly outside */
+    right: -2px;
+    
+    width: 25%;
+    height: 25%;
+    min-width: 10px;
+    min-height: 10px;
+    
+    border-radius: 50%;
+    background: #ccc;
+    border: 2px solid var(--ds-sys-color-surface);
+    z-index: 2; /* Ensure it sits on top of the image */
+  }
+  
+  .avatar__status--online { background-color: light-dark(green, #4ade80); }
+  .avatar__status--busy   { background-color: light-dark(red, #f87171); }
+  .avatar__status--away   { background-color: light-dark(orange, #fbbf24); }
+
+  /* --- AVATAR GROUP --- */
+  .avatar-group {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem; /* Offset for first negative margin */
+  }
+  
+  .avatar-group .avatar {
+    margin-left: -0.75rem;
+    transition: transform 0.2s ease, z-index 0s;
+    box-sizing: border-box; /* Groups look better with standard box model */
+  }
+  
+  .avatar-group .avatar:hover {
+    transform: translateY(-4px) scale(1.1);
+    z-index: 10;
+  }
+}

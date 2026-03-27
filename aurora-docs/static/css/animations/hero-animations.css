@@ -1,0 +1,142 @@
+/* -------------------------------------------------------------------------- */
+/* COMPONENT: HERO TEXT ANIMATIONS                                            */
+/* Location: /static/css/animations/hero-animations.css                       */
+/* -------------------------------------------------------------------------- */
+
+/* --- CORE KEYFRAMES --- */
+@keyframes heroFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes heroZoomIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes heroSlideRight {
+    0% {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes heroFallDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroKenBurns {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.15);
+    }
+}
+
+/* --- ANIMATION UTILITIES --- */
+/* By default, we use an extremely smooth cubic-bezier curve for editorial luxury */
+.animate-fade-up,
+.animate-fade-in,
+.animate-zoom-in,
+.animate-slide-right,
+.animate-fall-down {
+    /* Initialize hidden so they don't pop in before animating */
+    opacity: 0;
+    animation-duration: 1.2s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: forwards; /* Persist the final 100% frame state */
+    will-change: opacity, transform;
+}
+
+/* Ken burns specifically bypasses the standard cubic-bezier */
+.animate-ken-burns {
+    animation-name: heroKenBurns;
+    animation-duration: 10s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    will-change: transform;
+}
+
+.animate-fade-up {
+    animation-name: heroFadeUp;
+}
+
+.animate-fade-in {
+    animation-name: heroFadeIn;
+}
+
+.animate-zoom-in {
+    animation-name: heroZoomIn;
+}
+
+.animate-slide-right {
+    animation-name: heroSlideRight;
+}
+
+.animate-fall-down {
+    animation-name: heroFallDown;
+}
+
+/* --- STAGGERED DELAYS --- */
+/* Allows composing complex multi-node animations simply by adding classes to HTML */
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-400 { animation-delay: 400ms; }
+.animate-delay-500 { animation-delay: 500ms; }
+.animate-delay-600 { animation-delay: 600ms; }
+.animate-delay-700 { animation-delay: 700ms; }
+.animate-delay-800 { animation-delay: 800ms; }
+.animate-delay-1000 { animation-delay: 1000ms; }
+.animate-delay-1200 { animation-delay: 1200ms; }
+.animate-delay-1500 { animation-delay: 1500ms; }
+
+/* =========================================================================
+ ACCESSIBILITY CRITICAL:
+ If the user has OS-level motion reduction enabled, enforce immediate display.
+========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+    .animate-fade-up,
+    .animate-fade-in,
+    .animate-zoom-in,
+    .animate-slide-right,
+    .animate-fall-down,
+    .animate-ken-burns {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

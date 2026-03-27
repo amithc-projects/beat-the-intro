@@ -1,0 +1,143 @@
+/* css/layouts/app-shell.css */
+@layer layouts {
+    /* 
+       THE APP SHELL ENGINE
+       This system uses CSS Grid Named Areas to physically structure entire applications.
+       Because the grid controls positioning, the HTML source order becomes entirely irrelevant.
+    */
+
+    .l-app-shell {
+        display: grid;
+        height: 100%;
+        /* Contains the app shell neatly within any parent bounding box */
+        width: 100%;
+        /* Prevents layout blowout when nested inside documentation containers */
+        overflow: hidden;
+        background-color: var(--ds-sys-color-bg-app, #f8fafc);
+    }
+
+    /* 
+       --- ASSIGNING NAMED IDENTITIES --- 
+       Elements mapped to these identites will instantly snap into the defined grid zones
+    */
+    .app-header {
+        grid-area: header;
+    }
+
+    .app-sidebar {
+        grid-area: sidebar;
+    }
+
+    .app-main {
+        grid-area: main;
+    }
+
+    .app-aside {
+        grid-area: aside;
+    }
+
+    .app-footer {
+        grid-area: footer;
+    }
+
+    /* Required behaviors for scrollable regions */
+    .app-main {
+        overflow-y: auto;
+        position: relative;
+    }
+
+    .app-sidebar,
+    .app-aside {
+        overflow-y: auto;
+    }
+
+    /* 
+       ====================================================
+       ARCHETYPES (LAYOUT VARIANTS)
+       ====================================================
+    */
+
+    /* VAR 1: STANDARD DASHBOARD
+       Left Sidebar spanning full height. Header to the right. Main content below header.
+       Example: Slack, Stripe Dashboard.
+    */
+    .l-app-shell--standard {
+        grid-template-columns: 280px 1fr;
+        grid-template-rows: 64px 1fr;
+        grid-template-areas:
+            "sidebar header"
+            "sidebar main";
+    }
+
+    /* VAR 2: DOCUMENTATION PORTAL
+       Header spanning full width across the top. Left Sidebar below it.
+       Example: Tailwind Docs, React Docs.
+    */
+    .l-app-shell--docs {
+        grid-template-columns: 280px 1fr;
+        grid-template-rows: 64px 1fr;
+        grid-template-areas:
+            "header header"
+            "sidebar main";
+    }
+
+    /* VAR 3: THREE-COLUMN COMPLEX
+       Header full width. Left Sidebar. Center Main. Right Aside (Properties panels).
+       Example: VS Code, Figma, Complex CMS.
+    */
+    .l-app-shell--complex {
+        grid-template-columns: 240px 1fr 300px;
+        grid-template-rows: 64px 1fr;
+        grid-template-areas:
+            "header header  header"
+            "sidebar main    aside";
+    }
+
+    /* VAR 4: COMPACT RAIL
+       Left Rail (72px) spanning full height.
+       Example: High-density admin panels.
+    */
+    .l-app-shell--rail {
+        grid-template-columns: 72px 1fr;
+        grid-template-rows: 64px 1fr;
+        grid-template-areas:
+            "sidebar header"
+            "sidebar main";
+    }
+
+
+    /* 
+       ====================================================
+       MOBILE RESPONSIVITY (THE MAGIC)
+       We instantly rewire the application layout for mobile!
+       ====================================================
+    */
+    @media (max-width: 768px) {
+
+        /* On Mobile, standard layouts collapse to single column.
+           Sidebar is hidden or moved to an off-canvas drawer. */
+        .l-app-shell--standard,
+        .l-app-shell--docs,
+        .l-app-shell--complex,
+        .l-app-shell--rail {
+            grid-template-columns: 1fr;
+            grid-template-rows: 64px 1fr 64px;
+            /* 
+               CRITICAL MOBILE PATTERN:
+               We physically teleport the generic "sidebar" HTML 
+               to the BOTTOM of the screen to act as a Bottom Tab Nav!
+            */
+            grid-template-areas:
+                "header"
+                "main"
+                "sidebar";
+        }
+
+        /* Alternatively, hiding the sidebar for hamburger/drawer logic */
+        /* 
+        .l-app-shell--docs .app-sidebar {
+            display: none;
+        }
+        */
+    }
+}

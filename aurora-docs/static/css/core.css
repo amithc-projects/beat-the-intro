@@ -1,0 +1,266 @@
+/* css/aurora.css */
+
+/* 1. BASE LAYER */
+@import url('base/reset.css');
+@import url('base/primitives.css');
+@import url('base/properties.css');
+@import url('base/motion.css');
+
+/* 2. THEME CONFIGURATION */
+@import url('themes/corporate.css');
+@import url('themes/casual.css');
+
+/* 3. COMPONENT LAYER */
+
+/* --- LAYOUT --- */
+@import url('components/layout/navigation/navigation.css');
+@import url('components/layout/navigation/nav-bottom.css');
+@import url('components/layout/hero/hero.css');
+@import url('components/layout/footer/footer.css');
+@import url('components/layout/sidebar/sidebar.css');
+
+/* --- CONTENT --- */
+@import url('components/content/typography/typography.css');
+@import url('components/content/card/card.css');
+@import url('components/content/accordion/accordion.css');
+@import url('components/content/slider/slider.css');
+@import url('components/content/table/table.css');
+@import url('components/empty-state.css');
+@import url('components/spinner.css');
+@import url('components/skeleton.css');
+@import url('components/divider.css');
+@import url('components/virtual-keyboard.css');
+@import url('components/pin-input.css');
+@import url('components/splitter.css');
+@import url('components/tree-view.css');
+@import url('components/segmented-control.css');
+@import url('components/video-player.css');
+@import url('components/content/list/list.css');
+@import url('components/content/blockquote/blockquote.css');
+
+/* @import url('components/content/comparison/comparison.css'); */
+@import url('components/content/avatar/avatar.css');
+@import url('components/content/badge/badge.css');
+
+
+/* --- FORMS --- */
+@import url('components/forms/buttons/buttons.css');
+@import url('components/forms/advanced/advanced.css');
+
+/* Forms Components Extracted */
+@import url('components/forms/inputs/range-date.css');
+@import url('components/forms/inputs/media-capture.css');
+@import url('components/forms/inputs/text-value.css');
+@import url('components/forms/inputs/choice-selection.css');
+@import url('components/forms/grouping.css');
+
+
+@import url('components/forms/inputs/inputs.css');
+/* @import url('components/forms/inputs/selection-controls.css'); */
+@import url('components/forms/auth/auth.css');
+@import url('components/search.css');
+/* --- FEEDBACK --- */
+@import url('components/feedback/callout/callout.css');
+@import url('components/feedback/toast/toast.css');
+@import url('components/feedback/progress/progress.css');
+@import url('components/feedback/tooltip/tooltip.css');
+
+/* --- OVERLAYS --- */
+@import url('components/overlays/modal/modal.css');
+
+/* --- TYPOGRAPHY ENGINE --- */
+:root {
+  /* Default: Corporate (Inter) */
+  --font-primary: 'Inter', system-ui, sans-serif;
+
+  /* Variable Font Axes Defaults */
+  --vf-wght: 400;
+  --vf-wdth: 100;
+
+  /* Font Studio Roles (Fallback to Primary) */
+  --font-hero: var(--font-primary);
+  --font-heading: var(--font-primary);
+  --font-body: var(--font-primary);
+  --font-nav: var(--font-primary);
+
+  --settings-hero: normal;
+  --settings-heading: normal;
+  --settings-body: normal;
+  --settings-nav: normal;
+
+  /* Derived Props */
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+}
+
+/* GLOBAL RESET APPLYING VARIABLES */
+body {
+  font-family: var(--font-body);
+  font-variation-settings: var(--settings-body);
+  
+  /* Smoothly animate font changes */
+  transition: font-variation-settings 0.3s ease, font-weight 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-variation-settings: var(--settings-heading);
+}
+
+.hero {
+  font-family: var(--font-hero);
+  font-variation-settings: var(--settings-hero);
+}
+
+nav {
+  font-family: var(--font-nav);
+  font-variation-settings: var(--settings-nav);
+}
+
+/* UTILITIES FOR DEMO */
+.text-thin {
+  --vf-wght: 200;
+}
+
+.text-black {
+  --vf-wght: 900;
+}
+
+.text-narrow {
+  --vf-wdth: 75;
+}
+
+.text-wide {
+  --vf-wdth: 125;
+}
+
+/* Ensure headings inherit the variable weight logic but are bolder by default */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /* Headings are +200 weight from base if no specific settings provided */
+  font-weight: var(--font-weight-heading, calc(var(--vf-wght, 400) + 300));
+  font-variation-settings: var(--settings-heading, 'wght' calc(var(--vf-wght, 400) + 300), 'wdth' var(--vf-wdth, 100));
+}
+
+/* --- CHART COLOR TOKENS --- */
+
+:root {
+  /* DEFAULT THEME (Corporate/Light) */
+
+  /* Palette A: Categorical (Distinct, High Contrast) */
+  --ds-chart-1: var(--ds-sys-color-primary);
+  /* Blue-ish */
+  --ds-chart-2: #10b981;
+  /* Emerald */
+  --ds-chart-3: #f59e0b;
+  /* Amber */
+  --ds-chart-4: #ef4444;
+  /* Red */
+  --ds-chart-5: #8b5cf6;
+  /* Violet */
+  --ds-chart-6: #ec4899;
+  /* Pink */
+
+  /* Palette B: Sequential (Shades of Primary) */
+  --ds-chart-seq-1: color-mix(in srgb, var(--ds-sys-color-primary), white 80%);
+  --ds-chart-seq-2: color-mix(in srgb, var(--ds-sys-color-primary), white 60%);
+  --ds-chart-seq-3: color-mix(in srgb, var(--ds-sys-color-primary), white 40%);
+  --ds-chart-seq-4: color-mix(in srgb, var(--ds-sys-color-primary), white 20%);
+  --ds-chart-seq-5: var(--ds-sys-color-primary);
+}
+
+/* DARK MODE OVERRIDES */
+[data-mode="dark"] {
+  color-scheme: dark;
+  /* Brighter/lighter variants for dark backgrounds */
+  --ds-chart-1: #60a5fa;
+  --ds-chart-2: #34d399;
+  --ds-chart-3: #fbbf24;
+  --ds-chart-4: #f87171;
+  --ds-chart-5: #a78bfa;
+  --ds-chart-6: #f472b6;
+
+  /* Sequential (Shades mixed with black/transparent instead of white) */
+  --ds-chart-seq-1: color-mix(in srgb, var(--ds-sys-color-primary), black 60%);
+  --ds-chart-seq-2: color-mix(in srgb, var(--ds-sys-color-primary), black 40%);
+  --ds-chart-seq-3: color-mix(in srgb, var(--ds-sys-color-primary), black 20%);
+  --ds-chart-seq-4: var(--ds-sys-color-primary);
+  --ds-chart-seq-5: color-mix(in srgb, var(--ds-sys-color-primary), white 20%);
+}
+
+/* CASUAL THEME OVERRIDES (More playful/saturated) */
+[data-theme="casual"] {
+  --ds-chart-1: #FF5D73;
+  /* Pop Pink */
+  --ds-chart-2: #7CFFC4;
+  /* Mint */
+  --ds-chart-3: #FFD166;
+  /* Yellow */
+  --ds-chart-4: #118AB2;
+  /* Blue */
+  --ds-chart-5: #06D6A0;
+  /* Green */
+}
+
+/* --- CHART COLOR TOKENS --- */
+
+:root {
+  /* DEFAULT THEME (Corporate/Light) */
+
+  /* Palette A: Categorical (Distinct, High Contrast) */
+  --ds-chart-1: var(--ds-sys-color-primary);
+  /* Blue-ish */
+  --ds-chart-2: #10b981;
+  /* Emerald */
+  --ds-chart-3: #f59e0b;
+  /* Amber */
+  --ds-chart-4: #ef4444;
+  /* Red */
+  --ds-chart-5: #8b5cf6;
+  /* Violet */
+  --ds-chart-6: #ec4899;
+  /* Pink */
+
+  /* Palette B: Sequential (Shades of Primary) */
+  --ds-chart-seq-1: color-mix(in srgb, var(--ds-sys-color-primary), white 80%);
+  --ds-chart-seq-2: color-mix(in srgb, var(--ds-sys-color-primary), white 60%);
+  --ds-chart-seq-3: color-mix(in srgb, var(--ds-sys-color-primary), white 40%);
+  --ds-chart-seq-4: color-mix(in srgb, var(--ds-sys-color-primary), white 20%);
+  --ds-chart-seq-5: var(--ds-sys-color-primary);
+}
+
+/* DARK MODE OVERRIDES */
+[data-mode="dark"] {
+  /* Brighter/lighter variants for dark backgrounds */
+  --ds-chart-1: #60a5fa;
+  --ds-chart-2: #34d399;
+  --ds-chart-3: #fbbf24;
+  --ds-chart-4: #f87171;
+  --ds-chart-5: #a78bfa;
+  --ds-chart-6: #f472b6;
+
+  /* Sequential (Shades mixed with black/transparent instead of white) */
+  --ds-chart-seq-1: color-mix(in srgb, var(--ds-sys-color-primary), black 60%);
+  --ds-chart-seq-2: color-mix(in srgb, var(--ds-sys-color-primary), black 40%);
+  --ds-chart-seq-3: color-mix(in srgb, var(--ds-sys-color-primary), black 20%);
+  --ds-chart-seq-4: var(--ds-sys-color-primary);
+  --ds-chart-seq-5: color-mix(in srgb, var(--ds-sys-color-primary), white 20%);
+}
+
+/* CASUAL THEME OVERRIDES (More playful/saturated) */
+[data-theme="casual"] {
+  --ds-chart-1: #FF5D73;
+  /* Pop Pink */
+  --ds-chart-2: #7CFFC4;
+  /* Mint */
+  --ds-chart-3: #FFD166;
+  /* Yellow */
+  --ds-chart-4: #118AB2;
+  /* Blue */
+  --ds-chart-5: #06D6A0;
+  /* Green */
+}

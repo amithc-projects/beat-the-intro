@@ -1,0 +1,51 @@
+@import "../base.css";
+
+[data-theme="corporate"] {
+  /* NAVIGATION */
+  .icon-menu          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:menu.svg'); mask-image: url('https://api.iconify.design/material-symbols:menu.svg'); }
+  .icon-close         { -webkit-mask-image: url('https://api.iconify.design/material-symbols:close.svg'); mask-image: url('https://api.iconify.design/material-symbols:close.svg'); }
+  .icon-home          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:home.svg'); mask-image: url('https://api.iconify.design/material-symbols:home.svg'); }
+  .icon-chevron-right { -webkit-mask-image: url('https://api.iconify.design/material-symbols:chevron-right.svg'); mask-image: url('https://api.iconify.design/material-symbols:chevron-right.svg'); }
+  .icon-chevron-left  { -webkit-mask-image: url('https://api.iconify.design/material-symbols:chevron-left.svg'); mask-image: url('https://api.iconify.design/material-symbols:chevron-left.svg'); }
+  .icon-expand        { -webkit-mask-image: url('https://api.iconify.design/material-symbols:expand-more.svg'); mask-image: url('https://api.iconify.design/material-symbols:expand-more.svg'); }
+  .icon-collapse      { -webkit-mask-image: url('https://api.iconify.design/material-symbols:expand-less.svg'); mask-image: url('https://api.iconify.design/material-symbols:expand-less.svg'); }
+  .icon-more          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:more-vert.svg'); mask-image: url('https://api.iconify.design/material-symbols:more-vert.svg'); }
+
+  /* FORMS */
+  .icon-search        { -webkit-mask-image: url('https://api.iconify.design/material-symbols:search.svg'); mask-image: url('https://api.iconify.design/material-symbols:search.svg'); }
+  .icon-lock          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:lock.svg'); mask-image: url('https://api.iconify.design/material-symbols:lock.svg'); }
+  .icon-visible       { -webkit-mask-image: url('https://api.iconify.design/material-symbols:visibility.svg'); mask-image: url('https://api.iconify.design/material-symbols:visibility.svg'); }
+  .icon-hidden        { -webkit-mask-image: url('https://api.iconify.design/material-symbols:visibility-off.svg'); mask-image: url('https://api.iconify.design/material-symbols:visibility-off.svg'); }
+  .icon-calendar      { -webkit-mask-image: url('https://api.iconify.design/material-symbols:calendar-today.svg'); mask-image: url('https://api.iconify.design/material-symbols:calendar-today.svg'); }
+  .icon-upload        { -webkit-mask-image: url('https://api.iconify.design/material-symbols:cloud-upload.svg'); mask-image: url('https://api.iconify.design/material-symbols:cloud-upload.svg'); }
+  .icon-filter        { -webkit-mask-image: url('https://api.iconify.design/material-symbols:filter-list.svg'); mask-image: url('https://api.iconify.design/material-symbols:filter-list.svg'); }
+  .icon-plus          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:add.svg'); mask-image: url('https://api.iconify.design/material-symbols:add.svg'); }
+  .icon-minus         { -webkit-mask-image: url('https://api.iconify.design/material-symbols:remove.svg'); mask-image: url('https://api.iconify.design/material-symbols:remove.svg'); }
+
+  /* FEEDBACK */
+  .icon-success       { -webkit-mask-image: url('https://api.iconify.design/material-symbols:check.svg'); mask-image: url('https://api.iconify.design/material-symbols:check.svg'); }
+  .icon-error         { -webkit-mask-image: url('https://api.iconify.design/material-symbols:error.svg'); mask-image: url('https://api.iconify.design/material-symbols:error.svg'); }
+  .icon-info          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:info.svg'); mask-image: url('https://api.iconify.design/material-symbols:info.svg'); }
+  .icon-help          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:help.svg'); mask-image: url('https://api.iconify.design/material-symbols:help.svg'); }
+  .icon-warning       { -webkit-mask-image: url('https://api.iconify.design/material-symbols:warning.svg'); mask-image: url('https://api.iconify.design/material-symbols:warning.svg'); }
+
+  /* IDENTITY & ACTIONS */
+  .icon-user          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:person.svg'); mask-image: url('https://api.iconify.design/material-symbols:person.svg'); }
+  .icon-group         { -webkit-mask-image: url('https://api.iconify.design/material-symbols:group.svg'); mask-image: url('https://api.iconify.design/material-symbols:group.svg'); }
+  .icon-copy          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:content-copy.svg'); mask-image: url('https://api.iconify.design/material-symbols:content-copy.svg'); }
+  .icon-code          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:code.svg'); mask-image: url('https://api.iconify.design/material-symbols:code.svg'); }
+  .icon-edit          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:edit.svg'); mask-image: url('https://api.iconify.design/material-symbols:edit.svg'); }
+  .icon-delete        { -webkit-mask-image: url('https://api.iconify.design/material-symbols:delete.svg'); mask-image: url('https://api.iconify.design/material-symbols:delete.svg'); }
+  .icon-save          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:save.svg'); mask-image: url('https://api.iconify.design/material-symbols:save.svg'); }
+
+  /* NEW: SIDEBAR FOLDERS */
+  .icon-folder              { -webkit-mask-image: url('https://api.iconify.design/material-symbols:folder.svg'); mask-image: url('https://api.iconify.design/material-symbols:folder.svg'); }
+  .icon-text_fields         { -webkit-mask-image: url('https://api.iconify.design/material-symbols:text-fields.svg'); mask-image: url('https://api.iconify.design/material-symbols:text-fields.svg'); }
+  .icon-widgets             { -webkit-mask-image: url('https://api.iconify.design/material-symbols:widgets.svg'); mask-image: url('https://api.iconify.design/material-symbols:widgets.svg'); }
+  .icon-explore             { -webkit-mask-image: url('https://api.iconify.design/material-symbols:explore.svg'); mask-image: url('https://api.iconify.design/material-symbols:explore.svg'); }
+  .icon-dynamic_form        { -webkit-mask-image: url('https://api.iconify.design/material-symbols:dynamic-form.svg'); mask-image: url('https://api.iconify.design/material-symbols:dynamic-form.svg'); }
+  .icon-web                 { -webkit-mask-image: url('https://api.iconify.design/material-symbols:web.svg'); mask-image: url('https://api.iconify.design/material-symbols:web.svg'); }
+  .icon-view_compact        { -webkit-mask-image: url('https://api.iconify.design/material-symbols:view-compact.svg'); mask-image: url('https://api.iconify.design/material-symbols:view-compact.svg'); }
+  .icon-auto_awesome_mosaic { -webkit-mask-image: url('https://api.iconify.design/material-symbols:auto-awesome-mosaic.svg'); mask-image: url('https://api.iconify.design/material-symbols:auto-awesome-mosaic.svg'); }
+  .icon-analytics          { -webkit-mask-image: url('https://api.iconify.design/material-symbols:analytics.svg'); mask-image: url('https://api.iconify.design/material-symbols:analytics.svg'); }
+}

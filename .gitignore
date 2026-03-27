@@ -3,5 +3,9 @@ test-flow/node_modules/
 test-flow/.env
 .env
 dist/
-aurora-docs/
+# Aurora — track only aurora-docs/static/css/, ignore everything else
+aurora-docs/**
+!aurora-docs/static/
+!aurora-docs/static/css/
+!aurora-docs/static/css/**
 .DS_Store

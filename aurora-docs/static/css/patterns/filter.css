@@ -1,0 +1,44 @@
+/* JS-DRIVEN FILTER STYLES */
+
+.filter-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.filter-btn {
+  /* Reset Button Styles */
+  appearance: none;
+  background: var(--ds-sys-color-surface-variant);
+  border: 1px solid transparent;
+  cursor: pointer;
+  
+  /* Pill Shape */
+  padding: 0.25rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ds-sys-color-on-surface);
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: var(--ds-sys-color-surface-inverse);
+  color: var(--ds-sys-color-on-surface-inverse);
+}
+
+/* Active State (Applied by JS) */
+.filter-btn.is-active,
+.filter-btn[aria-pressed="true"] {
+  background: var(--ds-sys-color-primary);
+  color: var(--ds-sys-color-on-primary);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* VIEW TRANSITIONS */
+/* This makes the masonry grid animate smoothly when items disappear/appear */
+::view-transition-group(root) {
+  animation-duration: 0.4s;
+}

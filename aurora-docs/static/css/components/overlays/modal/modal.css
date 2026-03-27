@@ -1,0 +1,151 @@
+/* css/components/overlays/modal.css */
+@layer components {
+
+  :root {
+    /* Local tokens for easy theming of the "Glass" effect */
+    --modal-backdrop-bg: color-mix(in srgb, var(--ds-sys-color-on-surface), transparent 50%);
+    --modal-backdrop-blur: 4px;
+    --modal-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    --modal-radius: var(--ds-sys-radius-card);
+  }
+
+  /* 1. RESET & BASE STYLE */
+  .modal {
+    /* Reset native styles */
+    border: none;
+    padding: 0;
+    margin: auto; /* Centers it */
+    
+    /* Layout */
+    width: min(100% - 2rem, 500px); /* Responsive default width */
+    max-height: calc(100vh - 4rem);
+    
+    /* Paint */
+    background: var(--ds-sys-color-surface);
+    color: var(--ds-sys-color-on-surface);
+    border-radius: var(--modal-radius);
+    box-shadow: var(--modal-shadow);
+    
+    /* Internal Layout */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Clips children to radius */
+    
+    /* ANIMATION ENGINE (Modern @starting-style) */
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    transition: 
+      opacity 0.3s ease, 
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), /* Bouncy pop */
+      display 0.3s allow-discrete,
+      overlay 0.3s allow-discrete; /* Animate the top-layer promotion */
+  }
+
+  /* 2. OPEN STATE */
+  .modal[open] {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    
+    /* The "Before" state for entry animation */
+    @starting-style {
+      opacity: 0;
+      transform: scale(0.95) translateY(10px);
+    }
+  }
+
+  /* 3. THE BACKDROP (The Overlay) */
+  .modal::backdrop {
+    background: var(--modal-backdrop-bg);
+    backdrop-filter: blur(var(--modal-backdrop-blur));
+    
+    opacity: 0;
+    transition: opacity 0.3s ease, display 0.3s allow-discrete, overlay 0.3s allow-discrete;
+  }
+
+  .modal[open]::backdrop {
+    opacity: 1;
+    
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  /* 4. INTERNAL STRUCTURE */
+  .modal__header {
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--ds-sys-color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal__title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ds-sys-color-primary);
+  }
+
+  .modal__close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--ds-sys-color-on-surface);
+    opacity: 0.5;
+    transition: opacity 0.2s, background 0.2s;
+  }
+  .modal__close:hover { opacity: 1; background: var(--ds-sys-color-bg-app); }
+
+  .modal__body {
+    padding: var(--space-lg);
+    overflow-y: auto; /* Internal scroll */
+    overscroll-behavior: contain;
+  }
+
+  .modal__footer {
+    padding: var(--space-lg);
+    border-top: 1px solid var(--ds-sys-color-border);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-md);
+    background: var(--ds-sys-color-bg-app); /* Subtle contrast */
+  }
+
+  /* 5. VARIANTS */
+
+  /* Small (Alerts/Confirmations) */
+  .modal--small {
+    width: min(100% - 2rem, 320px);
+    text-align: center;
+  }
+  .modal--small .modal__footer { justify-content: center; }
+  .modal--small .modal__header { border: none; padding-bottom: 0; justify-content: center; }
+
+  /* Large (Complex Forms) */
+  .modal--large {
+    width: min(100% - 2rem, 800px);
+  }
+
+  /* Sheet (Mobile Drawer) */
+  @media (max-width: 768px) {
+    .modal--sheet {
+      width: 100%;
+      max-height: 85vh;
+      margin-top: auto; /* Pushes to bottom */
+      margin-bottom: 0;
+      border-radius: var(--modal-radius) var(--modal-radius) 0 0; /* Top corners only */
+      
+      /* Slide Up Animation */
+      transform: translateY(100%);
+    }
+    
+    .modal--sheet[open] {
+      transform: translateY(0);
+      @starting-style { transform: translateY(100%); }
+    }
+  }
+}

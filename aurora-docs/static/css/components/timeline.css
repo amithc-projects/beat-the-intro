@@ -1,0 +1,388 @@
+/* ── Date group label ── */
+.timeline-date-group {
+    margin-bottom: 1.5rem;
+}
+
+.timeline-date-label {
+    display: inline-flex;
+    align-items: center;
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ds-sys-color-on-surface-variant);
+    margin-bottom: .875rem;
+    padding: .25rem .625rem;
+    background: var(--ds-sys-color-bg-app);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--ds-sys-color-border);
+}
+
+/* ── Timeline feed ── */
+.timeline {
+    position: relative;
+    padding-left: 2.5rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--ds-sys-color-border);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.125rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Dot */
+.timeline-dot {
+    position: absolute;
+    left: -2.5rem;
+    top: .1875rem;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dot-brand {
+    background: var(--ds-sys-color-primary);
+    color: #fff;
+}
+
+.dot-success {
+    background: var(--ds-sys-color-success);
+    color: #fff;
+}
+
+.dot-warning {
+    background: var(--ds-sys-color-warning);
+    color: #fff;
+}
+
+.dot-danger {
+    background: var(--ds-sys-color-error);
+    color: #fff;
+}
+
+.dot-neutral {
+    background: var(--ds-sys-color-bg-app);
+    border: 2px solid var(--ds-sys-color-border);
+    color: var(--ds-sys-color-on-surface-variant);
+}
+
+.dot-info {
+    background: var(--color-info-500, #3b82f6);
+    color: #fff;
+}
+
+/* Card */
+.timeline-card {
+    background: var(--ds-sys-color-surface);
+    border: 1px solid var(--ds-sys-color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow var(--duration-fast);
+}
+
+.timeline-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.timeline-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .75rem;
+    padding: .875rem 1rem .625rem;
+}
+
+.timeline-title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--ds-sys-color-on-surface);
+    line-height: 1.35;
+}
+
+.timeline-subtitle {
+    font-size: var(--text-xs);
+    color: var(--ds-sys-color-on-surface-variant);
+    margin-top: .1875rem;
+}
+
+.timeline-time {
+    font-size: var(--text-xs);
+    color: var(--ds-sys-color-on-surface-variant);
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-top: .125rem;
+}
+
+/* Stats row */
+.timeline-stats {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid var(--ds-sys-color-border);
+}
+
+.timeline-stat {
+    flex: 1;
+    padding: .625rem .875rem;
+    border-right: 1px solid var(--ds-sys-color-border);
+    text-align: center;
+}
+
+.timeline-stat:last-child {
+    border-right: none;
+}
+
+.stat-val {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--ds-sys-color-on-surface);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: .6875rem;
+    color: var(--ds-sys-color-on-surface-variant);
+    margin-top: .25rem;
+}
+
+/* Expand toggle */
+.timeline-expand {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .375rem;
+    padding: .4375rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: var(--text-xs);
+    color: var(--ds-sys-color-on-surface-variant);
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--ds-sys-color-border);
+    transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.timeline-expand:hover {
+    background: var(--ds-sys-color-bg-app);
+    color: var(--ds-sys-color-on-surface);
+}
+
+.timeline-expand svg {
+    transition: transform var(--duration-moderate) var(--ease-out);
+}
+
+.timeline-expand[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+}
+
+/* Expanded body */
+.timeline-expanded-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--duration-moderate) var(--ease-out);
+}
+
+.timeline-expanded-body.is-open {
+    grid-template-rows: 1fr;
+}
+
+.timeline-expanded-inner {
+    overflow: hidden;
+}
+
+.timeline-expanded-content {
+    padding: .75rem 1rem .875rem;
+    border-top: 1px solid var(--ds-sys-color-border);
+    font-size: var(--text-xs);
+    color: var(--ds-sys-color-on-surface-variant);
+    line-height: 1.6;
+}
+
+/* Exercise list */
+.exercise-list {
+    display: flex;
+    flex-direction: column;
+    gap: .375rem;
+    margin-top: .5rem;
+}
+
+.exercise-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    font-size: var(--text-xs);
+}
+
+.exercise-name {
+    color: var(--ds-sys-color-on-surface);
+    font-weight: 500;
+}
+
+.exercise-sets {
+    color: var(--ds-sys-color-on-surface-variant);
+}
+
+/* Simple feed items (no card) */
+.timeline-simple {
+    padding: .125rem 0;
+}
+
+.simple-title {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--ds-sys-color-on-surface);
+}
+
+.simple-meta {
+    font-size: var(--text-xs);
+    color: var(--ds-sys-color-on-surface-variant);
+    margin-top: .125rem;
+}
+
+/* ── Milestones variant ── */
+.timeline-milestones {
+    position: relative;
+    padding-left: 3rem;
+}
+
+.timeline-milestones::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--ds-sys-color-border);
+}
+
+.milestone-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.milestone-dot {
+    position: absolute;
+    left: -3rem;
+    top: .125rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.milestone-card {
+    background: var(--ds-sys-color-surface);
+    border: 1px solid var(--ds-sys-color-border);
+    border-radius: var(--radius-lg);
+    padding: .875rem 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.milestone-title {
+    font-size: var(--text-sm);
+    font-weight: 700;
+}
+
+.milestone-desc {
+    font-size: var(--text-xs);
+    color: var(--ds-sys-color-on-surface-variant);
+    margin-top: .25rem;
+    line-height: 1.5;
+}
+
+.milestone-date {
+    font-size: .6875rem;
+    color: var(--ds-sys-color-on-surface-variant);
+    margin-top: .4375rem;
+}
+
+/* ── Compact variant ── */
+.timeline-compact {
+    position: relative;
+    padding-left: 1.75rem;
+}
+
+.timeline-compact::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--ds-sys-color-border);
+}
+
+.compact-item {
+    position: relative;
+    margin-bottom: .5rem;
+    display: flex;
+    align-items: baseline;
+    gap: .625rem;
+}
+
+.compact-dot {
+    position: absolute;
+    left: -1.75rem;
+    top: .3125rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.compact-label {
+    font-size: var(--text-sm);
+    color: var(--ds-sys-color-on-surface);
+}
+
+.compact-time {
+    font-size: var(--text-xs);
+    color: var(--ds-sys-color-on-surface-variant);
+    white-space: nowrap;
+}
+
+/* Load more */
+.load-earlier {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: 100%;
+    margin-top: 1.25rem;
+    padding: .5625rem 1rem;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--ds-sys-color-on-surface-variant);
+    background: var(--ds-sys-color-surface);
+    border: 1px solid var(--ds-sys-color-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.load-earlier:hover {
+    background: var(--ds-sys-color-bg-app);
+    color: var(--ds-sys-color-on-surface);
+}

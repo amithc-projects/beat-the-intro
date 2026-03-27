@@ -1,0 +1,96 @@
+/* ════════════════════════════════
+   SPINNER
+════════════════════════════════ */
+.spinner {
+    display: inline-block;
+    animation: spin var(--spinner-duration, 700ms) linear infinite;
+}
+
+.spinner circle.track {
+    fill: none;
+    stroke: var(--spinner-track-color, var(--ds-sys-color-border));
+}
+
+.spinner circle.arc {
+    fill: none;
+    stroke: var(--spinner-arc-color, var(--ds-sys-color-primary));
+    stroke-linecap: round;
+    stroke-dasharray: 60 100;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+        transform-origin: center;
+    }
+}
+
+/* Sizes */
+.spinner-xs {
+    width: 12px;
+    height: 12px;
+}
+
+.spinner-sm {
+    width: 16px;
+    height: 16px;
+}
+
+.spinner-md {
+    width: 24px;
+    height: 24px;
+}
+
+.spinner-lg {
+    width: 40px;
+    height: 40px;
+}
+
+.spinner-xl {
+    width: 64px;
+    height: 64px;
+}
+
+/* Variants */
+.spinner-muted circle.arc {
+    stroke: var(--ds-sys-color-on-surface-variant);
+}
+
+.spinner-inverted circle.track {
+    stroke: rgba(255, 255, 255, .25);
+}
+
+.spinner-inverted circle.arc {
+    stroke: #fff;
+}
+
+.spinner-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Button with loading */
+.btn-primary:disabled {
+    opacity: .7;
+    cursor: wait;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spinner {
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: .4
+        }
+
+        50% {
+            opacity: 1
+        }
+    }
+}

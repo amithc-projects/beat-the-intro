@@ -1,0 +1,70 @@
+/* static/css/components/rating.css */
+@layer components {
+
+    /* --- RATING WRAPPER --- */
+    .rating-group {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+    }
+
+    .rating-group__text {
+        font-size: var(--text-sm);
+        color: var(--ds-sys-color-on-surface-subtle);
+        font-weight: 500;
+    }
+
+    /* --- 1. INTERACTIVE RATING (Forms) --- */
+    .rating-input {
+        display: inline-flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+
+    .rating-input input {
+        display: none;
+    }
+
+    .rating-input label {
+        font-size: 1.5rem;
+        color: var(--ds-sys-color-border);
+        cursor: pointer;
+        transition: 0.2s;
+        line-height: 1;
+    }
+
+    .rating-input input:checked~label,
+    .rating-input label:hover,
+    .rating-input label:hover~label {
+        color: var(--ds-sys-color-warning, #f59e0b);
+    }
+
+    /* --- 2. READ-ONLY DISPLAY (E-commerce Aggregates) --- */
+    /* Uses a custom property --rating-fill to clip perfectly to decimal ratings */
+    .rating-display {
+        position: relative;
+        display: inline-flex;
+        font-size: 1.5rem;
+        line-height: 1;
+        color: var(--ds-sys-color-border);
+        /* Set this inline: style="--rating-fill: 86%" */
+        --rating-fill: 0%;
+    }
+
+    /* Base grey stars */
+    .rating-display::before {
+        content: "★★★★★";
+    }
+
+    /* Colored stars that get clipped */
+    .rating-display::after {
+        content: "★★★★★";
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: var(--ds-sys-color-warning, #f59e0b);
+        overflow: hidden;
+        width: var(--rating-fill);
+        white-space: nowrap;
+    }
+}

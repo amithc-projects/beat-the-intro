@@ -1,0 +1,43 @@
+/* css/components/buttons.css */
+@layer components {
+  /* ... Global Reset & Primary Button remain the same ... */
+  button {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    padding-block: calc(var(--space-xs) * var(--ds-sys-density));
+    padding-inline: calc(var(--space-lg) * var(--ds-sys-density));
+    transition: background 0.2s ease, transform 0.1s, box-shadow 0.2s;
+  }
+
+  .primary {
+    background: var(--ds-sys-color-primary);
+    color: var(--ds-sys-color-on-primary);
+    border-radius: var(--ds-sys-radius-btn);
+    border: 2px solid transparent; 
+  }
+  .primary:hover {
+    background: color-mix(in oklch, var(--ds-sys-color-primary), var(--ds-ref-mix-shade) 30%);
+  }
+
+  /* SECONDARY BUTTON (Abstracted) */
+  .secondary {
+    /* Default to transparent/outline style */
+    background: var(--ds-cmp-btn-sec-bg, transparent);
+    color: var(--ds-cmp-btn-sec-text, var(--ds-sys-color-primary));
+    
+    border: var(--ds-cmp-btn-sec-border-width, 2px) solid;
+    border-color: var(--ds-cmp-btn-sec-border-color, var(--ds-sys-color-primary));
+    
+    border-radius: var(--ds-sys-radius-btn);
+  }
+
+  .secondary:hover {
+    background: var(--ds-cmp-btn-sec-hover-bg, var(--ds-sys-color-primary));
+    color: var(--ds-cmp-btn-sec-hover-text, var(--ds-sys-color-on-primary));
+    border-color: var(--ds-cmp-btn-sec-hover-border, var(--ds-sys-color-primary));
+    transform: var(--ds-cmp-btn-sec-hover-transform, none);
+  }
+}

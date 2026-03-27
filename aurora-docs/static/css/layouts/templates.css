@@ -1,0 +1,197 @@
+/* AURORA PAGE TEMPLATES
+   One markup structure, multiple layout variations.
+   Controlled via data-layout="..." attribute on the container.
+*/
+
+:root {
+  /* Layout Dimensions */
+  --tpl-sidebar-width: 18rem;
+  --tpl-rail-width: 14rem;
+  --tpl-gap: var(--space-md);
+  
+  /* Inherit System Tokens */
+  --tpl-bg: var(--ds-sys-color-bg-app);
+  --tpl-surface: var(--ds-sys-color-surface);
+  --tpl-border: 1px solid var(--ds-sys-color-border);
+  --tpl-radius: var(--ds-sys-radius-card);
+}
+
+/* --- THE CONTAINER (.tpl-page) --- */
+.tpl-page {
+  display: grid;
+  gap: var(--tpl-gap);
+  min-height: 80vh;
+  width: 100%;
+  
+  /* Default: Holy Grail Grid Definition */
+  grid-template-columns: var(--tpl-rail-width) 1fr var(--tpl-sidebar-width);
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "hdr hdr hdr"
+    "nav main aside"
+    "ftr ftr ftr";
+}
+
+/* --- REGIONS --- */
+.tpl-header { grid-area: hdr; }
+.tpl-nav    { grid-area: nav; }
+.tpl-main   { grid-area: main; }
+.tpl-aside  { grid-area: aside; }
+.tpl-footer { grid-area: ftr; }
+
+/* Visual Styling for Regions (to show structure) */
+.tpl-header, .tpl-nav, .tpl-main, .tpl-aside, .tpl-footer {
+  background: var(--tpl-surface);
+  border: var(--tpl-border);
+  border-radius: var(--tpl-radius);
+  padding: var(--space-md);
+  overflow: hidden; /* Contain content */
+}
+
+.tpl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* --- LAYOUT VARIATIONS --- */
+
+/* 1. Holy Grail (Default) */
+[data-layout="holy-grail"] {
+  /* Uses default grid defined above */
+}
+
+/* 2. Single Column */
+[data-layout="single"] {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "hdr"
+    "main"
+    "ftr";
+}
+[data-layout="single"] .tpl-nav,
+[data-layout="single"] .tpl-aside { display: none; }
+
+/* 3. Centered (Reading) */
+[data-layout="centered"] {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "hdr"
+    "main"
+    "ftr";
+}
+[data-layout="centered"] .tpl-nav,
+[data-layout="centered"] .tpl-aside { display: none; }
+[data-layout="centered"] .tpl-main {
+  width: 100%;
+  max-width: 70ch;
+  margin-inline: auto; /* Center the content block */
+}
+
+/* 4. Two Column (Left Nav) */
+[data-layout="two-left"] {
+  grid-template-columns: var(--tpl-rail-width) 1fr;
+  grid-template-areas:
+    "hdr hdr"
+    "nav main"
+    "ftr ftr";
+}
+[data-layout="two-left"] .tpl-aside { display: none; }
+
+/* 5. Two Column (Right Rail) */
+[data-layout="two-right"] {
+  grid-template-columns: 1fr var(--tpl-sidebar-width);
+  grid-template-areas:
+    "hdr hdr"
+    "main aside"
+    "ftr ftr";
+}
+[data-layout="two-right"] .tpl-nav { display: none; }
+
+/* 6. Three Column */
+[data-layout="three-col"] {
+  /* Same as default/holy grail */
+}
+
+/* 7. Split Screen */
+[data-layout="split"] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "hdr hdr"
+    "main aside"
+    "ftr ftr";
+}
+[data-layout="split"] .tpl-nav { display: none; }
+[data-layout="split"] .tpl-aside {
+  background: var(--ds-sys-color-surface-variant, #f0f0f0);
+  border: none;
+}
+
+/* 8. App Shell (Fixed Sidebar) */
+[data-layout="app-shell"] {
+  grid-template-columns: var(--tpl-rail-width) 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "hdr hdr"
+    "nav main";
+  height: 100vh; /* Full viewport height */
+  overflow: hidden;
+}
+[data-layout="app-shell"] .tpl-footer,
+[data-layout="app-shell"] .tpl-aside { display: none; }
+[data-layout="app-shell"] .tpl-nav {
+  border-radius: 0;
+  border-left: 0; border-top: 0; border-bottom: 0;
+}
+[data-layout="app-shell"] .tpl-main {
+  overflow-y: auto;
+  border-radius: var(--tpl-radius) 0 0 0;
+}
+[data-layout="app-shell"] .tpl-header {
+  border-radius: 0;
+  border: none;
+  border-bottom: var(--tpl-border);
+}
+
+/* 9. Grid Gallery (Internal Layout) */
+[data-layout="grid-gallery"] {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "hdr"
+    "main"
+    "ftr";
+}
+[data-layout="grid-gallery"] .tpl-nav,
+[data-layout="grid-gallery"] .tpl-aside { display: none; }
+
+/* 10. Multi-Column Text */
+[data-layout="multicol"] {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "hdr"
+    "main"
+    "ftr";
+}
+[data-layout="multicol"] .tpl-nav,
+[data-layout="multicol"] .tpl-aside { display: none; }
+[data-layout="multicol"] .tpl-main-content {
+  column-count: 3;
+  column-gap: 2rem;
+}
+
+/* --- RESPONSIVE OVERRIDES --- */
+@media (max-width: 900px) {
+  .tpl-page {
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+      "hdr"
+      "nav"
+      "main"
+      "aside"
+      "ftr" !important;
+  }
+  /* Reset widths for stacked mobile view */
+  [data-layout="centered"] .tpl-main { max-width: 100%; }
+  [data-layout="multicol"] .tpl-main-content { column-count: 1; }
+}

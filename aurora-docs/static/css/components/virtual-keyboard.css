@@ -1,0 +1,160 @@
+@layer components {
+    .virtual-keyboard {
+        --vk-bg: var(--ds-cmp-vk-bg, var(--ds-sys-color-surface-container-low, #f1f5f9));
+        --vk-key-bg: var(--ds-cmp-vk-key-bg, var(--ds-sys-color-surface, #ffffff));
+        --vk-key-text: var(--ds-cmp-vk-key-text, var(--ds-sys-color-on-surface, #0f172a));
+        --vk-key-border: var(--ds-cmp-vk-key-border, 1px solid var(--ds-sys-color-border, #cbd5e1));
+        --vk-key-shadow: var(--ds-cmp-vk-key-shadow, 0 1px 2px rgba(0, 0, 0, 0.05));
+        --vk-key-radius: var(--ds-cmp-vk-key-radius, var(--ds-sys-radius-btn, 6px));
+
+        /* States */
+        --vk-key-active-bg: var(--ds-cmp-vk-key-active-bg, var(--ds-sys-color-surface-container-highest, #e2e8f0));
+
+        /* Game States */
+        --vk-key-disabled-bg: var(--ds-cmp-vk-key-disabled-bg, color-mix(in srgb, var(--ds-sys-color-surface-container-highest), transparent 40%));
+        --vk-key-disabled-text: var(--ds-cmp-vk-key-disabled-text, var(--ds-sys-color-on-surface-variant, #94a3b8));
+
+        --vk-key-positive-bg: var(--ds-cmp-vk-key-positive-bg, var(--ds-sys-color-success, #22c55e));
+        --vk-key-positive-text: var(--ds-cmp-vk-key-positive-text, var(--ds-sys-color-on-primary, #ffffff));
+
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.75rem;
+        background: var(--vk-bg);
+        border-radius: var(--ds-sys-radius-card);
+        touch-action: manipulation;
+        user-select: none;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .virtual-keyboard__row {
+        display: flex;
+        justify-content: center;
+        gap: 0.375rem;
+    }
+
+    /* Specific Row Indents for QWERTY stagger */
+    .virtual-keyboard__row[data-row="1"] {
+        padding: 0 4%;
+    }
+
+    .virtual-keyboard__row[data-row="2"] {
+        padding: 0 0;
+    }
+
+    .virtual-keyboard__key {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        /* Auto stretch */
+        min-width: 0;
+        /* Prevent flex blowout */
+        height: 3.5rem;
+        /* Large touch target */
+
+        background: var(--vk-key-bg);
+        color: var(--vk-key-text);
+        border: var(--vk-key-border);
+        border-radius: var(--vk-key-radius);
+        box-shadow: var(--vk-key-shadow);
+
+        font-family: inherit;
+        font-size: 1.1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.1s ease;
+
+        /* Disable default touch highlighting on iOS */
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Wide Keys (Enter, Del) */
+    .virtual-keyboard__key--wide {
+        flex: 1.5;
+        font-size: 0.9rem;
+        font-weight: 600;
+        min-width: 4.5rem;
+    }
+
+    .virtual-keyboard__key--voice {
+        flex: 1;
+        min-width: 3.5rem;
+    }
+
+    .virtual-keyboard__key .material-symbols-outlined {
+        font-size: 1.25rem;
+    }
+
+    /* Voice Active State - Pulsing */
+    .virtual-keyboard__key--voice.is-listening {
+        color: var(--ds-sys-color-error);
+        background: color-mix(in srgb, var(--ds-sys-color-error), transparent 90%);
+        border-color: var(--ds-sys-color-error);
+        animation: vk-pulse 1.5s infinite;
+    }
+
+    @keyframes vk-pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4);
+        }
+
+        70% {
+            box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+        }
+    }
+
+    /* --- INTERACTIONS --- */
+
+    .virtual-keyboard__key:active {
+        background: var(--vk-key-active-bg);
+        transform: translateY(1px);
+        box-shadow: none;
+    }
+
+    @media (hover: hover) {
+        .virtual-keyboard__key:hover:not(:disabled):not([data-state]) {
+            background: var(--vk-key-active-bg);
+        }
+    }
+
+    /* --- SPECIAL STATES --- */
+
+    /* Neutral Disabled (e.g. letter not in word) */
+    .virtual-keyboard__key[data-state="disabled"] {
+        background: var(--vk-key-disabled-bg);
+        color: var(--vk-key-disabled-text);
+        border-color: transparent;
+        box-shadow: none;
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    /* Positive Disabled (e.g. correct letter, already guessed) */
+    .virtual-keyboard__key[data-state="positive"] {
+        background: var(--vk-key-positive-bg);
+        color: var(--vk-key-positive-text);
+        border-color: transparent;
+        pointer-events: none;
+    }
+
+    /* Ensure special icons invert correctly on positive state */
+    .virtual-keyboard__key[data-state="positive"] .material-symbols-outlined {
+        color: inherit;
+    }
+
+    /* --- LAYOUT VARIANTS --- */
+
+    .virtual-keyboard--digits .virtual-keyboard__key {
+        height: 4rem;
+        font-size: 1.5rem;
+    }
+}

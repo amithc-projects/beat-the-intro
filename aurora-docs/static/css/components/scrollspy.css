@@ -1,0 +1,129 @@
+/* -------------------------------------------------------------------------- */
+/* Component: Scrollspy (Table of Contents)                                   */
+/* -------------------------------------------------------------------------- */
+
+.docs-page-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+@media (min-width: 1024px) {
+    .docs-page-layout.has-toc {
+        display: grid;
+        /* Create a generous content area and a fixed right sidebar for TOC */
+        grid-template-columns: minmax(0, 1fr) 200px;
+        gap: 3rem;
+    }
+}
+
+.docs-page-content {
+    width: 100%;
+    min-width: 0;
+}
+
+.docs-page-toc {
+    /* Avoid showing on small screens where it takes too much space */
+    display: none;
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .docs-page-toc {
+        display: block;
+        /* Sticky positioning relative to the .docs-layout viewport */
+        position: sticky;
+        top: 2rem;
+        max-height: calc(100vh - 4rem);
+        overflow-y: auto;
+
+        /* Subtle separation from main content */
+        padding-left: 1.5rem;
+        border-left: 1px solid var(--ds-sys-color-border);
+    }
+}
+
+.toc-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.toc-title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--ds-sys-color-on-surface);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toc-title::-webkit-details-marker {
+    display: none;
+}
+
+.toc-title svg {
+    transition: transform 0.2s ease;
+}
+
+details[open] .toc-title svg {
+    transform: rotate(180deg);
+}
+
+/* Hugo's generated TOC structure */
+.docs-page-toc nav,
+.docs-page-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.docs-page-toc ul ul {
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+.docs-page-toc li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.docs-page-toc a {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--ds-sys-color-on-surface-variant);
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+    position: relative;
+}
+
+.docs-page-toc a:hover {
+    color: var(--ds-sys-color-primary);
+    transform: translateX(2px);
+}
+
+/* Active state from Javascript Scrollspy */
+.docs-page-toc a.is-active {
+    color: var(--ds-sys-color-primary);
+    font-weight: 600;
+    border-left: 2px solid var(--ds-sys-color-primary);
+    padding-left: 4px;
+    /* Slight visual nudge */
+    margin-left: -6px;
+    /* Offset to align text */
+}
+
+/* Focus state for keyboard accessibility */
+.docs-page-toc a:focus-visible {
+    color: var(--ds-sys-color-primary);
+    font-weight: 500;
+    outline: 2px solid var(--ds-sys-color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+}

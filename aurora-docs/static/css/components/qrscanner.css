@@ -1,0 +1,70 @@
+/* css/components/qrscanner.css */
+@layer components {
+    .qr-scanner-card {
+        background: var(--ds-sys-color-surface);
+        padding: calc(var(--ds-ref-space-base) * 1.5);
+        border-radius: var(--ds-sys-radius-card);
+        border: var(--ds-sys-border-width) solid var(--ds-sys-color-border);
+        box-shadow: var(--ds-sys-shadow-card);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: var(--ds-ref-space-base);
+        max-width: 600px;
+        /* Keep the camera feed from getting absurdly massive on desktop */
+        margin: 0 auto;
+    }
+
+    /* Target the injected html5-qrcode DOM structure */
+    .qr-scanner-container {
+        width: 100%;
+        border-radius: calc(var(--ds-sys-radius-card) - 4px);
+        overflow: hidden;
+        /* Round the video stream edges */
+    }
+
+    /* Override the ugly injected styles from the library */
+    .qr-scanner-container a {
+        color: var(--ds-sys-color-primary) !important;
+        text-decoration: none;
+    }
+
+    .qr-scanner-container a:hover {
+        text-decoration: underline;
+    }
+
+    .qr-scanner-container button {
+        background: var(--ds-sys-color-primary) !important;
+        color: var(--ds-sys-color-on-primary) !important;
+        border: none !important;
+        padding: var(--ds-ref-space-base) calc(var(--ds-ref-space-base) * 2) !important;
+        border-radius: var(--ds-sys-radius-btn) !important;
+        font-family: var(--font-primary) !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+        transition: opacity 0.2s ease !important;
+        margin-top: var(--ds-ref-space-base) !important;
+    }
+
+    .qr-scanner-container button:hover {
+        opacity: 0.9 !important;
+    }
+
+    /* Result Output Styling */
+    .qr-scanner-result {
+        background: var(--ds-sys-color-surface-variant);
+        color: var(--ds-sys-color-on-surface-variant);
+        padding: var(--ds-ref-space-base);
+        border-radius: var(--ds-sys-radius-card);
+        font-family: var(--font-primary);
+        word-break: break-all;
+        font-size: 0.875rem;
+        display: none;
+        /* Hidden until success */
+    }
+
+    .qr-scanner-result.has-data {
+        display: block;
+        animation: fade-in 0.3s ease-out;
+    }
+}

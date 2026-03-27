@@ -1,0 +1,39 @@
+/* css/base/primitives.css */
+@layer primitives {
+  /* Vertical Stack */
+  .l-stack { 
+    display: flex; 
+    flex-direction: column; 
+    /* FIXED: Force full width so children don't shrink-wrap */
+    width: 100%; 
+    gap: var(--space-md); 
+  }
+  
+  /* Grid System */
+  .l-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--col-min, 300px)), 1fr)); 
+    /* FIXED: Force full width */
+    width: 100%;
+    gap: var(--space-lg); 
+  }
+  
+  /* Centered Container */
+  .l-center { 
+    max-width: var(--ds-sys-layout-max-width, 1200px); 
+    margin-inline: auto; 
+    padding-inline: var(--space-md); 
+    /* Ensure it behaves as a container */
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Cluster (Flex Wrap) */
+  .l-cluster { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: var(--space-md); 
+    align-items: center; 
+  }
+  .l-cluster--center { justify-content: center; }
+}

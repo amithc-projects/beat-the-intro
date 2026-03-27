@@ -1,0 +1,89 @@
+/* css/components/accordion.css */
+@layer components {
+  /* 1. The Container */
+  .accordion {
+    /* FIXED: Force full width constraints */
+    display: block;
+    width: 100%;
+    min-width: 100%; /* Prevents flex-shrink shrinking it */
+    box-sizing: border-box;
+    
+    /* Paint */
+    background: var(--ds-cmp-accordion-bg, var(--ds-sys-color-surface));
+    border: var(--ds-cmp-accordion-border, 1px solid var(--ds-sys-color-border));
+    border-radius: var(--ds-cmp-accordion-radius, var(--ds-sys-radius-card));
+    
+    /* Layout */
+    margin-bottom: var(--space-xs);
+    overflow: hidden; 
+  }
+
+  /* 2. The Interactive Trigger (Summary) */
+  .accordion__summary {
+    width: 100%;
+    box-sizing: border-box;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md);
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--ds-sys-color-on-surface);
+    list-style: none; 
+    
+    transition: background 0.2s, color 0.2s;
+  }
+  
+  .accordion__summary::-webkit-details-marker { display: none; }
+
+  .accordion__summary:hover {
+    background: var(--ds-cmp-accordion-hover-bg, transparent);
+  }
+
+  /* 3. The Custom Marker (Icon) */
+  .accordion__summary::after {
+    content: var(--ds-cmp-accordion-icon, "expand_more"); 
+    font-family: "Material Symbols Outlined";
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+    transform: var(--ds-cmp-accordion-icon-closed-rotation, rotate(0deg));
+  }
+
+  /* OPEN STATE: Rotate marker */
+  .accordion[open] .accordion__summary::after {
+    transform: var(--ds-cmp-accordion-icon-open-rotation, rotate(180deg));
+  }
+  
+  /* OPEN STATE: Active Header Styling */
+  .accordion[open] .accordion__summary {
+    background: var(--ds-cmp-accordion-active-header, transparent);
+    
+    /* FIXED: Correctly inverts text color for Shop Theme (White on Black) */
+    color: var(--ds-cmp-accordion-active-text, inherit);
+  }
+
+  /* 4. The Content Wrapper */
+  .accordion__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-out;
+    width: 100%;
+    min-width: 0; /* Prevents grid blowout */
+  }
+
+  .accordion[open] .accordion__panel {
+    grid-template-rows: 1fr;
+  }
+
+  .accordion__inner {
+    overflow: hidden; 
+  }
+  
+  .accordion__inner > div {
+    padding: var(--space-md);
+    padding-top: 0;
+    color: var(--ds-sys-color-on-surface);
+    opacity: 0.9;
+  }
+}

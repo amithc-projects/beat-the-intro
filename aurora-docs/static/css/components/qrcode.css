@@ -1,0 +1,36 @@
+/* css/components/qrcode.css */
+@layer components {
+    .qr-container {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: var(--ds-sys-color-surface);
+        padding: calc(var(--ds-ref-space-base) * 1.5);
+        border-radius: var(--ds-sys-radius-card);
+        border: var(--ds-sys-border-width) solid var(--ds-sys-color-border);
+        box-shadow: var(--ds-sys-shadow-card);
+        gap: var(--ds-ref-space-base);
+    }
+
+    .qr-container.no-style {
+        padding: 0;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .qr-code-canvas {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .qr-caption {
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        color: var(--ds-sys-color-on-surface-variant);
+        text-align: center;
+        margin: 0;
+    }
+}

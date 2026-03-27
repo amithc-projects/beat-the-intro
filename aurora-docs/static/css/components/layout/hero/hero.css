@@ -1,0 +1,64 @@
+/* css/components/hero.css */
+@layer components {
+  .hero { 
+    text-align: center; 
+    padding-block: var(--ds-sys-space-section-lg, 4rem); 
+  }
+  
+  .hero__title { 
+    font-size: var(--ds-sys-size-font-display, 3rem); 
+    margin-bottom: 1rem; 
+    line-height: 1.1; 
+  }
+  
+  .hero__text { 
+    max-width: 60ch; 
+    margin-inline: auto; 
+    margin-bottom: 2rem; 
+    font-size: 1.125rem; 
+    color: var(--ds-sys-color-on-surface-variant, inherit); 
+  }
+
+  /* Append to css/components/layout/hero/hero.css */
+
+  /* --- OVERLAY HERO --- */
+  /* Usage: <header class="hero hero--overlay" style="background-image: url(...)"> */
+  .hero--overlay {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    color: white; /* Force white text */
+    min-height: 60vh; /* Taller for dramatic effect */
+    
+    /* Flex alignment (e.g. Center Center or Bottom Left) */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center;     /* Center horizontally */
+    text-align: center;
+  }
+
+  /* The Dimmer Gradient (Pseudo-element) */
+  .hero--overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);
+    z-index: 0;
+  }
+
+  /* Ensure content sits above the gradient */
+  .hero--overlay > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Variant: Bottom Left (Netflix Style) */
+  .hero--overlay-bottom {
+    justify-content: flex-end;
+    align-items: flex-start;
+    text-align: left;
+    padding-bottom: var(--space-2xl);
+  }
+  
+}

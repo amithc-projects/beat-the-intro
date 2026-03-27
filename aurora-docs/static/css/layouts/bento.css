@@ -1,0 +1,24 @@
+.l-bento {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 900px) {
+  .l-bento {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(280px, auto);
+  }
+  
+  /* The First Child takes up 2x2 space */
+  .l-bento > *:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  
+  /* Ensure the card inside fills the height */
+  .l-bento > *:first-child .card {
+    height: 100%;
+  }
+}
+

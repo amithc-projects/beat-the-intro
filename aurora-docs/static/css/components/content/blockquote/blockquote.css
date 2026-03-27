@@ -1,0 +1,54 @@
+@layer components {
+    .blockquote {
+        /* Layout & Spacing */
+        padding: var(--space-md) var(--space-lg);
+        margin-block: var(--space-lg);
+        position: relative;
+
+        /* Paint */
+        background-color: var(--ds-cmp-blockquote-bg);
+        color: var(--ds-cmp-blockquote-text-color);
+        border-left: var(--ds-cmp-blockquote-border-width) solid var(--ds-cmp-blockquote-border-color);
+        border-radius: var(--ds-sys-radius-card);
+
+        /* Typography */
+        font-size: 1.25rem;
+        font-style: var(--ds-cmp-blockquote-font-style);
+        font-weight: var(--ds-cmp-blockquote-font-weight);
+        line-height: 1.6;
+    }
+
+    /* Variant: Borderless with Large Icon (Modern style) */
+    .blockquote--iconic {
+        border-left: none;
+        padding-left: calc(var(--space-2xl) + 1rem);
+    }
+
+    .blockquote--iconic::before {
+        content: '“';
+        position: absolute;
+        left: var(--space-md);
+        top: 0;
+        font-size: 4rem;
+        line-height: 1;
+        color: var(--ds-sys-color-primary);
+        opacity: 0.5;
+        font-family: serif;
+        /* Classic look for quotes */
+    }
+
+    /* Footer for Citation */
+    .blockquote__footer {
+        display: block;
+        margin-top: var(--space-sm);
+        font-size: 0.9rem;
+        font-style: normal;
+        font-weight: 500;
+        opacity: 0.8;
+        color: var(--ds-sys-color-on-surface-variant);
+    }
+
+    .blockquote__footer::before {
+        content: "— ";
+    }
+}

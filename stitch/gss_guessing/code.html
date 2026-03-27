@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><title>GSS: Guessing</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#aed500",
+              "primary-fixed-dim": "#aed500",
+              "surface": "#131313",
+              "surface-container-lowest": "#0e0e0e",
+              "error-container": "#93000a",
+              "inverse-surface": "#e2e2e2",
+              "on-primary-container": "#576c00",
+              "surface-variant": "#353535",
+              "tertiary": "#ffffff",
+              "inverse-on-surface": "#303030",
+              "primary-fixed": "#c7f300",
+              "on-tertiary-fixed-variant": "#454747",
+              "on-error": "#690005",
+              "on-tertiary": "#2f3131",
+              "on-background": "#e2e2e2",
+              "on-secondary": "#002e6a",
+              "on-tertiary-container": "#636565",
+              "on-primary": "#293500",
+              "surface-container-low": "#1b1b1b",
+              "secondary": "#adc6ff",
+              "secondary-fixed-dim": "#adc6ff",
+              "surface-dim": "#131313",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed": "#001a42",
+              "primary-container": "#c7f300",
+              "background": "#131313",
+              "on-surface-variant": "#c5c9ac",
+              "surface-container-high": "#2a2a2a",
+              "outline-variant": "#444933",
+              "on-surface": "#e2e2e2",
+              "on-secondary-fixed-variant": "#004395",
+              "tertiary-container": "#e2e2e2",
+              "on-secondary-container": "#e6ecff",
+              "primary": "#ffffff",
+              "surface-bright": "#393939",
+              "error": "#ffb4ab",
+              "secondary-fixed": "#d8e2ff",
+              "tertiary-fixed": "#e2e2e2",
+              "secondary-container": "#0566d9",
+              "surface-container-highest": "#353535",
+              "on-tertiary-fixed": "#1a1c1c",
+              "outline": "#8e9378",
+              "surface-container": "#1f1f1f",
+              "on-primary-fixed-variant": "#3d4d00",
+              "tertiary-fixed-dim": "#c6c6c7",
+              "inverse-primary": "#526600",
+              "on-primary-fixed": "#171e00"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grainy-bg {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+        }
+        .brutal-shadow {
+            box-shadow: 4px 4px 0px 0px #c7f300;
+        }
+        .brutal-shadow-white {
+            box-shadow: 4px 4px 0px 0px #ffffff;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-[#131313] border-b-4 border-[#D1FF00]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-highest border-2 border-primary-container overflow-hidden rounded-none">
+<img alt="Spotify User Profile" class="w-full h-full object-cover" data-alt="Abstract vibrant geometric profile avatar with high contrast neon green and black shapes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaLW2R0rD1B2yD1plw1O7dAeyGUYaZJCEqMdSrL0H4z62owpVkqn-T27TparOlYG003eYUPvxN0avfClfwD-a5Tj7xLR4ePDdE3qeEi_3NDmmxJVyTJrd7ez9mdkGUuJJg_QBDLA-EZU5vBk0_TiiUz1pt1pH5QnbnvAgc8dS_EhUO6Pu5w87bnpKMMnUJ3JcYzkdDEMNR9LPQL8Fj7I0fd1YixwDrBoxlUnrSJKbzfN1IvYl7ZheO-728MAQJfRAPqcdrxwC0pK4"/>
+</div>
+<span class="text-2xl font-black italic tracking-tighter text-[#D1FF00] font-headline uppercase">BEAT THE INTRO</span>
+</div>
+<button class="text-[#D1FF00] hover:bg-[#D1FF00] hover:text-black transition-all duration-75 p-2 active:translate-x-1 active:translate-y-1">
+<span class="material-symbols-outlined text-3xl">settings</span>
+</button>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-20 px-6 max-w-5xl mx-auto flex flex-col md:flex-row gap-8 min-h-[calc(100vh-144px)]">
+<!-- Left Column: Context (Now Paused Track Visuals) -->
+<section class="flex-1 flex flex-col justify-center gap-8">
+<div class="relative group">
+<!-- Hard Layering Artwork -->
+<div class="absolute -inset-2 bg-primary-container translate-x-1 translate-y-1 -z-10"></div>
+<div class="aspect-square w-full max-w-[400px] mx-auto bg-surface-container-high border-2 border-primary relative overflow-hidden grayscale contrast-125">
+<img alt="Track Art" class="w-full h-full object-cover mix-blend-overlay" data-alt="High contrast black and white photography of a grainy DJ mixer and vinyl records in a dark underground club" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvEazLMYGIRU28QEXRJn0GygiZevxbxPFafnQfxfBnLgU393QAjKWXZOvfy1FEqPZvvy_Lr-kG3G7oZXO9k3j5juCts3Lj2chortThRqxeykxsxlUCTvSItTtd436_gc7e3_p-Z_ejPz6tnZD5goP6XVMl3p_ujBhGrlPQMacXIl9Ew1l9-8HbylCAj-bKNFH13xxXWsMwS1VngED-MZ4ny6gRCX0fhJ3DPm_oscQ6eTJGq77xclfScROtUkX78Uo0Q69vdGQTuiI"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+<div class="text-center p-6 border-4 border-primary-container">
+<span class="material-symbols-outlined text-7xl text-primary-container font-black">pause_circle</span>
+<p class="font-headline font-black text-2xl uppercase tracking-tighter mt-4 text-primary">PLAYBACK PAUSED</p>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex items-center gap-2">
+<span class="bg-primary text-black px-2 py-0.5 text-[10px] font-black tracking-widest uppercase">STATUS</span>
+<span class="text-primary-container font-black text-sm tracking-tighter">WAITING FOR GUESS...</span>
+</div>
+<h1 class="font-headline text-5xl md:text-6xl font-black italic tracking-tighter uppercase leading-[0.9] text-primary">
+                    ???<span class="text-primary-container">_</span>
+</h1>
+<p class="font-headline text-2xl font-bold uppercase text-on-surface-variant opacity-70 italic">
+                    ARTIST UNKNOWN
+                </p>
+</div>
+<!-- Pulse Progress Bar (Static while paused) -->
+<div class="w-full h-4 bg-surface-container-highest border-2 border-primary-container">
+<div class="w-1/3 h-full bg-primary-container shadow-[0_0_15px_rgba(209,255,0,0.5)]"></div>
+</div>
+</section>
+<!-- Right Column: Guessing Form (Aurora Brutalist Design) -->
+<section class="flex-1 flex flex-col justify-center">
+<div class="bg-surface-container-low p-8 border-4 border-primary relative">
+<div class="absolute -top-4 -left-4 bg-primary-container text-black px-4 py-1 font-black text-sm uppercase tracking-tighter transform -rotate-2">
+                    INPUT_YOUR_INTEL
+                </div>
+<form class="space-y-10 mt-6" onsubmit="return false">
+<div class="flex flex-col md:flex-row gap-6">
+<!-- Artist Name Input -->
+<div class="flex-1 group">
+<label class="block font-label text-[10px] font-bold tracking-[5%] text-primary-container uppercase mb-2">
+                                01_Artist Name
+                            </label>
+<div class="relative">
+<input class="w-full bg-surface-container-high border-0 border-b-4 border-primary text-primary font-headline font-black text-xl uppercase py-4 px-4 placeholder:text-white/20 focus:ring-0 focus:border-primary-container transition-all" placeholder="ENTER ARTIST..." type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-20">
+<span class="material-symbols-outlined">person</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Song Title Input -->
+<div class="group">
+<label class="block font-label text-[10px] font-bold tracking-[5%] text-primary-container uppercase mb-2">
+                            02_Song Title
+                        </label>
+<div class="relative">
+<input class="w-full bg-surface-container-high border-0 border-b-4 border-primary text-primary font-headline font-black text-xl uppercase py-4 px-4 placeholder:text-white/20 focus:ring-0 focus:border-primary-container transition-all" placeholder="WHAT IS THE TRACK?" type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-20">
+<span class="material-symbols-outlined">music_note</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col gap-4 pt-6">
+<button class="w-full bg-[#D1FF00] text-black font-headline font-black text-2xl py-6 uppercase tracking-tighter brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:scale-95 transition-all flex items-center justify-center gap-3">
+                            SUBMIT GUESS
+                            <span class="material-symbols-outlined font-black">send</span>
+</button>
+<button class="w-full border-4 border-primary text-primary font-headline font-black text-xl py-4 uppercase tracking-tighter hover:bg-primary hover:text-black transition-all active:scale-95 flex items-center justify-center gap-3">
+                            RESUME LISTENING
+                            <span class="material-symbols-outlined">play_circle</span>
+</button>
+</div>
+</form>
+<!-- Metadata/Specs Layout -->
+<div class="mt-8 flex justify-between items-end">
+<div class="space-y-1">
+<p class="text-[10px] font-bold tracking-widest text-on-surface-variant uppercase">Time Bonus</p>
+<p class="text-primary-container font-black font-headline text-xl">+1250 pts</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-bold tracking-widest text-on-surface-variant uppercase">Attempts</p>
+<p class="text-primary font-black font-headline text-xl">1/3</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full h-16 z-50 flex justify-around items-stretch bg-[#131313] border-t-4 border-[#D1FF00]">
+<a class="flex flex-col items-center justify-center bg-[#D1FF00] text-black h-full px-4 transform scale-110 flex-1" href="#">
+<span class="material-symbols-outlined">play_arrow</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PLAY</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 flex-1 hover:bg-white hover:text-black transition-colors duration-100" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">DISCOVER</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 flex-1 hover:bg-white hover:text-black transition-colors duration-100" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">RANK</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white h-full px-4 opacity-80 flex-1 hover:bg-white hover:text-black transition-colors duration-100" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Space_Grotesk'] font-bold tracking-[5%] text-[10px]">PROFILE</span>
+</a>
+</nav>
+<!-- Grainy static overlay -->
+<div class="fixed inset-0 pointer-events-none grainy-bg z-[100]"></div>
+</body></html>

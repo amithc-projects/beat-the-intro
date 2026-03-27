@@ -1,0 +1,395 @@
+/* --- DOCS LAYOUT --- */
+.docs-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.docs-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid var(--ds-sys-color-border);
+  background: var(--ds-sys-color-bg-app);
+  padding: 0 0 0 3px;
+}
+
+.docs-content {
+  padding: 3rem;
+  max-width: 100%;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Sidebar Navigation                                                         */
+/* -------------------------------------------------------------------------- */
+.nav-vertical {
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.9rem;
+}
+
+.docs-sidebar-header {
+  font-weight: 900;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: var(--ds-sys-color-on-surface);
+  letter-spacing: -0.5px;
+}
+
+.docs-sidebar-subheader {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin-top: 0.2rem;
+}
+
+.nav-group {
+  margin-bottom: 1rem;
+}
+
+.nav-accordion summary {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ds-sys-color-on-surface);
+  padding: 0.5rem 0.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.nav-accordion-list {
+  list-style: none;
+  padding: 0.5rem 0 0 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nav-accordion-sub-list {
+  list-style: none;
+  padding-left: 1rem;
+  margin-top: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Accordion UI polish */
+details.nav-accordion summary::-webkit-details-marker {
+  display: none;
+  /* Hide default triangle in Safari */
+}
+
+details.nav-accordion summary:hover {
+  background: var(--ds-sys-color-surface-variant);
+}
+
+details.nav-accordion[open] summary .accordion-icon {
+  transform: rotate(180deg);
+}
+
+details.nav-accordion {
+  border-bottom: 1px solid var(--ds-sys-color-border);
+  padding-bottom: 0.5rem;
+}
+
+/* Nav Links */
+.sb-nav-link {
+  text-decoration: none;
+  display: block;
+  padding: 6px 10px;
+  border-radius: 4px;
+  color: var(--ds-sys-color-on-surface);
+}
+
+.sb-nav-link.is-active {
+  background: var(--ds-sys-color-surface-container-highest);
+  font-weight: 600;
+}
+
+/* Sub Accordion (Level 2) */
+details.nav-accordion-sub summary::-webkit-details-marker {
+  display: none;
+}
+
+.sb-nav-link-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 4px;
+  color: var(--ds-sys-color-on-surface);
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  list-style: none;
+  /* Modern way to hide native disclosure triangle */
+}
+
+/* Suppress the native disclosure triangle across all browser engines */
+.sb-nav-link-summary::-webkit-details-marker,
+.sb-nav-link-summary::marker {
+  display: none;
+}
+
+.sb-nav-link-summary:hover {
+  background: var(--ds-sys-color-surface-container-highest);
+}
+
+.sb-nav-link-summary.is-active {
+  color: var(--ds-sys-color-primary);
+}
+
+.sb-nav-link-summary a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  flex: 1;
+  font-weight: 600;
+}
+
+.sb-nav-link-summary span.sb-nav-link-label {
+  display: block;
+  flex: 1;
+  font-weight: 600;
+}
+
+details.nav-accordion-sub[open] summary .accordion-icon-sub {
+  transform: rotate(180deg);
+}
+
+.sb-sub-nav-link {
+  text-decoration: none;
+  display: block;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  color: var(--ds-sys-color-on-surface-variant);
+}
+
+.sb-sub-nav-link.is-active {
+  color: var(--ds-sys-color-primary);
+}
+
+/* --- DEMO BLOCK WRAPPER --- */
+.demo-wrapper {
+  border: 1px solid var(--ds-sys-color-border);
+  border-radius: var(--ds-sys-radius-card);
+  overflow: hidden;
+  margin-block: 2rem;
+  /* ensure the border matches the theme */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.demo-preview {
+  padding: 3rem;
+  overflow: scroll;
+  resize: both;
+
+  /* CRITICAL FIX: Use the theme's surface color, not transparency */
+  /*  background-color: var(--ds-sys-color-surface);*/
+  color: var(--ds-sys-color-on-surface);
+
+  /* Optional: Add a subtle border to separate preview from docs background if they are similar */
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  /* Center content by default for better presentation */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Allow page grids to break out of the demo padding for full-bleed demonstrations */
+.demo-preview .l-page-grid {
+  margin-inline: -3rem;
+  width: calc(100% + 6rem) !important;
+}
+
+.demo-source {
+  background: #1e1e1e;
+  /* Always dark for code */
+  color: #e5e5e5;
+  border-top: 1px solid var(--ds-sys-color-border);
+}
+
+.demo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+}
+
+.btn-copy {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  opacity: 0.8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.btn-copy:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+}
+
+.code-content pre {
+  margin: 0;
+  padding: 1.5rem;
+  overflow-x: auto;
+  font-family: 'Fira Code', Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* --- CONFIGURATOR PANEL --- */
+.aurora-configurator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background: white;
+  /* Always white UI for the tool itself */
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.config-header {
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+}
+
+.config-body {
+  padding: 16px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.config-footer {
+  padding: 12px 16px;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+  text-align: right;
+}
+
+.control-group {
+  margin-bottom: 16px;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #4b5563;
+}
+
+.control-group input[type="range"] {
+  width: 100%;
+  display: block;
+}
+
+/* --- CODE TOGGLE STYLES --- */
+
+/* 1. Toggle Button Styling (Matches btn-copy) */
+.btn-toggle-code {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.btn-toggle-code:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-toggle-code .material-symbols-outlined {
+  font-size: 1.1rem;
+}
+
+/* 2. Hidden State */
+.code-content[hidden] {
+  display: none;
+}
+
+/* 3. Visible State (Animation optional) */
+.code-content:not([hidden]) {
+  display: block;
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- LIVE EDIT STYLES --- */
+.live-code {
+  outline: none;
+  /* Remove default browser outline */
+  caret-color: var(--ds-sys-color-primary);
+  /* Cursor matches theme */
+  cursor: text;
+}
+
+/* Visual cue when editing */
+.live-code:focus {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 2px 0 0 0 var(--ds-sys-color-primary);
+  /* Left border indicator */
+  display: block;
+  /* Ensure box-shadow renders nicely */
+}
+
+.live-code {
+  caret-color: white !important;
+}

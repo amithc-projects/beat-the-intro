@@ -1,0 +1,248 @@
+/* css/components/nav-rail.css */
+@layer components {
+
+    /* --- BASE RAIL CONSTRAINTS --- */
+    .nav-rail {
+        /* Default compressed state: ~72px wide just for icons + padding */
+        width: 4.5rem;
+        height: 100%;
+        background-color: var(--ds-sys-color-surface);
+        border-right: var(--ds-sys-border-width) solid var(--ds-sys-color-border);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Center icons horizontally */
+        overflow: hidden;
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-family: var(--font-body);
+        /* Force elevated z-index so expanding over body content works securely */
+        position: relative;
+        z-index: 50;
+    }
+
+    /* Expanding hover engine */
+    /* Expanding hover engine & Pinned State */
+    .nav-rail:hover,
+    .nav-rail.is-pinned {
+        /* Opens up to full Side Nav equivalent width */
+        width: var(--ds-cmp-nav-side-width, 280px);
+        align-items: flex-start;
+        /* Switch alignments so text tracks cleanly from the left edge */
+        box-shadow: var(--ds-sys-shadow-card);
+        overflow-y: auto;
+        /* Allow scrolling when expanded if menus are deep */
+        overflow-x: hidden;
+    }
+
+
+    /* --- LIST ARCHITECTURE --- */
+    .nav-rail ul {
+        list-style: none;
+        padding: var(--ds-ref-space-sm) 0;
+        margin: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: var(--ds-ref-space-sm);
+    }
+
+    .nav-rail li {
+        width: 100%;
+        padding: 0 calc(var(--ds-ref-space-base) / 2);
+        padding: 0 0.5rem;
+    }
+
+    /* Anchor layout mapping */
+    /* Anchor and Summary container mapping (Shared styles for triggers) */
+    .nav-rail a,
+    .nav-rail summary {
+        display: block;
+        /* Ignore flex to bypass Webkit <summary> shadow-dom bugs */
+        text-decoration: none;
+        color: var(--ds-sys-color-on-surface);
+        min-height: 3.5rem;
+        width: 100%;
+        border-radius: var(--ds-sys-radius-btn);
+        transition: background-color 0.2s ease, color 0.2s ease;
+        cursor: pointer;
+        list-style: none;
+        position: relative;
+    }
+
+    /* Core layout engine explicitly applied to the inner div to guarantee cross-browser consistency */
+    .nav-rail .nav-rail-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        min-height: 3.5rem;
+        padding: 0.5rem;
+    }
+
+    .nav-rail summary::-webkit-details-marker {
+        display: none;
+    }
+
+    /* Chevron for nesting */
+    .nav-rail summary::after {
+        content: "";
+        display: block;
+        width: 1.25rem;
+        height: 1.25rem;
+        background-color: currentColor;
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        -webkit-mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        transition: transform 0.2s ease;
+        opacity: 0;
+        /* Hide by default in compressed mode */
+        position: absolute;
+        right: var(--ds-ref-space-base);
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .nav-rail details[open]>summary::after {
+        transform: translateY(-50%) rotate(180deg);
+    }
+
+    .nav-rail a:hover,
+    .nav-rail summary:hover {
+        background-color: var(--ds-sys-color-surface-container-highest, rgba(0, 0, 0, 0.05));
+    }
+
+    .nav-rail a:active,
+    .nav-rail summary:active {
+        background-color: color-mix(in srgb, var(--ds-sys-color-primary), transparent 90%);
+        color: var(--ds-sys-color-primary);
+    }
+
+    /* --- CONDITIONAL TEXT RENDERING --- */
+    /* The core intelligence: Visually hide the textual label in compressed mode */
+    .nav-rail .nav-rail-label {
+        font-size: 0.75rem;
+        /* Tiny label size natively */
+        line-height: 0;
+        opacity: 0;
+        white-space: nowrap;
+        height: 0;
+        width: 0;
+        padding: 0;
+        margin: 0;
+        /* Squash it completely without breaking alignment */
+        overflow: hidden;
+        transition: opacity 0.2s ease;
+    }
+
+    /* When the rail expands via hover or pinned state, reconfigure the Flexbox to row and fade in the text! */
+    .nav-rail:hover .nav-rail-inner,
+    .nav-rail.is-pinned .nav-rail-inner {
+        flex-direction: row;
+        /* Icon and text sit tightly horizontally */
+        justify-content: flex-start;
+        /* Anchor everything to the left side */
+        padding-left: 1.5rem;
+    }
+
+    /* Inject generous space between the icon and the new inline text */
+    .nav-rail:hover .material-symbols-outlined,
+    .nav-rail.is-pinned .material-symbols-outlined {
+        margin-right: var(--ds-ref-space-base);
+    }
+
+    /* Resurrect the text label */
+    .nav-rail:hover .nav-rail-label,
+    .nav-rail.is-pinned .nav-rail-label {
+        opacity: 1;
+        height: auto;
+        width: auto;
+        line-height: normal;
+        font-size: 0.95rem;
+        /* Scale it up to match standard Side Navigation size! */
+        font-weight: 500;
+    }
+
+    /* Show Chevron only when expanded */
+    .nav-rail:hover summary::after,
+    .nav-rail.is-pinned summary::after {
+        opacity: 0.6;
+    }
+
+    .nav-rail:hover summary:hover::after,
+    .nav-rail.is-pinned summary:hover::after {
+        opacity: 1;
+    }
+
+    /* --- NESTING HIERARCHY --- */
+    /* Only show deeply nested items when the rail is expanded */
+    .nav-rail details ul {
+        display: none;
+        /* Hide physically in DOM so it doesn't break compressed mode heights */
+    }
+
+    /* Nested list container escapes parent padding to hug left edge */
+    .nav-rail:hover details[open] ul,
+    .nav-rail.is-pinned details[open] ul {
+        display: flex;
+        flex-direction: column;
+        margin-left: 1.5rem;
+        width: calc(100% - 1.5rem);
+        border-left: 1px solid var(--ds-sys-color-border);
+        padding-top: 0;
+        padding-bottom: 0;
+        gap: 0;
+    }
+
+    .nav-rail ul ul a>.nav-rail-inner {
+        flex-direction: row;
+        /* Nested items are always text-first in a row */
+        justify-content: flex-start;
+        min-height: 2.25rem;
+        padding: 0;
+        padding-left: 1.25rem;
+    }
+
+    .nav-rail ul ul a {
+        color: var(--ds-sys-color-on-surface-variant);
+        width: 100%;
+        border-radius: 0 var(--ds-sys-radius-btn) var(--ds-sys-radius-btn) 0;
+        margin: 1px 0;
+    }
+
+    .nav-rail ul ul a:hover {
+        color: var(--ds-sys-color-on-surface);
+        background-color: var(--ds-sys-color-surface-container-highest, rgba(0, 0, 0, 0.05));
+    }
+
+
+    /* --- ACTIVE STATE DEMARCATION --- */
+    .nav-rail a.is-active {
+        background-color: color-mix(in srgb, var(--ds-sys-color-primary), transparent 92%);
+        color: var(--ds-sys-color-primary);
+    }
+
+    /* The visual vertical indicator */
+    .nav-rail a.is-active::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        height: 50%;
+        width: 4px;
+        background-color: var(--ds-sys-color-primary);
+        border-radius: 0 4px 4px 0;
+    }
+
+    /* Specific overrides for the Bottom "User / Settings" section */
+    .nav-rail .nav-rail-bottom-group {
+        margin-top: auto;
+        /* Force the Flex layout to slam this group to the absolute bottom of viewport */
+        padding-bottom: var(--ds-ref-space-base);
+    }
+}

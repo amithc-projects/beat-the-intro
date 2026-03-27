@@ -1,0 +1,79 @@
+/* css/components/feedback/progress.css */
+@layer components {
+
+  /* --- 1. CIRCULAR SPINNER --- */
+  .spinner {
+    display: inline-block;
+    width: var(--ds-cmp-spinner-size, 1.5rem);
+    height: var(--ds-cmp-spinner-size, 1.5rem);
+    
+    border: 3px solid currentColor; /* Inherits text color */
+    border-right-color: transparent; /* Create the gap */
+    border-radius: 50%;
+    
+    animation: spinner-spin 0.75s linear infinite;
+    vertical-align: middle;
+  }
+  
+  @keyframes spinner-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* --- 2. LINEAR PROGRESS (<progress>) --- */
+  progress {
+    appearance: none; /* Reset native styles */
+    border: none;
+    width: 100%;
+    height: var(--ds-cmp-progress-height, 0.75rem);
+    display: block;
+    margin-bottom: var(--space-md);
+    
+    /* Background (The Track) */
+    background: var(--ds-sys-color-surface);
+    border: 1px solid var(--ds-sys-color-border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  /* Value (The Fill) - Webkit */
+  progress::-webkit-progress-bar { background: transparent; }
+  progress::-webkit-progress-value {
+    background: var(--ds-sys-color-primary);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+
+  /* Value (The Fill) - Firefox */
+  progress::-moz-progress-bar {
+    background: var(--ds-sys-color-primary);
+    border-radius: 999px;
+  }
+
+  /* --- 3. INDETERMINATE STATE (Infinite Loading) --- */
+  /* Target progress elements without a 'value' attribute */
+  progress:not([value]) {
+    position: relative;
+  }
+
+  /* We need a pseudo-element for the shimmer because we can't style the 'value' bar if it doesn't exist */
+  progress:not([value])::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0; width: 40%;
+    
+    background: linear-gradient(
+      90deg, 
+      transparent, 
+      var(--ds-sys-color-primary), 
+      transparent
+    );
+    opacity: 0.5;
+    
+    animation: progress-indeterminate 1.5s infinite ease-in-out;
+  }
+
+  @keyframes progress-indeterminate {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(300%); }
+  }
+}

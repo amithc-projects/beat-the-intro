@@ -1,0 +1,210 @@
+/* css/components/forms/advanced.css */
+@layer components {
+
+  /* --- 1. FILE UPLOAD (The "Label Wrapper" Trick) --- */
+  /* We visually hide the native input but keep it accessible/clickable via the label */
+  
+  .file-input-wrapper {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+  }
+
+  /* The Native Input (Hidden but accessible) */
+  .file-input-wrapper input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    white-space: nowrap;
+  }
+
+  /* The Visual Button (The Label) */
+  .file-input-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    /* Inherit Button Styles from your system */
+    background: var(--ds-sys-color-surface);
+    color: var(--ds-sys-color-on-surface);
+    border: 1px solid var(--ds-sys-color-border);
+    border-radius: var(--ds-sys-radius-btn);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  
+  /* Focus State (via :focus-within on parent) */
+  .file-input-wrapper:focus-within .file-input-button {
+    outline: 2px solid var(--ds-sys-color-primary);
+    outline-offset: 2px;
+    border-color: var(--ds-sys-color-primary);
+  }
+
+  .file-input-wrapper:hover .file-input-button,
+  .file-input-wrapper.drag-over .file-input-button {
+    background: var(--ds-sys-color-bg-app);
+    border-color: var(--ds-sys-color-primary);
+  }
+  
+  .file-input-wrapper.drag-over .file-input-button {
+      outline: 2px dashed var(--ds-sys-color-primary);
+      outline-offset: 2px;
+  }
+
+  /* --- 2. DATE & TIME INPUTS --- */
+  
+  input[type="date"],
+  input[type="time"],
+  input[type="datetime-local"] {
+    /* Ensure they match text inputs */
+    appearance: none;
+    display: block;
+    width: 100%;
+    
+    padding: var(--ds-cmp-input-padding-x, 0.75rem);
+    height: var(--ds-cmp-input-height, 3rem);
+    
+    border: var(--ds-cmp-input-border-width, 1px) solid var(--ds-cmp-input-border-color, var(--ds-sys-color-border));
+    border-radius: var(--ds-cmp-input-radius, 4px);
+    background: var(--ds-cmp-input-bg, var(--ds-sys-color-surface));
+    color: var(--ds-sys-color-on-surface);
+    
+    font-family: inherit;
+    font-size: 1rem;
+  }
+
+  /* The Calendar Icon (Webkit/Blink) */
+  /* We use a CSS filter to force the icon to match the text color */
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator,
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: 0.2s;
+    /* Invert filter trick for Dark Mode if needed, or use mask */
+    /* For now, we rely on the browser's auto-color, but we can force it: */
+    filter: invert(0.5); 
+  }
+  
+  input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  /* --- 3. ADVANCED SELECT (Experimental base-select) --- */
+  
+  /* Fallback for older browsers (Standard styling) */
+  select.select--advanced {
+    appearance: none;
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+  }
+
+  /* THE NEW MAGIC: Customizable Select */
+  /* Only apply if browser supports it */
+  @supports (appearance: base-select) {
+    
+    select.select--advanced {
+      appearance: base-select; /* Magic Keyword */
+      
+      /* Now we can style it like a DIV */
+      padding: var(--ds-cmp-input-padding-x, 1rem);
+      border: var(--ds-cmp-input-border-width, 1px) solid var(--ds-cmp-input-border-color, var(--ds-sys-color-border));
+      border-radius: var(--ds-cmp-input-radius, 4px);
+      background: var(--ds-cmp-input-bg, var(--ds-sys-color-surface));
+      color: var(--ds-sys-color-on-surface);
+    }
+
+    /* The Dropdown Popover (::picker) */
+    /* NOTE: Syntax is currently evolving (::picker(select)) */
+    select.select--advanced::picker(select) {
+      background: var(--ds-sys-color-surface);
+      border: 1px solid var(--ds-sys-color-border);
+      border-radius: var(--ds-sys-radius-card);
+      box-shadow: var(--ds-sys-shadow-card);
+      padding: 0.5rem;
+      
+      /* Animation */
+      opacity: 0;
+      transition: opacity 0.2s allow-discrete;
+    }
+    
+    select.select--advanced::picker(select):popover-open {
+      opacity: 1;
+      @starting-style { opacity: 0; }
+    }
+
+    /* Option styling inside the picker */
+    select.select--advanced option {
+      padding: 0.5rem 1rem;
+      border-radius: var(--ds-sys-radius-btn);
+      cursor: pointer;
+      display: flex; /* Allow icons inside options! */
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    select.select--advanced option:hover,
+    select.select--advanced option:checked {
+      background-color: var(--ds-sys-color-bg-app);
+      color: var(--ds-sys-color-primary);
+    }
+    
+    /* The button arrow (::select-button is implicit in some drafts, 
+       but standard CSS on the select element handles the trigger styles) */
+  }
+
+
+  /* --- 4. FORM LAYOUTS --- */
+
+  /* .form-row: A Grid Wrapper */
+  .form-row {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin-bottom: var(--space-md);
+  }
+  
+  /* .form-inline: Flex Cluster (e.g. "Zip" next to "State") */
+  .form-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: flex-end; /* Align inputs to bottom line */
+  }
+
+  /* .field-group: Semantic grouping (Fieldset alternative) */
+  .field-group {
+    border: none;
+    padding: 0;
+    margin: 0 0 var(--space-lg) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .field-group__label {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--ds-sys-color-on-surface);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .field-group__hint {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: var(--space-sm);
+  }
+
+}

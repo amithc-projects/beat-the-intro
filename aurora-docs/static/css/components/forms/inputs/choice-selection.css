@@ -1,0 +1,324 @@
+/* Extracted from choice-selection/_index.md */
+.l-grid-choice {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Activate the customizable select behavior */
+.field .input--custom-base,
+::picker(select) {
+  appearance: base-select;
+}
+
+/* 1. The Main Trigger Button */
+.field .input--custom-base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--ds-sys-color-surface);
+  border: 1px solid var(--ds-sys-color-border);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.field .input--custom-base:hover {
+  background-color: var(--ds-sys-color-surface);
+  border-color: var(--ds-sys-color-primary);
+}
+
+/* 2. The Arrow Icon */
+.field .input--custom-base::picker-icon {
+  content: "expand_circle_down";
+  font-family: 'Material Symbols Outlined';
+  color: var(--ds-sys-color-primary);
+  font-size: 1.2rem;
+  transition: 0.4s rotate;
+}
+
+.field .input--custom-base:open::picker-icon {
+  rotate: 180deg;
+}
+
+/* 3. The Dropdown Popover */
+::picker(select) {
+  background: var(--ds-sys-color-surface);
+  border: 1px solid var(--ds-sys-color-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  margin-top: 4px;
+  opacity: 0;
+  transition: opacity 0.4s allow-discrete, display 0.4s allow-discrete;
+}
+
+::picker(select):popover-open {
+  opacity: 1;
+}
+
+@starting-style {
+  ::picker(select):popover-open {
+    opacity: 0;
+  }
+}
+
+/* 4. Options Styling */
+.field .input--custom-base option {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.field .input--custom-base option:hover,
+.field .input--custom-base option:focus {
+  background-color: var(--ds-sys-color-surface-variant);
+  outline: none;
+}
+
+.field .input--custom-base option:checked {
+  background-color: var(--ds-sys-color-primary-container);
+  color: var(--ds-sys-color-on-primary-container);
+  font-weight: 500;
+}
+
+.field .input--custom-base option::checkmark {
+  content: "check";
+  font-family: 'Material Symbols Outlined';
+  margin-left: auto;
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+/* Multi-Select */
+.multi-select {
+  position: relative;
+  cursor: pointer;
+}
+
+.ms-trigger {
+  border: 1px solid var(--ds-sys-color-border);
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--ds-sys-color-surface);
+  min-height: 42px;
+}
+
+.ms-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--ds-sys-color-surface);
+  border: 1px solid var(--ds-sys-color-border);
+  border-radius: 6px;
+  padding: 0;
+  list-style: none;
+  margin-top: 4px;
+  z-index: 50;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.multi-select.is-open .ms-dropdown {
+  display: block;
+}
+
+.ms-dropdown li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.ms-dropdown li:hover {
+  background: var(--ds-sys-color-surface-variant);
+}
+
+.ms-dropdown li.is-selected {
+  background: var(--ds-sys-color-primary-container);
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.ms-chips {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  background: var(--ds-sys-color-primary-container);
+  color: var(--ds-sys-color-on-primary-container);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Segmented Controls */
+.seg-group {
+  display: inline-flex;
+  background: #eee;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.seg-group label {
+  position: relative;
+  cursor: pointer;
+}
+
+.seg-group input {
+  display: none;
+}
+
+.seg-group span {
+  display: block;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: .2s;
+}
+
+.seg-group input:checked+span {
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: var(--ds-sys-color-primary);
+  font-weight: bold;
+}
+
+/* Rich Selection (Button Group) */
+.rich-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.rich-option {
+  cursor: pointer;
+  position: relative;
+  margin: 0;
+}
+
+.rich-option input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.rich-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.25rem 1rem;
+  border: 2px solid var(--ds-sys-color-border);
+  border-radius: 8px;
+  background: var(--ds-sys-color-surface);
+  transition: all 0.2s ease;
+  text-align: center;
+  color: var(--ds-sys-color-on-surface);
+}
+
+.rich-option:hover .rich-card {
+  border-color: var(--ds-sys-color-outline);
+  background: var(--ds-sys-color-surface-container);
+}
+
+.rich-option input:checked+.rich-card {
+  border-color: var(--ds-sys-color-primary);
+  background: var(--ds-sys-color-primary-container);
+  color: var(--ds-sys-color-on-primary-container);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.rich-card .material-symbols-outlined {
+  font-size: 1.5rem;
+}
+
+/* Tags & Ratings */
+.tag-box {
+  border: 1px solid var(--ds-sys-color-border);
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  cursor: text;
+}
+
+.tag-box input {
+  border: none;
+  outline: none;
+  flex: 1;
+  min-width: 60px;
+}
+
+
+
+.emoji-group {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.emoji-group input {
+  display: none;
+}
+
+.emoji-group label {
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: grayscale(100%);
+  opacity: 0.4;
+}
+
+.emoji-group label:hover {
+  filter: grayscale(0%);
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+
+.emoji-group input:checked+label {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+/* Matrix Survey */
+.matrix-grid {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  border: 1px solid var(--ds-sys-color-border);
+}
+
+.matrix-grid th {
+  background: var(--ds-sys-color-surface-variant);
+  padding: 1rem;
+}
+
+.matrix-grid td {
+  padding: 1rem;
+  border-top: 1px solid var(--ds-sys-color-border);
+}
+
+.matrix-grid td.topic {
+  text-align: left;
+  font-weight: bold;
+  padding-left: 1.5rem;
+}

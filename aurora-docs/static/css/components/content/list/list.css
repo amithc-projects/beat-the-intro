@@ -1,0 +1,133 @@
+/* css/components/content/list.css */
+@layer components {
+
+  /* --- 0. DEFAULT TYPOGRAPHIC LISTS --- */
+  :where(ul:not([class])) {
+    display: block;
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-block: 1rem;
+  }
+  
+  :where(ul:not([class]) ul:not([class])),
+  :where(ol:not([class]) ul:not([class])) {
+    list-style: circle;
+    margin-block: 0.25rem;
+  }
+  
+  :where(ol:not([class])) {
+    display: block;
+    list-style: decimal;
+    padding-left: 1.5rem;
+    margin-block: 1rem;
+  }
+  
+  :where(ol:not([class]) ol:not([class])),
+  :where(ul:not([class]) ol:not([class])) {
+    list-style: lower-alpha;
+    margin-block: 0.25rem;
+  }
+  
+  :where(ul:not([class]) > li), 
+  :where(ol:not([class]) > li) {
+    display: list-item;
+    margin-bottom: 0.25rem;
+  }
+
+  /* --- 1. BASE LIST (Clean Slate) --- */
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  /* --- 2. VARIANT: STACK (Divided) --- */
+  .list--stack {
+    gap: 0;
+    border: 1px solid var(--ds-sys-color-border);
+    border-radius: var(--ds-sys-radius-card);
+    overflow: hidden;
+  }
+  
+  .list--stack > li {
+    padding: var(--space-md);
+    background: var(--ds-sys-color-surface);
+    border-bottom: 1px solid var(--ds-sys-color-border);
+  }
+  
+  .list--stack > li:last-child {
+    border-bottom: none;
+  }
+  
+  .list--stack > li:hover {
+    background: var(--ds-sys-color-bg-app);
+  }
+
+  /* --- 3. VARIANT: INLINE (Tags/Meta) --- */
+  .list--inline {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  
+  /* --- 4. VARIANT: BREADCRUMBS --- */
+  .list--breadcrumbs {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.9rem;
+    color: var(--ds-sys-color-on-surface);
+  }
+
+  .list--breadcrumbs li {
+    display: flex;
+    align-items: center;
+  }
+
+  /* The Separator (The "/" or "›") */
+  .list--breadcrumbs li:not(:last-child)::after {
+    content: "/"; /* Default separator */
+    margin-left: var(--space-sm);
+    opacity: 0.4;
+    font-weight: 400;
+  }
+  
+  /* Link Styling */
+  .list--breadcrumbs a {
+    text-decoration: none;
+    color: var(--ds-sys-color-primary);
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  
+  .list--breadcrumbs a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
+  
+  /* Current Item (Last Child) */
+  .list--breadcrumbs li:last-child {
+    font-weight: 600;
+    color: var(--ds-sys-color-on-surface);
+    opacity: 0.8;
+  }
+
+  /* Separator Variants */
+  .list--breadcrumbs-arrow li:not(:last-child)::after {
+    content: "›";
+    font-size: 1.2em;
+    line-height: 0.8;
+  }
+  
+  .list--breadcrumbs-chevron li:not(:last-child)::after {
+    content: "chevron_right";
+    font-family: 'Material Symbols Outlined';
+    font-size: 1rem;
+    vertical-align: middle;
+  }
+
+}
