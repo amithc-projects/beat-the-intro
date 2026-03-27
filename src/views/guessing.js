@@ -57,6 +57,10 @@ export function renderGuessing() {
   document.getElementById('submit-btn').addEventListener('click', () => {
     const artistGuess = document.getElementById('artist-input').value.trim()
     const titleGuess  = document.getElementById('title-input').value.trim()
+
+    // Clear pause state — this is a final submission, not a resume
+    state.pausedElapsedMs = null
+
     const result = submitGuess(artistGuess, titleGuess)
 
     track('guess_submitted', { round: state.currentRound, isCorrect: result.isCorrect })
@@ -67,7 +71,7 @@ export function renderGuessing() {
   })
 
   document.getElementById('resume-btn').addEventListener('click', () => {
-    // pausedElapsedMs is still set — playing.js will use it to resume
+    // pausedElapsedMs intentionally kept — playing.js uses it to resume
     navigate('/play')
   })
 

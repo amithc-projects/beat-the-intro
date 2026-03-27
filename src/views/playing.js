@@ -19,6 +19,7 @@ export async function renderPlaying() {
     const params = getQueryParams()
     if (params.tracks && params.playlist) {
       await setupFromShareLink(params.playlist, params.tracks.split(','))
+      return // setupFromShareLink navigates to /ready or /playlists
     } else {
       navigate('/playlists')
       return
@@ -122,6 +123,7 @@ async function setupFromShareLink(playlistId, trackIds) {
       tracks.length,
       { presorted: true }
     )
+    navigate('/ready') // User gesture on ready screen unlocks browser audio
   } catch (err) {
     console.error('Failed to load shared tracks', err)
     showToast('Could not load shared game', 'error')

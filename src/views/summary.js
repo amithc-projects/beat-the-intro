@@ -43,21 +43,29 @@ export function renderSummary() {
           </div>
         </div>
 
-        <div class="space-y-4">
-          <p class="section-label">Round by round</p>
-          ${state.rounds.map((r, i) => `
-            <div class="card" style="display:flex;align-items:center;gap:1rem">
-              <span class="badge badge--${r.isCorrect ? 'success' : 'error'}" style="min-width:2rem;justify-content:center">${i + 1}</span>
-              ${r.track.album.images?.[0]?.url
-                ? `<img src="${r.track.album.images[0].url}" alt="" style="width:40px;height:40px;object-fit:cover;flex-shrink:0">`
-                : ''}
-              <div style="flex:1;min-width:0">
-                <p style="font-weight:900;font-size:0.875rem;text-transform:uppercase;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escHtml(r.track.name)}</p>
-                <p class="text-muted text-xs tracking-wide uppercase mt-2">${escHtml(r.track.artists.map(a=>a.name).join(', '))}</p>
-              </div>
-              <span class="section-label" style="flex-shrink:0">${(r.elapsedMs/1000).toFixed(1)}s</span>
-            </div>
-          `).join('')}
+        <div>
+          <p class="section-label" style="margin-bottom:0.75rem">Round by round</p>
+          <div class="round-tiles">
+            ${state.rounds.map((r, i) => {
+              const img = r.track.album.images?.[0]?.url || ''
+              const artist = escHtml(r.track.artists.map(a=>a.name).join(', '))
+              return `
+                <div class="round-tile-wrap">
+                  <div class="round-tile" style="${img ? `background-image:url('${img}')` : 'background:#1f1f1f'}">
+                    <div class="round-tile__overlay">
+                      <p class="round-tile__track">${escHtml(r.track.name)}</p>
+                      <p class="round-tile__artist">${artist}</p>
+                      <p class="round-tile__time">${(r.elapsedMs/1000).toFixed(1)}s</p>
+                    </div>
+                  </div>
+                  <div class="round-tile__label round-tile__label--${r.isCorrect ? 'correct' : 'wrong'}">
+                    <span class="round-tile__label-num">${i + 1}</span>
+                    <span class="round-tile__label-verdict">${r.isCorrect ? 'Correct' : 'Incorrect'}</span>
+                  </div>
+                </div>
+              `
+            }).join('')}
+          </div>
         </div>
 
         <div class="space-y-4">

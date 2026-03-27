@@ -20,7 +20,7 @@ export function renderRoundResult() {
     <div class="view">
       <div class="view__inner space-y-6">
 
-        <!-- Big verdict banner -->
+        <!-- Verdict banner -->
         <div class="result-verdict result-verdict--${isCorrect ? 'correct' : 'wrong'}">
           <span class="material-symbols-outlined result-verdict__icon" style="font-variation-settings:'FILL' 1">
             ${isCorrect ? 'check_circle' : 'cancel'}
@@ -29,19 +29,21 @@ export function renderRoundResult() {
           <span class="result-verdict__time">${secs}s</span>
         </div>
 
-        <!-- Track reveal -->
-        <div style="display:flex;gap:1.25rem;align-items:flex-start">
-          ${coverUrl
-            ? `<img src="${coverUrl}" alt="Album art" style="width:88px;height:88px;object-fit:cover;flex-shrink:0;border:2px solid #fff">`
-            : ''}
-          <div style="min-width:0">
-            <p style="font-weight:900;font-size:1.1rem;text-transform:uppercase;letter-spacing:-0.02em;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escHtml(track.name)}</p>
-            <p class="text-volt font-bold tracking-wide uppercase text-sm mt-2">${escHtml(correctArtist)}</p>
-            <p class="text-muted text-xs tracking-wide uppercase mt-2">${escHtml(track.album.name)}</p>
+        <!-- Track info — hidden until revealed on wrong answer -->
+        <div id="track-reveal" ${!isCorrect ? 'style="display:none"' : ''}>
+          <div style="display:flex;gap:1.25rem;align-items:flex-start">
+            ${coverUrl
+              ? `<img src="${coverUrl}" alt="Album art" style="width:88px;height:88px;object-fit:cover;flex-shrink:0;border:2px solid #fff">`
+              : ''}
+            <div style="min-width:0">
+              <p style="font-weight:900;font-size:1.1rem;text-transform:uppercase;letter-spacing:-0.02em;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escHtml(track.name)}</p>
+              <p class="text-volt font-bold tracking-wide uppercase text-sm mt-2">${escHtml(correctArtist)}</p>
+              <p class="text-muted text-xs tracking-wide uppercase mt-2">${escHtml(track.album.name)}</p>
+            </div>
           </div>
         </div>
 
-        <!-- Artist / Title breakdown -->
+        <!-- Artist / Title breakdown (always shown) -->
         <div class="result-breakdown">
           <div class="result-breakdown__row">
             <span class="result-breakdown__label">Artist</span>
@@ -59,23 +61,58 @@ export function renderRoundResult() {
           </div>
         </div>
 
-        <!-- Score + next -->
         <p class="section-label">${score} correct — Round ${state.currentRound} of ${state.totalRounds}</p>
 
-        <button id="next-btn" class="btn btn--primary btn--full">
-          ${last
-            ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
-            : '<span class="material-symbols-outlined">skip_next</span> Next Round'
-          }
-        </button>
+        <!-- CTAs -->
+        <div class="space-y-4">
+          ${isCorrect ? `
+            <button id="next-btn" class="btn btn--primary btn--full">
+              ${last
+                ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
+                : '<span class="material-symbols-outlined">skip_next</span> Next Round'
+              }
+            </button>
+          ` : `
+            <button id="reveal-btn" class="btn btn--primary btn--full">
+              <span class="material-symbols-outlined">visibility</span>
+              Reveal Answer
+            </button>
+            <button id="next-btn" class="btn btn--primary btn--full" style="display:none">
+              ${last
+                ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
+                : '<span class="material-symbols-outlined">skip_next</span> Next Round'
+              }
+            </button>
+            <button id="hear-more-btn" class="btn btn--secondary btn--full">
+              <span class="material-symbols-outlined">hearing</span>
+              Hear More
+            </button>
+          `}
+        </div>
+
       </div>
     </div>
   `
 
   showToast(isCorrect ? '✓ Correct!' : '✗ Wrong answer', isCorrect ? 'success' : 'error', 2500)
 
-  document.getElementById('next-btn').addEventListener('click', () => {
+  // Reveal answer (wrong path only)
+  document.getElementById('reveal-btn')?.addEventListener('click', () => {
+    document.getElementById('track-reveal').style.display = 'block'
+    document.getElementById('reveal-btn').style.display = 'none'
+    document.getElementById('next-btn').style.display = 'flex'
+    document.getElementById('hear-more-btn').style.display = 'none'
+  })
+
+  document.getElementById('next-btn')?.addEventListener('click', () => {
     navigate(last ? '/summary' : '/play')
+  })
+
+  document.getElementById('hear-more-btn')?.addEventListener('click', () => {
+    const undone = state.rounds.pop()
+    state.totalElapsedMs -= undone.elapsedMs
+    state.pausedElapsedMs = undone.elapsedMs
+    navigate('/play')
   })
 }
 

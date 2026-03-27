@@ -15,9 +15,11 @@ import { renderGuessing } from './views/guessing.js'
 import { renderRoundResult } from './views/round-result.js'
 import { renderSummary } from './views/summary.js'
 import { renderShare } from './views/share.js'
+import { renderReady } from './views/ready.js'
 import { renderSettings } from './views/settings.js'
 import { renderCookiePolicy } from './views/cookie-policy.js'
 import { renderPrivacyPolicy } from './views/privacy-policy.js'
+import { renderHowToPlay } from './views/how-to-play.js'
 
 // ── Preserve share route before OAuth wipes the hash ──────────────────────────
 const initialHash = window.location.hash
@@ -68,14 +70,16 @@ register('/login',    () => noNav(renderLogin))
 register('/gate',     () => noNav(renderPremiumGate))
 register('/playlists',() => authRequired(renderPlaylists))
 register('/config',   () => authRequired(renderConfig))
+register('/ready',    () => authRequired(renderReady))
 register('/play',     () => authRequired(renderPlaying))
 register('/guess',    () => authRequired(renderGuessing))
 register('/result',   () => authRequired(renderRoundResult))
 register('/summary',  () => authRequired(renderSummary))
 register('/share',    () => authRequired(renderShare))
 register('/settings', () => authRequired(renderSettings))
-register('/cookies',  () => authRequired(renderCookiePolicy))
-register('/privacy',  () => authRequired(renderPrivacyPolicy))
+register('/cookies',    () => authRequired(renderCookiePolicy))
+register('/privacy',    () => authRequired(renderPrivacyPolicy))
+register('/how-to-play',() => authRequired(renderHowToPlay))
 
 // ── Bootstrap ─────────────────────────────────────────────────────────────────
 async function init() {
