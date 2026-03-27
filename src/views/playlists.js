@@ -12,7 +12,7 @@ export async function renderPlaylists() {
 
   app.innerHTML = `
     <div class="view">
-      <div class="view__inner view__inner--wide space-y-6">
+      <div class="view__inner view__inner--wide space-y-6 lscape-playlist-container">
         <div class="playlist-header">
           <div>
             <p class="section-label">Step 1 of 2</p>

@@ -55,7 +55,7 @@ export function renderRoundResult() {
           <p class="section-label">${score} correct — Round ${state.currentRound} of ${state.totalRounds}</p>
         </div>
 
-        <!-- RIGHT: track reveal + CTAs -->
+        <!-- RIGHT: track reveal -->
         <div class="result-right">
           <div id="track-reveal" ${!isCorrect ? 'style="display:none"' : ''}>
             <div style="display:flex;gap:1.25rem;align-items:flex-start">
@@ -69,50 +69,54 @@ export function renderRoundResult() {
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="space-y-4">
-            ${isCorrect ? `
-              <button id="next-btn" class="btn btn--primary btn--full">
-                ${last
-                  ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
-                  : '<span class="material-symbols-outlined">skip_next</span> Next Round'
-                }
-              </button>
-            ` : `
-              <button id="reveal-btn" class="btn btn--primary btn--full">
-                <span class="material-symbols-outlined">visibility</span>
-                Reveal Answer
-              </button>
-              <button id="next-btn" class="btn btn--primary btn--full" style="display:none">
-                ${last
-                  ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
-                  : '<span class="material-symbols-outlined">skip_next</span> Next Round'
-                }
-              </button>
-              <button id="hear-more-btn" class="btn btn--secondary btn--full">
+        <!-- BOTTOM CTAs -->
+        <div class="result-ctas-left">
+          ${!isCorrect ? `
+            <div id="hear-more-wrap">
+              <button id="hear-more-btn" class="btn btn--secondary">
                 <span class="material-symbols-outlined">hearing</span>
                 Hear More
               </button>
-            `}
-          </div>
+            </div>
+          ` : ''}
+        </div>
+
+        <div class="result-ctas-right">
+          ${isCorrect ? `
+            <button id="next-btn" class="btn btn--primary">
+              ${last
+                ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
+                : '<span class="material-symbols-outlined">skip_next</span> Next Round'
+              }
+            </button>
+          ` : `
+            <button id="reveal-btn" class="btn btn--primary">
+              <span class="material-symbols-outlined">visibility</span>
+              Reveal Answer
+            </button>
+            <button id="next-btn" class="btn btn--primary" style="display:none">
+              ${last
+                ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
+                : '<span class="material-symbols-outlined">skip_next</span> Next Round'
+              }
+            </button>
+          `}
         </div>
 
       </div>
     </div>
   `
 
-  showToast(
-    isCorrect ? '✓ Correct!' : isPartial ? '~ So close!' : '✗ Wrong answer',
-    isCorrect ? 'success' : 'error',
-    2500
-  )
 
   // Reveal answer (wrong path only)
   document.getElementById('reveal-btn')?.addEventListener('click', () => {
     document.getElementById('track-reveal').style.display = 'block'
     document.getElementById('reveal-btn').style.display = 'none'
     document.getElementById('next-btn').style.display = 'flex'
-    document.getElementById('hear-more-btn').style.display = 'none'
+    const hm = document.getElementById('hear-more-wrap')
+    if (hm) hm.style.display = 'none'
   })
 
   document.getElementById('next-btn')?.addEventListener('click', () => {

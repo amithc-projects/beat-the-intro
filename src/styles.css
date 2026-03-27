@@ -1190,23 +1190,37 @@ body {
   .field__input { padding: 0.5rem 0.75rem; font-size: 0.9375rem; }
   .field__label { font-size: 0.625rem; margin-bottom: 0.25rem; }
 
-  /* ── Playlists: header stays put, grid scrolls ── */
-  .view__inner--wide { display: flex; flex-direction: column; height: calc(100dvh - 44px - 1.5rem); }
-  .playlist-grid { flex: 1; overflow-y: auto; min-height: 0; }
+  /* ── Playlists: grid header + natural scroll ── */
+  .lscape-playlist-container {
+    display: grid;
+    grid-template-rows: auto auto;
+    height: auto;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  .playlist-grid { 
+    overflow: visible; 
+    min-height: 0; 
+    display: grid; 
+    align-content: start;
+  }
+  .playlist-card__image {
+    min-height: 120px; /* Safety net for aspect-ratio collapse */
+  }
 
-  /* ── Config: 2-column ── */
+  /* ── Config: Heading full width, columns below ── */
   .lscape-config {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: auto 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
     height: calc(100dvh - 44px - 1.5rem);
     align-items: start;
   }
-  .lscape-config > :nth-child(1) { grid-column: 1; grid-row: 1; }
-  .lscape-config > :nth-child(2) { grid-column: 1; grid-row: 2; }
-  .lscape-config > :nth-child(3) { grid-column: 2; grid-row: 1; }
-  .lscape-config > :nth-child(4) { grid-column: 2; grid-row: 2; align-self: end; }
+  .lscape-config > :nth-child(1) { grid-column: 1 / -1; margin-bottom: 0; }
+  .lscape-config > :nth-child(2) { grid-column: 1; grid-row: 2; } /* Playlist card */
+  .lscape-config > :nth-child(3) { grid-column: 2; grid-row: 2; } /* Number of rounds */
+  .lscape-config > :nth-child(4) { grid-column: 2; grid-row: 2; align-self: end; } /* Buttons */
 
   /* ── Playing: album-art left, controls right ── */
   .lscape-playing {
@@ -1230,27 +1244,34 @@ body {
   }
   .lscape-playing .timer { font-size: clamp(1.8rem, 7vw, 3rem); margin: 0; }
 
-  /* ── Guessing: left = context, right = inputs ── */
-  .lscape-guess {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem;
-    height: calc(100dvh - 44px - 1.5rem);
-    align-items: center;
+  /* ── Guessing: Compact Row-based layout ── */
+  .lscape-guess-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: -0.5rem; /* Optical tug upwards */
   }
-  .guess-left { display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; height: 100%; }
-  .guess-right { display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; height: 100%; }
+  .lscape-row-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .lscape-row-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; }
+  .lscape-row-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .lscape-guess-compact .display-heading { font-size: 1.5rem; margin: 0; }
+  .lscape-guess-compact .timer { font-size: 2rem; margin: 0; }
 
-  /* ── Round result: left = verdict/breakdown, right = reveal/CTAs ── */
+  /* ── Round result: explicit bottom buttons ── */
   .lscape-result {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 1fr auto;
     gap: 1.25rem;
     height: calc(100dvh - 44px - 1.5rem);
     align-items: start;
   }
-  .result-left { display: flex; flex-direction: column; gap: 0.5rem; }
-  .result-right { display: flex; flex-direction: column; gap: 0.5rem; }
+  .result-left { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+  .result-right { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+  
+  .result-ctas-left  { grid-column: 1; grid-row: 2; align-self: end; }
+  .result-ctas-right { grid-column: 2; grid-row: 2; align-self: end; display: flex; justify-content: flex-end; }
   .result-verdict { padding: 0.75rem 1rem; }
   .result-verdict__word { font-size: 1.4rem; }
   .result-verdict__icon { font-size: 1.8rem; }
@@ -1273,10 +1294,19 @@ body {
   }
   .summary-right .round-tiles { 
     flex: 1; 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
     overflow-y: auto; 
     min-height: 0; 
     padding-right: 0.5rem;
+    align-content: start;
   }
+  .lscape-summary .round-tile {
+    aspect-ratio: 16 / 9; /* Wider, shorter tiles for landscape */
+  }
+  .lscape-summary .round-tile__track { font-size: 0.8rem; }
+  .lscape-summary .round-tile__artist { font-size: 0.7rem; }
   .lscape-summary .display-heading { font-size: 2.2rem; }
 }
  

@@ -15,12 +15,14 @@ export function renderConfig() {
   const cover = state.playlist.images?.[0]?.url || ''
   app.innerHTML = `
     <div class="view view--centered">
-      <div class="view__inner space-y-8 lscape-config">
-        <div>
+      <div class="lscape-config view__inner view__inner--wide">
+        <!-- Grid Child 1: Heading -->
+        <div class="space-y-2">
           <p class="section-label">Step 2 of 2</p>
-          <h2 class="display-heading mt-2">Configure <span class="accent">Game</span></h2>
+          <h2 class="display-heading">Configure <span class="accent">Game</span></h2>
         </div>
 
+        <!-- Grid Child 2: Playlist Card -->
         <div class="card playlist-hero">
           ${cover ? `<img src="${cover}" alt="${state.playlist.name}" class="playlist-hero__cover" style="width:120px;height:120px;object-fit:cover;flex-shrink:0;display:block">` : ''}
           <div class="playlist-hero__info">
@@ -29,6 +31,7 @@ export function renderConfig() {
           </div>
         </div>
 
+        <!-- Grid Child 3: Rounds -->
         <div class="space-y-4">
           <p class="section-label">Number of rounds</p>
           <div class="seg-control" id="seg-rounds">
@@ -44,6 +47,7 @@ export function renderConfig() {
           <p id="rounds-note" class="text-muted text-xs" style="display:none"></p>
         </div>
 
+        <!-- Grid Child 4: Buttons -->
         <div class="space-y-4">
           <button id="start-btn" class="btn btn--primary btn--full">
             <span class="material-symbols-outlined">play_arrow</span>

@@ -18,16 +18,16 @@ export function renderGuessing() {
 
   app.innerHTML = `
     <div class="view view--centered">
-      <div class="lscape-guess">
-        <div class="guess-left view__inner space-y-6">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <span class="badge">Round ${state.currentRound} of ${state.totalRounds}</span>
-            <span class="timer" style="font-size:2.5rem" id="paused-timer">${formatTime(elapsed)}</span>
-          </div>
+      <div class="lscape-guess-compact view__inner view__inner--wide">
+        <!-- Row 1: Header (Title, Round, Timer) -->
+        <div class="lscape-row-header">
           <h2 class="display-heading">Name the <span class="accent">Track</span></h2>
+          <span class="badge">Round ${state.currentRound} of ${state.totalRounds}</span>
+          <span class="timer" id="paused-timer">${formatTime(elapsed)}</span>
         </div>
 
-        <div class="guess-right view__inner space-y-4">
+        <!-- Row 2: Inputs (Artist, Title) side-by-side -->
+        <div class="lscape-row-inputs">
           <div class="field">
             <label class="field__label" for="artist-input">Artist name</label>
             <input id="artist-input" class="field__input" type="text" placeholder="e.g. The Beatles" autocomplete="off" autocorrect="off" spellcheck="false">
@@ -36,16 +36,18 @@ export function renderGuessing() {
             <label class="field__label" for="title-input">Song title</label>
             <input id="title-input" class="field__input" type="text" placeholder="e.g. Come Together" autocomplete="off" autocorrect="off" spellcheck="false">
           </div>
-          <div class="space-y-4">
-            <button id="submit-btn" class="btn btn--primary btn--full">
-              <span class="material-symbols-outlined">check</span>
-              Submit Guess
-            </button>
-            <button id="resume-btn" class="btn btn--ghost btn--full">
-              <span class="material-symbols-outlined">play_arrow</span>
-              Resume Listening
-            </button>
-          </div>
+        </div>
+
+        <!-- Row 3: Buttons side-by-side -->
+        <div class="lscape-row-buttons">
+          <button id="resume-btn" class="btn btn--ghost btn--full">
+            <span class="material-symbols-outlined">play_arrow</span>
+            Resume Listening
+          </button>
+          <button id="submit-btn" class="btn btn--primary btn--full">
+            <span class="material-symbols-outlined">check</span>
+            Submit Guess
+          </button>
         </div>
       </div>
     </div>
