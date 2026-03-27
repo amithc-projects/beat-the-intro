@@ -676,6 +676,29 @@ html, body {
   flex-direction: column;
 }
 
+/* Config playlist hero */
+.playlist-hero {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+  padding: 0;
+  overflow: hidden;
+}
+
+.playlist-hero__cover {
+  width: 100px;
+  flex-shrink: 0;
+  object-fit: cover;
+  align-self: stretch;
+}
+
+.playlist-hero__info {
+  padding: 1rem 1rem 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .round-tile {
   aspect-ratio: 1;
   position: relative;
