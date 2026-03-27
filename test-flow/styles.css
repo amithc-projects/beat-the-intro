@@ -1,0 +1,107 @@
+:root {
+    --color-surface: #131313;
+    --color-surface-container-low: #1b1b1b;
+    --color-surface-container-high: #2a2a2a;
+    --color-surface-container-highest: #353535;
+    --color-primary: #ffffff;
+    --color-primary-container: #D1FF00;
+    --color-on-primary-container: #000000;
+    --color-on-surface: #e2e2e2;
+    --color-on-surface-variant: #c5c9ac;
+    --color-error: #ffb4ab;
+    --color-outline-variant: #444933;
+}
+
+body {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 0;
+}
+
+.bg-surface { background-color: var(--color-surface); }
+.text-on-surface { color: var(--color-on-surface); }
+.text-on-surface-variant { color: var(--color-on-surface-variant); }
+.text-primary-container { color: var(--color-primary-container); }
+.bg-primary-container { background-color: var(--color-primary-container); }
+.bg-surface-container-low { background-color: var(--color-surface-container-low); }
+.bg-surface-container-highest { background-color: var(--color-surface-container-highest); }
+
+.grainy-bg {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.offset-border {
+    box-shadow: 4px 4px 0px 0px #fff;
+    border: none;
+}
+
+.active-glitch:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px 0px #fff;
+}
+
+.zine-skew {
+    transform: skewY(-2deg);
+}
+
+.hidden { display: none !important; }
+
+/* Grid for playlists */
+#playlist-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.playlist-card {
+    background-color: var(--color-surface-container-low);
+    padding: 1rem;
+    border: 1px solid var(--color-outline-variant);
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.playlist-card:hover {
+    transform: scale(1.02);
+    border-color: var(--color-primary-container);
+}
+
+.playlist-card img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-cover: cover;
+}
+
+.playlist-card .name {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+    font-size: 1.25rem;
+}
+
+.playlist-card .tracks {
+    font-size: 0.75rem;
+    color: var(--color-primary-container);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Typography Utility */
+.font-black { font-weight: 900; }
+.italic { font-style: italic; }
+.uppercase { text-transform: uppercase; }
+.tracking-tighter { letter-spacing: -0.05em; }
+.tracking-widest { letter-spacing: 0.2em; }
+.text-6xl { font-size: 3.75rem; }
+.text-4xl { font-size: 2.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xs { font-size: 0.75rem; }
