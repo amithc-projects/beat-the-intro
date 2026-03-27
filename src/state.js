@@ -15,4 +15,8 @@ export const state = {
 
   // Share
   sharePayload: null, // { playlistId, trackIds, score, totalSeconds }
+
+  // Devices (Spotify Connect)
+  activeDeviceId: null,   // Selected output device ID
+  availableDevices: [],   // List of { id, name, type, is_active }
 }

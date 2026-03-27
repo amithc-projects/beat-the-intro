@@ -20,6 +20,7 @@ import { renderSettings } from './views/settings.js'
 import { renderCookiePolicy } from './views/cookie-policy.js'
 import { renderPrivacyPolicy } from './views/privacy-policy.js'
 import { renderHowToPlay } from './views/how-to-play.js'
+import { renderDevices } from './views/devices.js'
 
 // ── Preserve share route before OAuth wipes the hash ──────────────────────────
 const initialHash = window.location.hash
@@ -80,6 +81,7 @@ register('/settings', () => authRequired(renderSettings))
 register('/cookies',    () => authRequired(renderCookiePolicy))
 register('/privacy',    () => authRequired(renderPrivacyPolicy))
 register('/how-to-play',() => authRequired(renderHowToPlay))
+register('/devices',    () => authRequired(renderDevices))
 
 // ── Bootstrap ─────────────────────────────────────────────────────────────────
 async function init() {

@@ -5,15 +5,37 @@ import { showToast } from '../components/toast.js'
 import { track } from '../events.js'
 
 const app = document.getElementById('app')
+let allPlaylists = [] // Cache for filtering
 
 export async function renderPlaylists() {
+  const savedSearch = localStorage.getItem('bti_playlist_search') || ''
+
   app.innerHTML = `
     <div class="view">
       <div class="view__inner view__inner--wide space-y-6">
-        <div>
-          <p class="section-label">Step 1 of 2</p>
-          <h2 class="display-heading mt-2">Pick a <span class="accent">Playlist</span></h2>
+        <div class="playlist-header">
+          <div>
+            <p class="section-label">Step 1 of 2</p>
+            <h2 class="display-heading mt-2">Pick a <span class="accent">Playlist</span></h2>
+          </div>
+
+          <div id="search-container" class="search-container ${savedSearch ? 'is-active' : ''}">
+            <div class="search-input-wrapper">
+              <input
+                type="text"
+                id="search-input"
+                class="search-input"
+                placeholder="SEARCH..."
+                value="${escHtml(savedSearch)}"
+                autocomplete="off"
+              >
+            </div>
+            <button id="search-toggle" class="search-btn" title="Search">
+              <span class="material-symbols-outlined">search</span>
+            </button>
+          </div>
         </div>
+
         <div id="playlist-grid" class="playlist-grid">
           ${Array(6).fill(0).map(() => `
             <div class="playlist-card">
@@ -29,18 +51,61 @@ export async function renderPlaylists() {
     </div>
   `
 
+  const searchInput = document.getElementById('search-input')
+  const searchToggle = document.getElementById('search-toggle')
+  const searchContainer = document.getElementById('search-container')
+
+  searchToggle.addEventListener('click', () => {
+    const wasActive = searchContainer.classList.contains('is-active')
+    searchContainer.classList.toggle('is-active')
+
+    if (!wasActive) {
+      searchInput.focus()
+    } else {
+      searchInput.value = ''
+      localStorage.removeItem('bti_playlist_search')
+      renderGrid(allPlaylists)
+    }
+  })
+
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase()
+    localStorage.setItem('bti_playlist_search', e.target.value)
+    filterAndRender(term)
+  })
+
   try {
-    const playlists = await getPlaylists()
-    renderGrid(playlists)
+    allPlaylists = await getPlaylists()
+    if (savedSearch) {
+      filterAndRender(savedSearch.toLowerCase())
+    } else {
+      renderGrid(allPlaylists)
+    }
   } catch (err) {
     console.error(err)
     showToast('Could not load playlists', 'error')
   }
 }
 
+function filterAndRender(term) {
+  const filtered = allPlaylists.filter(pl =>
+    pl.name.toLowerCase().includes(term)
+  )
+  renderGrid(filtered)
+}
+
 function renderGrid(playlists) {
   const grid = document.getElementById('playlist-grid')
   if (!grid) return
+
+  if (playlists.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; padding: 4rem 0; text-align: center;">
+        <p class="text-muted uppercase tracking-wide font-bold">No playlists found matching your search.</p>
+      </div>`
+    return
+  }
+
   grid.innerHTML = playlists.map(pl => `
     <div class="playlist-card" data-id="${pl.id}" data-name="${escHtml(pl.name)}" data-total="${pl.tracks.total}">
       <img

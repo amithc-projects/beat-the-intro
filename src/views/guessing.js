@@ -58,9 +58,6 @@ export function renderGuessing() {
     const artistGuess = document.getElementById('artist-input').value.trim()
     const titleGuess  = document.getElementById('title-input').value.trim()
 
-    // Clear pause state — this is a final submission, not a resume
-    state.pausedElapsedMs = null
-
     const result = submitGuess(artistGuess, titleGuess)
 
     track('guess_submitted', { round: state.currentRound, isCorrect: result.isCorrect })

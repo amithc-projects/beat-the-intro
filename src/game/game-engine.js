@@ -68,7 +68,7 @@ export function currentTrack() {
 
 export function submitGuess(artistGuess, titleGuess) {
   const track = currentTrack()
-  const elapsed = Date.now() - state.startTime
+  const elapsed = state.pausedElapsedMs !== null ? state.pausedElapsedMs : (Date.now() - state.startTime)
   const result = evaluateGuess(artistGuess, titleGuess, track)
 
   state.rounds.push({

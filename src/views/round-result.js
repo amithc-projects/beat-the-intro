@@ -10,22 +10,27 @@ export function renderRoundResult() {
 
   const round = state.rounds[state.rounds.length - 1]
   const { track, guess, isCorrect, artistMatch, titleMatch, elapsedMs } = round
+  const isPartial = !isCorrect && (artistMatch || titleMatch)
   const correctArtist = track.artists.map(a => a.name).join(', ')
   const coverUrl = track.album.images?.[0]?.url || ''
   const last = isLastRound()
   const score = correctCount()
   const secs = (elapsedMs / 1000).toFixed(1)
 
+  const verdictClass = isCorrect ? 'correct' : isPartial ? 'partial' : 'wrong'
+  const verdictIcon  = isCorrect ? 'check_circle' : isPartial ? 'warning' : 'cancel'
+  const verdictWord  = isCorrect ? 'Correct!' : isPartial ? 'Close!' : 'Wrong!'
+
   app.innerHTML = `
     <div class="view">
       <div class="view__inner space-y-6">
 
         <!-- Verdict banner -->
-        <div class="result-verdict result-verdict--${isCorrect ? 'correct' : 'wrong'}">
+        <div class="result-verdict result-verdict--${verdictClass}">
           <span class="material-symbols-outlined result-verdict__icon" style="font-variation-settings:'FILL' 1">
-            ${isCorrect ? 'check_circle' : 'cancel'}
+            ${verdictIcon}
           </span>
-          <span class="result-verdict__word">${isCorrect ? 'Correct!' : 'Wrong!'}</span>
+          <span class="result-verdict__word">${verdictWord}</span>
           <span class="result-verdict__time">${secs}s</span>
         </div>
 
@@ -94,7 +99,11 @@ export function renderRoundResult() {
     </div>
   `
 
-  showToast(isCorrect ? '✓ Correct!' : '✗ Wrong answer', isCorrect ? 'success' : 'error', 2500)
+  showToast(
+    isCorrect ? '✓ Correct!' : isPartial ? '~ So close!' : '✗ Wrong answer',
+    isCorrect ? 'success' : 'error',
+    2500
+  )
 
   // Reveal answer (wrong path only)
   document.getElementById('reveal-btn')?.addEventListener('click', () => {

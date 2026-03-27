@@ -1,20 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beat the Intro</title>
+  <title>Beat the Intro — The Music Guessing Game</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Test your music knowledge with Beat the Intro. Guess the track from the first few seconds. powered by Spotify.">
+  <meta name="keywords" content="music game, music quiz, spotify game, guess the song, beat the intro, music trivia">
+  <meta name="author" content="Beat the Intro">
+  <meta name="robots" content="index, follow">
+
+  <!-- Theme & Mobile -->
+  <meta name="theme-color" content="#D1FF00">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Beat the Intro">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Beat the Intro">
+  <meta property="og:title" content="Beat the Intro — The Music Guessing Game">
+  <meta property="og:description" content="Test your music knowledge with Beat the Intro. Guess the track from the first few seconds. powered by Spotify.">
+  <meta property="og:url" content="https://beattheintro.app/">
+  <meta property="og:image" content="/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Beat the Intro — The Music Guessing Game">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Beat the Intro — The Music Guessing Game">
+  <meta name="twitter:description" content="Test your music knowledge with Beat the Intro. Guess the track from the first few seconds.">
+  <meta name="twitter:image" content="/og-image.png">
+  <meta name="twitter:image:alt" content="Beat the Intro game">
+
+  <!-- Icons & Manifest -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Preload Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link rel="stylesheet" href="/aurora-docs/static/css/core.css">
   <link rel="stylesheet" href="/aurora-docs/static/css/aurora.css">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="/src/styles.css">
   <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "w2glar91jc");
+  </script>
+
 </head>
+
 <body>
   <div id="grain" aria-hidden="true"></div>
   <div id="nav"></div>
   <div id="app"></div>
   <script type="module" src="/src/main.js"></script>
 </body>
+
 </html>

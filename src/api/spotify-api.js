@@ -47,3 +47,7 @@ export async function getPlaylistTracks(playlistId, market) {
     .filter(item => item.track && !item.track.is_local && item.track.is_playable !== false)
     .map(item => item.track)
 }
+
+export async function getDevices() {
+  return apiFetch('https://api.spotify.com/v1/me/player/devices')
+}

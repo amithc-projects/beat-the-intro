@@ -1,7 +1,9 @@
 import { getAccessToken, isTokenExpired, refreshToken } from '../auth/spotify-auth.js'
 
+import { state } from '../state.js'
+
 let player = null
-let deviceId = null
+let deviceId = null // Local SDK device ID
 let sdkReady = false
 
 // Resolve when device_id is available — callers await this
@@ -56,11 +58,13 @@ export async function initPlayer(onStateChange) {
 }
 
 export async function playTrack(uri) {
-  if (!deviceId) throw new Error('No device ID — player not ready')
+  const targetDevice = state.activeDeviceId || deviceId
+  if (!targetDevice) throw new Error('No device available for playback')
+  
   if (isTokenExpired()) await refreshToken()
   const token = getAccessToken()
 
-  const res = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+  const res = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${targetDevice}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,

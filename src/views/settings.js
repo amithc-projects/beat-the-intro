@@ -1,9 +1,11 @@
 import { navigate } from '../router.js'
 import { showToast } from '../components/toast.js'
+import { getDevices } from '../api/spotify-api.js'
+import { state } from '../state.js'
 
 const app = document.getElementById('app')
 
-export function renderSettings() {
+export async function renderSettings() {
   const isDark = document.documentElement.classList.contains('dark') ||
                  localStorage.getItem('theme') !== 'light'
 
@@ -13,6 +15,7 @@ export function renderSettings() {
         <h2 class="display-heading">Settings</h2>
 
         <div class="card space-y-6">
+          <!-- Theme Toggle -->
           <div style="display:flex;align-items:center;justify-content:space-between">
             <div>
               <p style="font-weight:700;text-transform:uppercase;letter-spacing:-0.01em;margin:0">Dark Mode</p>
@@ -30,6 +33,20 @@ export function renderSettings() {
               </span>
             </label>
           </div>
+
+          <div style="height:1px;background:var(--ds-sys-color-outline-variant)"></div>
+
+          <!-- Device Selector -->
+          <div id="device-trigger" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+            <div>
+              <p style="font-weight:700;text-transform:uppercase;letter-spacing:-0.01em;margin:0">
+                Select output device
+                <span id="device-count" class="text-volt" style="margin-left:0.5rem">...</span>
+              </p>
+              <p class="text-muted text-xs tracking-wide uppercase mt-2">Play via Spotify Connect</p>
+            </div>
+            <span class="material-symbols-outlined">chevron_right</span>
+          </div>
         </div>
 
         <div class="space-y-4">
@@ -46,11 +63,26 @@ export function renderSettings() {
   const toggle = document.getElementById('theme-toggle')
   const toggleTrack = document.getElementById('toggle-track')
   const toggleThumb = document.getElementById('toggle-thumb')
+  const deviceTrigger = document.getElementById('device-trigger')
+  const deviceCount = document.getElementById('device-count')
 
+  // Theme logic
   toggle.addEventListener('change', () => {
     toggleTrack.style.background = toggle.checked ? '#D1FF00' : '#444'
     toggleThumb.style.transform  = toggle.checked ? 'translateX(22px)' : 'translateX(0)'
   })
+
+  // Device logic
+  deviceTrigger.addEventListener('click', () => navigate('/devices'))
+
+  try {
+    const { devices } = await getDevices()
+    state.availableDevices = devices
+    deviceCount.textContent = `(${devices.length + 1})` // +1 for "This Browser"
+  } catch (err) {
+    console.warn('Failed to fetch devices', err)
+    deviceCount.textContent = '(?)'
+  }
 
   document.getElementById('save-btn').addEventListener('click', () => {
     const theme = toggle.checked ? 'dark' : 'light'
