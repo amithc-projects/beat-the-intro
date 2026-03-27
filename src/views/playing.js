@@ -1,12 +1,12 @@
-import { navigate } from '../router.js'
+import { navigate, getQueryParams } from '../router.js'
 import { state } from '../state.js'
-import { startRound, currentTrack, isLastRound } from '../game/game-engine.js'
-import { initPlayer, playTrack, isSdkReady } from '../player/playback.js'
+import { startRound, currentTrack, startGame } from '../game/game-engine.js'
+import { initPlayer, playTrack, resumePlayback, pausePlayback } from '../player/playback.js'
+import { getTracks } from '../api/spotify-api.js'
 import { showToast } from '../components/toast.js'
 import { track } from '../events.js'
 
 const app = document.getElementById('app')
-
 let timerInterval = null
 
 function waveformBars(count = 16) {
@@ -14,9 +14,26 @@ function waveformBars(count = 16) {
 }
 
 export async function renderPlaying() {
-  if (!state.tracks.length) { navigate('/playlists'); return }
+  // ── Share link bootstrap ────────────────────────────────────────────────────
+  if (!state.tracks.length) {
+    const params = getQueryParams()
+    if (params.tracks && params.playlist) {
+      await setupFromShareLink(params.playlist, params.tracks.split(','))
+    } else {
+      navigate('/playlists')
+      return
+    }
+  }
 
-  startRound()
+  // ── Resume vs new round ─────────────────────────────────────────────────────
+  const isResuming = state.pausedElapsedMs !== null
+  const resumeFrom = state.pausedElapsedMs || 0
+
+  if (!isResuming) {
+    startRound()
+  }
+  state.pausedElapsedMs = null
+
   const t = currentTrack()
   const coverUrl = t.album.images?.[0]?.url || ''
 
@@ -53,14 +70,12 @@ export async function renderPlaying() {
     </div>
   `
 
-  track('round_started', { round: state.currentRound, trackId: t.id })
+  if (!isResuming) track('round_started', { round: state.currentRound, trackId: t.id })
 
-  const waveformEl  = document.getElementById('waveform')
-  const pauseBtn    = document.getElementById('pause-btn')
-  const sdkStatus   = document.getElementById('sdk-status')
-  const progressFill = document.getElementById('progress-fill')
+  const waveformEl   = document.getElementById('waveform')
+  const pauseBtn     = document.getElementById('pause-btn')
+  const sdkStatus    = document.getElementById('sdk-status')
 
-  // Init player and play
   try {
     const { sdkReady } = await initPlayer(null)
 
@@ -71,41 +86,65 @@ export async function renderPlaying() {
       return
     }
 
-    await playTrack(t.uri)
+    if (isResuming) {
+      // Backdate startTime so elapsed accumulates correctly
+      state.startTime = Date.now() - resumeFrom
+      await resumePlayback()
+    } else {
+      await playTrack(t.uri)
+    }
+
     waveformEl.classList.add('is-playing')
     pauseBtn.disabled = false
-    startTimer(t.duration_ms)
+    startTimer(t.duration_ms, resumeFrom)
   } catch (err) {
     console.error(err)
     showToast('Playback error — is Spotify Premium active?', 'error')
     pauseBtn.disabled = false
   }
 
-  pauseBtn.addEventListener('click', () => {
+  pauseBtn.addEventListener('click', async () => {
     clearInterval(timerInterval)
+    // Save elapsed so guess screen can display it and resume can restore it
+    state.pausedElapsedMs = Date.now() - state.startTime
+    try { await pausePlayback() } catch { /* ignore */ }
     navigate('/guess')
   })
 }
 
-function startTimer(durationMs) {
-  const startMs = Date.now()
-  const timerEl = document.getElementById('timer')
-  const fill    = document.getElementById('progress-fill')
-  const waveformEl = document.getElementById('waveform')
+// ── Share link setup ──────────────────────────────────────────────────────────
+async function setupFromShareLink(playlistId, trackIds) {
+  try {
+    const tracks = await getTracks(trackIds)
+    startGame(
+      { id: playlistId, name: 'Shared Game', images: [] },
+      tracks,
+      tracks.length,
+      { presorted: true }
+    )
+  } catch (err) {
+    console.error('Failed to load shared tracks', err)
+    showToast('Could not load shared game', 'error')
+    navigate('/playlists')
+  }
+}
+
+// ── Timer ─────────────────────────────────────────────────────────────────────
+function startTimer(durationMs, offsetMs = 0) {
+  const wallStart = Date.now() - offsetMs
+  const timerEl   = document.getElementById('timer')
+  const fill      = document.getElementById('progress-fill')
 
   timerInterval = setInterval(() => {
     if (!timerEl) { clearInterval(timerInterval); return }
-    const elapsed = Date.now() - startMs
+    const elapsed = Date.now() - wallStart
     const secs  = Math.floor(elapsed / 1000)
     const cents = Math.floor((elapsed % 1000) / 10)
     timerEl.innerHTML = `${pad(secs)}<span class="timer__dot">.</span>${pad(cents)}`
-
     if (durationMs > 0) {
       fill.style.width = `${Math.min(100, (elapsed / durationMs) * 100)}%`
     }
   }, 50)
 }
 
-function pad(n) {
-  return String(n).padStart(2, '0')
-}
+function pad(n) { return String(n).padStart(2, '0') }

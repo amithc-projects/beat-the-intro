@@ -100,6 +100,7 @@ async function init() {
       console.error('Auth callback failed', err)
       window.location.hash = '#/login'
     }
+    startRouter()
     return
   }
 

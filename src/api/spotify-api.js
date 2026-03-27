@@ -28,6 +28,16 @@ export async function getPlaylists() {
   return fetchAll('https://api.spotify.com/v1/me/playlists?limit=50')
 }
 
+export async function getTracks(ids) {
+  const results = []
+  for (let i = 0; i < ids.length; i += 50) {
+    const chunk = ids.slice(i, i + 50)
+    const data = await apiFetch(`https://api.spotify.com/v1/tracks?ids=${chunk.join(',')}`)
+    results.push(...data.tracks)
+  }
+  return results.filter(Boolean)
+}
+
 export async function getPlaylistTracks(playlistId, market) {
   const marketParam = market ? `&market=${market}` : ''
   const items = await fetchAll(

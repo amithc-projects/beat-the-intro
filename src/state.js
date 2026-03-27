@@ -9,7 +9,8 @@ export const state = {
   currentRound: 0,
   tracks: [],         // Pre-shuffled playable tracks
   rounds: [],         // [{ track, guess, isCorrect, elapsedMs }]
-  startTime: null,    // Per-round start timestamp (ms)
+  startTime: null,      // Per-round start timestamp (ms)
+  pausedElapsedMs: null, // ms elapsed when user paused — null means not paused
   totalElapsedMs: 0,
 
   // Share

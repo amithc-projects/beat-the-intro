@@ -43,17 +43,18 @@ function shuffle(arr) {
 }
 
 // ── Game lifecycle ────────────────────────────────────────────────────────────
-export function startGame(playlist, allTracks, requestedRounds) {
-  const playable = shuffle(allTracks)
-  const totalRounds = Math.min(requestedRounds, playable.length)
+export function startGame(playlist, allTracks, requestedRounds, { presorted = false } = {}) {
+  const tracks = presorted ? allTracks : shuffle(allTracks)
+  const totalRounds = Math.min(requestedRounds, tracks.length)
 
-  state.playlist     = playlist
-  state.tracks       = playable.slice(0, totalRounds)
-  state.totalRounds  = totalRounds
-  state.currentRound = 0
-  state.rounds       = []
-  state.totalElapsedMs = 0
-  state.sharePayload = null
+  state.playlist        = playlist
+  state.tracks          = tracks.slice(0, totalRounds)
+  state.totalRounds     = totalRounds
+  state.currentRound    = 0
+  state.rounds          = []
+  state.totalElapsedMs  = 0
+  state.pausedElapsedMs = null
+  state.sharePayload    = null
 }
 
 export function startRound() {
