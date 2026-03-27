@@ -15,14 +15,14 @@ export function renderConfig() {
   const cover = state.playlist.images?.[0]?.url || ''
   app.innerHTML = `
     <div class="view view--centered">
-      <div class="view__inner space-y-8">
+      <div class="view__inner space-y-8 lscape-config">
         <div>
           <p class="section-label">Step 2 of 2</p>
           <h2 class="display-heading mt-2">Configure <span class="accent">Game</span></h2>
         </div>
 
         <div class="card playlist-hero">
-          ${cover ? `<img src="${cover}" alt="${state.playlist.name}" class="playlist-hero__cover">` : ''}
+          ${cover ? `<img src="${cover}" alt="${state.playlist.name}" class="playlist-hero__cover" style="width:120px;height:120px;object-fit:cover;flex-shrink:0;display:block">` : ''}
           <div class="playlist-hero__info">
             <p style="font-weight:900;text-transform:uppercase;letter-spacing:-0.01em;margin:0">${state.playlist.name}</p>
             <p class="section-label mt-2" id="track-availability">${state.playlist.total} tracks</p>

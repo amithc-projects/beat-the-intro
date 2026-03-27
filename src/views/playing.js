@@ -40,33 +40,35 @@ export async function renderPlaying() {
 
   app.innerHTML = `
     <div class="view view--centered">
-      <div class="view__inner space-y-6" style="text-align:center">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <span class="badge">Round ${state.currentRound} of ${state.totalRounds}</span>
-          <span class="section-label" id="sdk-status"></span>
-        </div>
-
-        <div class="album-art" style="margin:0 auto">
+      <div class="lscape-playing">
+        <div class="album-art">
           <img class="album-art__img" src="${coverUrl}" alt="Album art">
           <div class="album-art__lock">
             <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">lock</span>
           </div>
         </div>
 
-        <div class="timer" id="timer">00<span class="timer__dot">.</span>00</div>
+        <div class="playing-right" style="text-align:center">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="badge">Round ${state.currentRound} of ${state.totalRounds}</span>
+            <span class="section-label" id="sdk-status"></span>
+          </div>
 
-        <div class="waveform" id="waveform">
-          ${waveformBars()}
+          <div class="timer" id="timer">00<span class="timer__dot">.</span>00</div>
+
+          <div class="waveform" id="waveform">
+            ${waveformBars()}
+          </div>
+
+          <div class="progress-bar" style="width:100%">
+            <div class="progress-bar__fill" id="progress-fill" style="width:0%"></div>
+          </div>
+
+          <button id="pause-btn" class="btn btn--primary btn--full" disabled>
+            <span class="material-symbols-outlined">pause</span>
+            Pause &amp; Guess
+          </button>
         </div>
-
-        <div class="progress-bar" style="width:100%">
-          <div class="progress-bar__fill" id="progress-fill" style="width:0%"></div>
-        </div>
-
-        <button id="pause-btn" class="btn btn--primary btn--full" disabled>
-          <span class="material-symbols-outlined">pause</span>
-          Pause &amp; Guess
-        </button>
       </div>
     </div>
   `

@@ -23,76 +23,78 @@ export function renderRoundResult() {
 
   app.innerHTML = `
     <div class="view">
-      <div class="view__inner space-y-6">
+      <div class="lscape-result">
 
-        <!-- Verdict banner -->
-        <div class="result-verdict result-verdict--${verdictClass}">
-          <span class="material-symbols-outlined result-verdict__icon" style="font-variation-settings:'FILL' 1">
-            ${verdictIcon}
-          </span>
-          <span class="result-verdict__word">${verdictWord}</span>
-          <span class="result-verdict__time">${secs}s</span>
-        </div>
+        <!-- LEFT: verdict + breakdown + score -->
+        <div class="result-left">
+          <div class="result-verdict result-verdict--${verdictClass}">
+            <span class="material-symbols-outlined result-verdict__icon" style="font-variation-settings:'FILL' 1">
+              ${verdictIcon}
+            </span>
+            <span class="result-verdict__word">${verdictWord}</span>
+            <span class="result-verdict__time">${secs}s</span>
+          </div>
 
-        <!-- Track info — hidden until revealed on wrong answer -->
-        <div id="track-reveal" ${!isCorrect ? 'style="display:none"' : ''}>
-          <div style="display:flex;gap:1.25rem;align-items:flex-start">
-            ${coverUrl
-              ? `<img src="${coverUrl}" alt="Album art" style="width:88px;height:88px;object-fit:cover;flex-shrink:0;border:2px solid #fff">`
-              : ''}
-            <div style="min-width:0">
-              <p style="font-weight:900;font-size:1.1rem;text-transform:uppercase;letter-spacing:-0.02em;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escHtml(track.name)}</p>
-              <p class="text-volt font-bold tracking-wide uppercase text-sm mt-2">${escHtml(correctArtist)}</p>
-              <p class="text-muted text-xs tracking-wide uppercase mt-2">${escHtml(track.album.name)}</p>
+          <div class="result-breakdown">
+            <div class="result-breakdown__row">
+              <span class="result-breakdown__label">Artist</span>
+              <span class="result-breakdown__status result-breakdown__status--${artistMatch ? 'correct' : 'wrong'}">
+                <span class="material-symbols-outlined" style="font-size:1rem;font-variation-settings:'FILL' 1">${artistMatch ? 'check_circle' : 'cancel'}</span>
+                ${escHtml(guess.artist || '—')}
+              </span>
+            </div>
+            <div class="result-breakdown__row">
+              <span class="result-breakdown__label">Title</span>
+              <span class="result-breakdown__status result-breakdown__status--${titleMatch ? 'correct' : 'wrong'}">
+                <span class="material-symbols-outlined" style="font-size:1rem;font-variation-settings:'FILL' 1">${titleMatch ? 'check_circle' : 'cancel'}</span>
+                ${escHtml(guess.title || '—')}
+              </span>
             </div>
           </div>
+
+          <p class="section-label">${score} correct — Round ${state.currentRound} of ${state.totalRounds}</p>
         </div>
 
-        <!-- Artist / Title breakdown (always shown) -->
-        <div class="result-breakdown">
-          <div class="result-breakdown__row">
-            <span class="result-breakdown__label">Artist</span>
-            <span class="result-breakdown__status result-breakdown__status--${artistMatch ? 'correct' : 'wrong'}">
-              <span class="material-symbols-outlined" style="font-size:1rem;font-variation-settings:'FILL' 1">${artistMatch ? 'check_circle' : 'cancel'}</span>
-              ${escHtml(guess.artist || '—')}
-            </span>
+        <!-- RIGHT: track reveal + CTAs -->
+        <div class="result-right">
+          <div id="track-reveal" ${!isCorrect ? 'style="display:none"' : ''}>
+            <div style="display:flex;gap:1.25rem;align-items:flex-start">
+              ${coverUrl
+                ? `<img src="${coverUrl}" alt="Album art" style="width:88px;height:88px;object-fit:cover;flex-shrink:0;border:2px solid #fff">`
+                : ''}
+              <div style="min-width:0">
+                <p style="font-weight:900;font-size:1.1rem;text-transform:uppercase;letter-spacing:-0.02em;margin:0;word-break:break-word">${escHtml(track.name)}</p>
+                <p class="text-volt font-bold tracking-wide uppercase text-sm mt-2">${escHtml(correctArtist)}</p>
+                <p class="text-muted text-xs tracking-wide uppercase mt-2">${escHtml(track.album.name)}</p>
+              </div>
+            </div>
           </div>
-          <div class="result-breakdown__row">
-            <span class="result-breakdown__label">Title</span>
-            <span class="result-breakdown__status result-breakdown__status--${titleMatch ? 'correct' : 'wrong'}">
-              <span class="material-symbols-outlined" style="font-size:1rem;font-variation-settings:'FILL' 1">${titleMatch ? 'check_circle' : 'cancel'}</span>
-              ${escHtml(guess.title || '—')}
-            </span>
+
+          <div class="space-y-4">
+            ${isCorrect ? `
+              <button id="next-btn" class="btn btn--primary btn--full">
+                ${last
+                  ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
+                  : '<span class="material-symbols-outlined">skip_next</span> Next Round'
+                }
+              </button>
+            ` : `
+              <button id="reveal-btn" class="btn btn--primary btn--full">
+                <span class="material-symbols-outlined">visibility</span>
+                Reveal Answer
+              </button>
+              <button id="next-btn" class="btn btn--primary btn--full" style="display:none">
+                ${last
+                  ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
+                  : '<span class="material-symbols-outlined">skip_next</span> Next Round'
+                }
+              </button>
+              <button id="hear-more-btn" class="btn btn--secondary btn--full">
+                <span class="material-symbols-outlined">hearing</span>
+                Hear More
+              </button>
+            `}
           </div>
-        </div>
-
-        <p class="section-label">${score} correct — Round ${state.currentRound} of ${state.totalRounds}</p>
-
-        <!-- CTAs -->
-        <div class="space-y-4">
-          ${isCorrect ? `
-            <button id="next-btn" class="btn btn--primary btn--full">
-              ${last
-                ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
-                : '<span class="material-symbols-outlined">skip_next</span> Next Round'
-              }
-            </button>
-          ` : `
-            <button id="reveal-btn" class="btn btn--primary btn--full">
-              <span class="material-symbols-outlined">visibility</span>
-              Reveal Answer
-            </button>
-            <button id="next-btn" class="btn btn--primary btn--full" style="display:none">
-              ${last
-                ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
-                : '<span class="material-symbols-outlined">skip_next</span> Next Round'
-              }
-            </button>
-            <button id="hear-more-btn" class="btn btn--secondary btn--full">
-              <span class="material-symbols-outlined">hearing</span>
-              Hear More
-            </button>
-          `}
         </div>
 
       </div>

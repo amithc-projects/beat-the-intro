@@ -69,6 +69,7 @@ export function currentTrack() {
 export function submitGuess(artistGuess, titleGuess) {
   const track = currentTrack()
   const elapsed = state.pausedElapsedMs !== null ? state.pausedElapsedMs : (Date.now() - state.startTime)
+  state.pausedElapsedMs = null // Reset so next round is recognized as new round
   const result = evaluateGuess(artistGuess, titleGuess, track)
 
   state.rounds.push({
