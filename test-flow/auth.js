@@ -1,6 +1,15 @@
 // spotify-auth.js - client-side PKCE OAuth
-const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
+// Use import.meta.env with fallback for non-Vite environments
+const getEnv = (key) => {
+    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env[key]) {
+        return import.meta.env[key];
+    }
+    // Fallback to window.__ENV__ or similar if needed
+    return window.__ENV__?.[key] || "";
+};
+
+const CLIENT_ID = getEnv('VITE_SPOTIFY_CLIENT_ID');
+const REDIRECT_URI = getEnv('VITE_REDIRECT_URI');
 
 export async function redirectToSpotify() {
     const verifier = generateCodeVerifier(128);
