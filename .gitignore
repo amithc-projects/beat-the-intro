@@ -1,0 +1,7 @@
+node_modules/
+test-flow/node_modules/
+test-flow/.env
+.env
+dist/
+aurora-docs/
+.DS_Store
