@@ -2,6 +2,7 @@ import { navigate } from '../router.js'
 import { state } from '../state.js'
 import { correctCount, buildSharePayload } from '../game/game-engine.js'
 import { track } from '../events.js'
+import { playTrack } from '../player/playback.js'
 
 const app = document.getElementById('app')
 
@@ -59,6 +60,9 @@ export function renderSummary() {
                     <p class="round-tile__track">${escHtml(r.track.name)}</p>
                     <p class="round-tile__artist">${artist}</p>
                     <p class="round-tile__time">${(r.elapsedMs/1000).toFixed(1)}s</p>
+                    <button class="round-tile__replay btn btn--icon" data-uri="${r.track.uri}" title="Replay Song">
+                      <span class="material-symbols-outlined">play_circle</span>
+                    </button>
                   </div>
                 </div>
                 <div class="round-tile__label round-tile__label--${r.isCorrect ? 'correct' : 'wrong'}" style="height:70px">
@@ -95,6 +99,17 @@ export function renderSummary() {
   document.getElementById('share-btn').addEventListener('click', () => navigate('/share'))
   document.getElementById('again-btn').addEventListener('click', () => navigate('/config'))
   document.getElementById('new-btn').addEventListener('click', () => navigate('/playlists'))
+
+  // Replay Delegation
+  app.addEventListener('click', (e) => {
+    const replayBtn = e.target.closest('.round-tile__replay')
+    if (replayBtn) {
+      const uri = replayBtn.dataset.uri
+      playTrack(uri).catch(err => {
+        console.error('Replay failed', err)
+      })
+    }
+  })
 }
 
 function escHtml(str) {
