@@ -27,6 +27,10 @@
   --ds-sys-shape-corner-large: 0px;
   --ds-sys-shape-corner-extra-large: 0px;
   --ds-sys-shape-corner-full: 9999px;
+
+  /* Layout dimensions — overridden in landscape */
+  --nav-h: 72px;
+  --view-pad-v: 4rem;  /* 2rem top + 2rem bottom */
 }
 
 /* ---------- Reset / Base ---------- */
@@ -72,7 +76,7 @@ body {
 
 #nav:not(:empty)~#app,
 #nav:not(:empty)+#app {
-  padding-top: 72px;
+  padding-top: var(--nav-h);
 }
 
 /* ---------- NAV bar ---------- */
@@ -80,7 +84,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 72px;
+  height: var(--nav-h);
   padding: 0 1.5rem;
   background: #131313;
   border-bottom: 4px solid #D1FF00;
@@ -299,7 +303,7 @@ body {
 
 /* ---------- View wrapper ---------- */
 .view {
-  min-height: calc(100dvh - 72px);
+  min-height: calc(100dvh - var(--nav-h));
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -893,31 +897,6 @@ body {
   flex-direction: column;
 }
 
-/* Config playlist hero */
-.playlist-hero {
-  display: flex;
-  flex-direction: row;
-  gap: 0;
-  align-items: stretch;
-  padding: 0;
-  overflow: hidden;
-}
-
-.playlist-hero__cover {
-  width: 120px;
-  height: 120px;
-  flex-shrink: 0;
-  object-fit: cover;
-  display: block;
-}
-
-.playlist-hero__info {
-  padding: 1rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .round-tile {
   aspect-ratio: 1;
   position: relative;
@@ -1112,324 +1091,332 @@ body {
   color: var(--ds-sys-color-error);
 }
 
-/* ── Landscape layout wrappers — portrait defaults (Standardized 3-Row Grid) ── */
-.lscape-playing, .lscape-guess, .lscape-guess-compact, .lscape-result, .lscape-summary, .lscape-config {
+/* ══════════════════════════════════════════════════════════════════════
+   LAYOUT SYSTEM
+   Two landscape triggers share the same CSS via :is() selector:
+     body.is-landscape    — set by inline matchMedia script (index.html)
+     body.force-landscape — set by TV mode toggle (navbar.js)
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── Landscape dimensions (override :root defaults) ── */
+:is(body.is-landscape, body.force-landscape) {
+  --nav-h: 44px;
+  --view-pad-v: 1.5rem;
+}
+
+/* ── Page grid: 3-row layout (pg-hdr / pg-cnt / pg-btn) ── */
+.pg-cfg, .pg-play, .pg-guess, .pg-result {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  /* Precisely calculate height to avoid scrolling the whole page */
-  height: calc(100dvh - 44px - 2rem); 
-  gap: 1rem;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  overflow: hidden; /* Footer stays pinned, middle scrolls */
-}
-
-/* Ensure these newly added wrappers don't create layout boxes in portrait */
-.lscape-result .result-left, .lscape-result .result-right { display: contents !important; }
-
-/* New scrollable middle content area */
-.lscape-main-content {
-  grid-row: 2;
-  overflow-y: auto;
-  padding-right: 4px; /* Space for scrollbar */
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.playing-right { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; align-items: center; }
-.guess-left  { display: contents; }
-.guess-right { display: contents; }
-.result-left  { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
-.result-right { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
-
-.lscape-summary {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  height: calc(100dvh - var(--nav-h) - var(--view-pad-v));
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
+  overflow: hidden;
+  gap: 1rem;
 }
-.summary-left  { display: contents; }
-.summary-right { display: contents; }
 
-/* Config Hero Styling */
-.playlist-hero { display: flex; gap: 1.5rem; width: 100%; align-items: center; justify-content: center; overflow: hidden; min-height: 0; }
-.playlist-hero__cover { aspect-ratio: 1/1; object-fit: cover; border-radius: 12px; border: 2px solid rgba(255,255,255,0.1); width: auto; max-width: 100%; height: auto; max-height: 100%; flex-shrink: 1; }
-.playlist-identity { display: flex; flex-direction: column; width: 100%; margin-bottom: 0.25rem; }
+/* Header slot */
+.pg-hdr {
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+.pg-hdr__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+.pg-hdr__timer { display: flex; justify-content: center; }
+.pg-hdr .timer { font-size: 2.4rem; text-align: center; width: 100%; }
+
+/* Content slot */
+.pg-cnt {
+  grid-row: 2;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  min-height: 0;
+}
+
+/* Button slot */
+.pg-btn {
+  grid-row: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--ds-sys-color-surface);
+}
+
+/* ── CONFIG: playlist hero — portrait (stacked) ── */
+.pg-cfg .playlist-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  width: 100%;
+  min-height: 0;
+}
+.pg-cfg .playlist-hero__cover {
+  width: min(80vw, 40vh);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+.pg-cfg .config-options { width: 100%; text-align: center; }
+.seg-control { justify-content: center; }
+
+.playlist-identity { display: flex; flex-direction: column; width: 100%; }
 .playlist-hero__name { font-weight: 950; font-size: 2rem; text-transform: uppercase; margin: 0; letter-spacing: -0.02em; line-height: 1; }
 .playlist-hero__tracks { color: var(--ds-sys-color-primary); font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.15em; margin-top: 0.25rem; }
 
-/* config: view__inner already provides sizing in portrait; no override needed */
-
-/* ---------- TV Mode / Landscape Layouts (Global Overrides) ---------- */
-
-/* Force containers to expand beyond portrait limits ONLY when TV Mode is manually active */
-body.force-landscape .view__inner,
-body.force-landscape .view__inner--wide {
-  max-width: 900px !important;
-  width: 100% !important;
+/* ── PLAYING: waveform/progress column ── */
+.play-wav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  align-items: center;
+  text-align: center;
 }
 
-body.force-landscape .lscape-config,
-body.force-landscape .lscape-playing,
-body.force-landscape .lscape-guess,
-body.force-landscape .lscape-result,
-body.force-landscape .lscape-summary {
-  max-width: 100% !important;
-  margin: 0 !important;
+/* ── GUESSING: inputs — portrait (stacked) ── */
+.guess-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
 }
 
-/* ---------- Responsive: landscape mobile / TV Mode ---------- */
-
-/* Core Landscape Grids - Shared via manual duplication to ensure portrait remains safe */
-@media (max-width: 896px) and (orientation: landscape) {
-  .view { min-height: calc(100dvh - 44px); padding: 0.75rem 1rem; }
-  .nav-bar { height: 44px; padding: 0 1rem; }
-  .nav-bar__username { display: none; }
-  #nav:not(:empty) ~ #app, #nav:not(:empty) + #app { padding-top: 44px; }
-  
-  .space-y-8 > * + * { margin-top: 0.75rem; }
-  .space-y-6 > * + * { margin-top: 0.5rem; }
-  .space-y-4 > * + * { margin-top: 0.35rem; }
-
-  .display-heading { font-size: 1.6rem; }
-  .btn { padding: 0.5rem 1rem; font-size: 0.875rem; }
-  .field__input { padding: 0.5rem 0.75rem; font-size: 0.9375rem; }
-  .field__label { font-size: 0.625rem; margin-bottom: 0.25rem; }
-
-  .lscape-main-content { display: contents !important; }
-
-  .lscape-playlist-container { display: grid; grid-template-rows: auto auto; height: auto; gap: 0.75rem; width: 100%; }
-  .lscape-config { display: grid; grid-template-columns: 1.2fr 1fr; grid-template-rows: auto 1fr auto; gap: 1rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
-  .lscape-config .lscape-row-header { grid-column: 1 / -1; margin-bottom: 0; }
-  .lscape-config .playlist-hero { grid-column: 1; grid-row: 2; height: 100%; align-items: center; justify-content: center; min-height: 0; }
-  .lscape-config .playlist-hero__cover { width: auto; height: 100%; max-height: min(48vh, 45vw); aspect-ratio: 1/1; }
-  .lscape-config .config-options { grid-column: 2; grid-row: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; min-height: 0; }
-  .lscape-config .lscape-row-buttons { grid-column: 1 / -1; grid-row: 3; align-self: end; display: flex !important; flex-direction: row !important; justify-content: space-between !important; align-items: flex-end; width: 100%; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
-  .lscape-config #start-btn { order: 2; width: auto !important; min-width: 240px; margin-bottom: 0 !important; }
-  .lscape-config #back-btn { order: 1; width: auto !important; margin-bottom: 0 !important; }
-
-  .lscape-playing { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto 1fr auto; gap: 2rem; height: calc(100dvh - 44px - 1.5rem); align-items: center; }
-  .lscape-playing .lscape-row-header { grid-column: 1 / -1; width: 100%; margin-bottom: 0.5rem; }
-  .lscape-playing .album-art { grid-row: 2; grid-column: 1; width: min(40vh, 35vw); height: min(40vh, 35vw); }
-  .lscape-playing .playing-right { grid-row: 2; grid-column: 2; display: flex; flex-direction: column; gap: 1.5rem; justify-content: center; height: 100%; align-items: stretch; width: 100%; }
-  .lscape-playing .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; display: flex !important; justify-content: flex-end; width: 100%; align-self: end; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
-  .lscape-playing .btn--full { width: auto !important; min-width: 240px; }
-
-  .lscape-guess-compact { display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
-  .lscape-row-header { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0.25rem; }
-  .lscape-row-header .timer { font-size: 2rem; font-style: italic; font-variant-numeric: tabular-nums; width: 10rem; text-align: right; margin: 0; }
-  .lscape-row-header__top { display: contents; }
-  .lscape-row-header__timer { display: block; }
-  .lscape-row-inputs { grid-row: 2; grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: flex-start; height: 100%; }
-  .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; align-self: end; display: flex !important; justify-content: space-between; align-items: center; width: 100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; }
-  .lscape-row-buttons #result-ctas-right { margin-left: auto; }
-
-  .lscape-result { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr auto; gap: 1.25rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
-  .lscape-result .lscape-row-header { grid-column: 1 / -1; width: 100%; }
-  .lscape-result .result-left { grid-column: 1; grid-row: 2; display: flex !important; flex-direction: column !important; gap: 0.5rem !important; }
-  .lscape-result .result-right { grid-column: 2; grid-row: 2; display: flex !important; flex-direction: column !important; gap: 0.5rem !important; }
-  .lscape-result .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; align-self: end; display: flex !important; justify-content: space-between; align-items: center; width: 100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; }
-  .lscape-result #result-ctas-right { margin-left: auto; }
-
-  .lscape-summary { display: flex; flex-direction: column; justify-content: space-between; height: calc(100dvh - 44px - 1.5rem); width: 100% !important; max-width: none !important; gap: 1rem; overflow: hidden; }
-  .lscape-summary .lscape-main-content { display: block !important; flex: 1; min-height: 0; }
-  .lscape-summary .lscape-summary-row { display: flex !important; gap: 0.75rem !important; overflow-x: auto !important; padding-bottom: 0.5rem; height: 100%; align-items: stretch; }
-  .lscape-summary .lscape-summary-row > * { flex: 0 0 240px !important; height: auto; max-height: 100%; }
-  .lscape-summary-ctas { display: flex; justify-content: space-between; gap: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); }
-  .lscape-summary .display-heading { font-size: 2rem; margin: 0; }
-  .lscape-summary .section-label { font-size: 0.65rem; }
+/* ── RESULT: columns — portrait (stacked) ── */
+.result-left, .result-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
 }
 
-/* Replay Button Styling */
+/* ── SUMMARY: flex-column layout ── */
+.pg-sum {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - var(--nav-h) - var(--view-pad-v));
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  overflow: hidden;
+  gap: 1rem;
+}
+
+/* Summary tiles — portrait: 2-col grid, scrollable */
+.sum-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 2rem;
+  align-content: start;
+}
+.sum-tiles .round-tile { height: 140px; }
+.sum-tiles > .card { min-height: 140px; }
+
+/* Summary CTAs — portrait: share full-width, then playlists | again */
+.sum-btn {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "shr shr" "plt agn";
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+#share-btn { grid-area: shr; }
+#new-btn   { grid-area: plt; }
+#again-btn { grid-area: agn; }
+
+/* Replay button on round tiles */
 .round-tile__replay {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
   width: 32px;
   height: 32px;
-  display: flex !important;
+  display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
   opacity: 0.8;
-  padding: 0 !important;
+  padding: 0;
   border: none;
   cursor: pointer;
   z-index: 10;
 }
-
 .round-tile__replay:hover {
   background: var(--ds-sys-color-primary);
   color: #000;
   transform: scale(1.1);
   opacity: 1;
 }
-
 .round-tile__replay span {
   font-size: 1.5rem;
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-/* --- Specialized Header/Footer for Portrait --- */
-@media (max-width: 896px) and (orientation: portrait) {
-  .lscape-row-header {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0.5rem !important;
-    width: 100%;
-    margin-top: 0.5rem;
-  }
-  .lscape-row-header__top {
-    display: flex !important;
-    justify-content: space-between;
-    align-items: baseline;
-    width: 100%;
-    margin-top: 0;
-  }
-  .lscape-row-header__timer {
-    display: flex !important;
-    justify-content: center;
-    width: 100%;
-  }
-  .lscape-row-header .timer {
-    font-size: 2.4rem !important;
-    text-align: center !important;
-    width: 100% !important;
-    margin-top: -0.25rem;
-  }
-  .lscape-row-header .round-badge { font-size: 0.85rem; padding: 0.25rem 0.5rem; }
-  .lscape-row-header .display-heading { font-size: 1.4rem; }
+/* ══════════════════════════════════════════════════════════════════════
+   LANDSCAPE  (body.is-landscape OR body.force-landscape)
+   ════════════════════════════════════════════════════════════════════ */
 
-  /* Buttons pinned to bottom */
-  .lscape-row-buttons, .lscape-summary-ctas, .result-ctas-row {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    gap: 1rem;
-    padding: 0.75rem 0;
-    width: 100%;
-    grid-row: 3;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    background: var(--ds-sys-color-surface); /* Solid bg ensures buttons aren't transparent over scroll */
-  }
-  
-  /* Result verdict refinement (shorter banner) */
-  .result-verdict {
-    padding: 1.5rem !important;
-    margin-bottom: 0.5rem;
-    height: auto !important;
-    min-height: 120px !important;
-  }
-  .result-verdict__icon { font-size: 3rem !important; }
-  .result-verdict__word { font-size: 2.5rem !important; }
+/* Nav */
+:is(body.is-landscape, body.force-landscape) .nav-bar { padding: 0 1rem; }
+:is(body.is-landscape, body.force-landscape) .nav-bar__username { display: none; }
 
-  /* Ensure main content takes priority and centers */
-  .lscape-main-content {
-     justify-content: center;
-     min-height: 0;
-     width: 100%;
-     align-items: stretch; /* Ensure children fill width */
-  }
-  .playing-right, .lscape-playing .playing-right { width: 100% !important; align-items: stretch !important; }
-  #waveform-container { width: 100% !important; flex-grow: 1; }
+/* View */
+:is(body.is-landscape, body.force-landscape) .view { padding: 0.75rem 1rem; }
 
-  /* 2-Row Summary Footer for Portrait */
-  .lscape-summary-ctas--portrait {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0.75rem !important;
-    align-items: stretch !important;
-    padding: 0.75rem 0 !important;
-  }
-  .lscape-summary-ctas--portrait .footer-row-bottom {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-  .lscape-summary-ctas--portrait .btn { width: 100%; }
+/* Spacing utilities */
+:is(body.is-landscape, body.force-landscape) .space-y-8 > * + * { margin-top: 0.75rem; }
+:is(body.is-landscape, body.force-landscape) .space-y-6 > * + * { margin-top: 0.5rem; }
+:is(body.is-landscape, body.force-landscape) .space-y-4 > * + * { margin-top: 0.35rem; }
 
-  /* Specific fix for single-button rows (Next/Reveal) ensuring right alignment */
-  .lscape-row-buttons:has(#result-ctas-right:only-child),
-  .lscape-row-buttons:has(#result-ctas-right:last-child):not(:has(#hear-more-btn)) {
-    justify-content: flex-end !important;
-  }
+/* Typography */
+:is(body.is-landscape, body.force-landscape) .display-heading { font-size: 1.6rem; }
+:is(body.is-landscape, body.force-landscape) .btn { padding: 0.5rem 1rem; font-size: 0.875rem; }
+:is(body.is-landscape, body.force-landscape) .field__input { padding: 0.5rem 0.75rem; font-size: 0.9375rem; }
+:is(body.is-landscape, body.force-landscape) .field__label { font-size: 0.625rem; margin-bottom: 0.25rem; }
 
-  /* Portrait Config Hero Fix */
-  .playlist-hero { flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
-  .playlist-hero__cover { width: min(80vw, 40vh); height: auto; aspect-ratio: 1/1; }
-  .playlist-hero__name { font-size: 2.2rem; margin-top: 0; }
-  .lscape-main-content .config-options { width: 100%; text-align: center; }
-  .seg-control { justify-content: center; }
+/* Gameplay grids: expand to fill viewport width */
+:is(body.is-landscape, body.force-landscape) .pg-cfg,
+:is(body.is-landscape, body.force-landscape) .pg-play,
+:is(body.is-landscape, body.force-landscape) .pg-guess,
+:is(body.is-landscape, body.force-landscape) .pg-result,
+:is(body.is-landscape, body.force-landscape) .pg-sum { max-width: 100%; margin: 0; }
+
+/* HDR: row layout in landscape (title+badge left, timer right) */
+:is(body.is-landscape, body.force-landscape) .pg-hdr {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0;
+}
+:is(body.is-landscape, body.force-landscape) .pg-hdr__top { align-items: center; }
+:is(body.is-landscape, body.force-landscape) .pg-hdr__timer { justify-content: flex-end; }
+:is(body.is-landscape, body.force-landscape) .pg-hdr .timer { font-size: 2rem; width: auto; text-align: right; }
+
+/* CNT: no scroll needed when content fits in columns */
+:is(body.is-landscape, body.force-landscape) .pg-cfg .pg-cnt,
+:is(body.is-landscape, body.force-landscape) .pg-play .pg-cnt,
+:is(body.is-landscape, body.force-landscape) .pg-guess .pg-cnt,
+:is(body.is-landscape, body.force-landscape) .pg-result .pg-cnt { overflow-y: visible; }
+
+/* CONFIG: cover | options */
+:is(body.is-landscape, body.force-landscape) .pg-cfg .pg-cnt {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+:is(body.is-landscape, body.force-landscape) .pg-cfg .playlist-hero {
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  height: 100%;
+  min-height: 0;
+  justify-content: center;
+}
+:is(body.is-landscape, body.force-landscape) .pg-cfg .playlist-hero__cover {
+  width: auto;
+  height: 100%;
+  max-height: min(48vh, 45vw);
+}
+:is(body.is-landscape, body.force-landscape) .pg-cfg .config-options {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+}
+:is(body.is-landscape, body.force-landscape) .pg-cfg .seg-control { justify-content: flex-start; }
+:is(body.is-landscape, body.force-landscape) .pg-cfg #back-btn,
+:is(body.is-landscape, body.force-landscape) .pg-cfg #start-btn { width: auto; }
+:is(body.is-landscape, body.force-landscape) .pg-cfg #start-btn { min-width: 200px; }
+
+/* PLAYING: album art | waveform */
+:is(body.is-landscape, body.force-landscape) .pg-play .pg-cnt {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+:is(body.is-landscape, body.force-landscape) .pg-play .album-art {
+  width: min(40vh, 35vw);
+  height: min(40vh, 35vw);
+  max-width: none;
+}
+:is(body.is-landscape, body.force-landscape) .pg-play .play-wav {
+  align-items: stretch;
+  gap: 1.5rem;
+  justify-content: center;
+  height: 100%;
+}
+:is(body.is-landscape, body.force-landscape) .pg-play .pg-btn { justify-content: flex-end; }
+:is(body.is-landscape, body.force-landscape) .pg-play .btn--full { width: auto; min-width: 240px; }
+
+/* GUESSING: artist | title */
+:is(body.is-landscape, body.force-landscape) .pg-guess .pg-cnt { justify-content: center; }
+:is(body.is-landscape, body.force-landscape) .guess-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
 }
 
-/* Duplicated logic for TV Mode Override (via body class) */
-body.force-landscape .lscape-main-content { display: contents !important; }
-body.force-landscape .view { min-height: calc(100dvh - 44px); padding: 0.75rem 1rem; }
-body.force-landscape .nav-bar { height: 44px; padding: 0 1rem; }
-body.force-landscape .nav-bar__username { display: none; }
-body.force-landscape #nav:not(:empty) ~ #app, body.force-landscape #nav:not(:empty) + #app { padding-top: 44px; }
-body.force-landscape .lscape-playlist-container { display: grid; grid-template-rows: auto auto; height: auto; gap: 0.75rem; width: 100%; }
-body.force-landscape .lscape-config { display: grid; grid-template-columns: 1.2fr 1fr; grid-template-rows: auto 1fr auto; gap: 1rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
-body.force-landscape .lscape-config .lscape-row-header { grid-column: 1 / -1; margin-bottom: 0; }
-body.force-landscape .lscape-config .playlist-hero { grid-column: 1; grid-row: 2; height: 100%; align-items: center; justify-content: center; min-height: 0; }
-body.force-landscape .lscape-config .playlist-hero__cover { width: auto; height: 100%; max-height: min(48vh, 50vw); aspect-ratio: 1/1; }
-body.force-landscape .lscape-config .config-options { grid-column: 2; grid-row: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; min-height: 0; }
-body.force-landscape .lscape-config .lscape-row-buttons { grid-column: 1 / -1; grid-row: 3; align-self: end; display: flex !important; flex-direction: row !important; justify-content: space-between !important; align-items: flex-end; width: 100%; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1); }
-body.force-landscape .lscape-config #start-btn { order: 2; width: auto !important; min-width: 240px; margin-bottom: 0 !important; }
-body.force-landscape .lscape-config #back-btn { order: 1; width: auto !important; margin-bottom: 0 !important; }
+/* RESULT: verdict+breakdown | track reveal */
+:is(body.is-landscape, body.force-landscape) .pg-result .pg-cnt {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
 
-body.force-landscape .lscape-playing { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto 1fr auto; gap: 2rem; height: calc(100dvh - 44px - 1.5rem); align-items: center; }
-body.force-landscape .lscape-playing .lscape-row-header { grid-column: 1 / -1; width: 100%; margin-bottom: 0.5rem; }
-body.force-landscape .lscape-playing .album-art { grid-row: 2; grid-column: 1; width: min(40vh, 35vw); height: min(40vh, 35vw); }
-body.force-landscape .lscape-playing .playing-right { grid-row: 2; grid-column: 2; display: flex; flex-direction: column; gap: 1.5rem; justify-content: center; height: 100%; align-items: stretch; width: 100%; }
-body.force-landscape .lscape-playing .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; display: flex !important; justify-content: flex-end; width: 100%; align-self: end; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
-body.force-landscape .lscape-playing .btn--full { width: auto !important; min-width: 240px; }
-
-body.force-landscape .lscape-guess-compact { display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
-body.force-landscape .lscape-row-header { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0.25rem; }
-body.force-landscape .lscape-row-header .timer { font-size: 2rem; font-style: italic; font-variant-numeric: tabular-nums; width: 6rem; text-align: right; margin: 0; }
-body.force-landscape .lscape-row-inputs { grid-row: 2; grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; height: 100%; }
-body.force-landscape .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; align-self: end; display: flex !important; justify-content: space-between; align-items: center; width: 100%; }
-
-body.force-landscape .lscape-result { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr auto; gap: 1.25rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
-body.force-landscape .lscape-result .lscape-row-header { grid-column: 1 / -1; width: 100%; }
-body.force-landscape .lscape-result .result-left { grid-column: 1; grid-row: 2; display: flex !important; flex-direction: column !important; gap: 0.5rem !important; }
-body.force-landscape .lscape-result .result-right { grid-column: 2; grid-row: 2; display: flex !important; flex-direction: column !important; gap: 0.5rem !important; }
-body.force-landscape .lscape-result .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; align-self: end; display: flex !important; justify-content: space-between; align-items: center; width: 100%; }
-body.force-landscape .lscape-result #result-ctas-right { margin-left: auto; }
-
-body.force-landscape .lscape-summary { display: flex !important; flex-direction: column; justify-content: space-between; height: calc(100dvh - 44px - 1.5rem); width: 100% !important; max-width: none !important; gap: 1rem; overflow: hidden; }
-body.force-landscape .lscape-summary .lscape-main-content { display: block !important; flex: 1; min-height: 0; }
-body.force-landscape .lscape-summary .lscape-summary-row { display: flex !important; gap: 0.75rem !important; overflow-x: auto !important; padding-bottom: 0.5rem; height: 100%; align-items: stretch; }
-body.force-landscape .lscape-summary .lscape-summary-row > * { flex: 0 0 240px !important; height: auto; max-height: 100%; }
-body.force-landscape .lscape-summary-ctas { display: flex; justify-content: space-between; gap: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); }
-body.force-landscape .lscape-summary .display-heading { font-size: 2rem; margin: 0; }
-body.force-landscape .lscape-summary .section-label { font-size: 0.65rem; }
-
-/* Portrait Mobile Summary Refinements */
-@media (max-width: 896px) and (orientation: portrait) {
-  .lscape-summary-row {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: min-content;
-    gap: 1rem;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    padding-bottom: 2rem;
-  }
-  .lscape-summary-row > .card--elevated { grid-column: span 1; height: 160px !important; }
-  .lscape-summary-row > .round-tile-wrap { grid-column: span 1; height: auto !important; }
-  .lscape-summary .round-tile { height: 140px !important; }
-  .lscape-summary .round-tile__overlay { padding: 0.5rem; }
-  .lscape-summary .round-tile__track { font-size: 0.75rem; }
+/* SUMMARY: horizontal-scroll tiles */
+:is(body.is-landscape, body.force-landscape) .pg-sum .display-heading { font-size: 2rem; margin: 0; }
+:is(body.is-landscape, body.force-landscape) .pg-sum .section-label { font-size: 0.65rem; }
+:is(body.is-landscape, body.force-landscape) .sum-tiles {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  align-items: stretch;
+}
+:is(body.is-landscape, body.force-landscape) .sum-tiles > * {
+  flex: 0 0 240px;
+  height: auto;
+  max-height: 100%;
+}
+:is(body.is-landscape, body.force-landscape) .sum-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
  
  /* ---------- Responsive: portrait mobile ---------- */

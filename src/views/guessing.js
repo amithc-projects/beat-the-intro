@@ -18,20 +18,20 @@ export function renderGuessing() {
 
   app.innerHTML = `
     <div class="view view--centered">
-      <div class="lscape-guess-compact view__inner view__inner--wide">
-        
-        <div class="lscape-row-header">
-          <div class="lscape-row-header__top">
+      <div class="pg-guess view__inner">
+
+        <div class="pg-hdr">
+          <div class="pg-hdr__top">
             <h2 class="display-heading">NAME THE TRACK</h2>
             <span class="badge badge--round">Round ${state.currentRound} of ${state.totalRounds}</span>
           </div>
-          <div class="lscape-row-header__timer">
+          <div class="pg-hdr__timer">
             <span class="timer" id="paused-timer">${formatTime(elapsed)}</span>
           </div>
         </div>
 
-        <div class="lscape-main-content">
-          <div class="lscape-row-inputs">
+        <div class="pg-cnt">
+          <div class="guess-inputs">
             <div class="field-group">
               <label class="section-label" style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
                 <span class="material-symbols-outlined" style="font-size:1.1rem">person_search</span>
@@ -49,7 +49,7 @@ export function renderGuessing() {
           </div>
         </div>
 
-        <div class="lscape-row-buttons">
+        <div class="pg-btn">
           <button id="resume-btn" class="btn btn--outline">
             <span class="material-symbols-outlined">play_arrow</span>
             Resume Listening

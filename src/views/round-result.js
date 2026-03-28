@@ -23,20 +23,19 @@ export function renderRoundResult() {
 
   app.innerHTML = `
     <div class="view view--centered">
-      <div class="lscape-result view__inner view__inner--wide">
+      <div class="pg-result view__inner">
 
-        <!-- HEADER ROW -->
-        <div class="lscape-row-header">
-          <div class="lscape-row-header__top">
+        <div class="pg-hdr">
+          <div class="pg-hdr__top">
             <h2 class="display-heading">REVEAL</h2>
             <span class="badge badge--round">Round ${state.currentRound} of ${state.totalRounds}</span>
           </div>
-          <div class="lscape-row-header__timer">
+          <div class="pg-hdr__timer">
             <span class="timer">${secs}s</span>
           </div>
         </div>
 
-        <div class="lscape-main-content">
+        <div class="pg-cnt">
           <!-- LEFT: verdict + breakdown + score -->
           <div class="result-left">
             <div class="result-verdict result-verdict--${verdictClass}">
@@ -83,8 +82,7 @@ export function renderRoundResult() {
           </div>
         </div>
 
-        <!-- BOTTOM CTAs (3rd Grid Row) -->
-        <div class="lscape-row-buttons">
+        <div class="pg-btn">
           ${(!isCorrect && !last) ? `
             <button id="hear-more-btn" class="btn btn--outline">
               <span class="material-symbols-outlined">hearing</span>

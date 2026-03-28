@@ -69,6 +69,14 @@
   <div id="grain" aria-hidden="true"></div>
   <div id="nav"></div>
   <div id="app"></div>
+  <script>
+    (function () {
+      var mql = window.matchMedia('(max-width: 896px) and (orientation: landscape)');
+      function sync(e) { document.body.classList.toggle('is-landscape', e.matches); }
+      mql.addEventListener('change', sync);
+      sync(mql);
+    })();
+  </script>
   <script type="module" src="/src/main.js"></script>
 </body>
 

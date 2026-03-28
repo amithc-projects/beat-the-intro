@@ -40,18 +40,18 @@ export async function renderPlaying() {
 
   app.innerHTML = `
     <div class="view view--centered">
-      <div class="lscape-playing view__inner view__inner--wide">
-        <div class="lscape-row-header">
-          <div class="lscape-row-header__top">
+      <div class="pg-play view__inner">
+        <div class="pg-hdr">
+          <div class="pg-hdr__top">
             <h2 class="display-heading">LISTEN</h2>
             <span class="badge badge--round">Round ${state.currentRound} of ${state.totalRounds}</span>
           </div>
-          <div class="lscape-row-header__timer">
+          <div class="pg-hdr__timer">
             <span class="timer" id="timer">00<span class="timer__dot">.</span>00</span>
           </div>
         </div>
 
-        <div class="lscape-main-content">
+        <div class="pg-cnt">
           <div class="album-art">
             <img class="album-art__img" src="${coverUrl}" alt="Album art">
             <div class="album-art__lock">
@@ -59,20 +59,18 @@ export async function renderPlaying() {
             </div>
           </div>
 
-          <div class="playing-right" style="text-align:center">
+          <div class="play-wav">
             <span class="section-label" id="sdk-status"></span>
-
             <div class="waveform" id="waveform">
               ${waveformBars()}
             </div>
-
             <div class="progress-bar" style="width:100%">
               <div class="progress-bar__fill" id="progress-fill" style="width:0%"></div>
             </div>
           </div>
         </div>
 
-        <div class="lscape-row-buttons">
+        <div class="pg-btn">
           <button id="pause-btn" class="btn btn--primary btn--full" disabled>
             <span class="material-symbols-outlined">pause</span>
             Pause &amp; Guess

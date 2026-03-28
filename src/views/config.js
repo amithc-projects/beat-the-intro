@@ -15,19 +15,17 @@ export function renderConfig() {
   const cover = state.playlist.images?.[0]?.url || ''
   app.innerHTML = `
     <div class="view view--centered">
-      <div class="lscape-config view__inner view__inner--wide">
-        <!-- Grid Child 1: Heading -->
-        <div class="lscape-row-header">
-          <div class="lscape-row-header__top">
-             <div class="space-y-1">
-               <p class="section-label" style="font-size:0.75rem; color:rgba(255,255,255,0.6)">Step 2 of 2</p>
-               <h2 class="display-heading" style="font-size:1.8rem">Configure <span class="accent">Game</span></h2>
-             </div>
+      <div class="pg-cfg view__inner">
+        <div class="pg-hdr">
+          <div class="pg-hdr__top">
+            <div class="space-y-1">
+              <p class="section-label" style="font-size:0.75rem; color:rgba(255,255,255,0.6)">Step 2 of 2</p>
+              <h2 class="display-heading" style="font-size:1.8rem">Configure <span class="accent">Game</span></h2>
+            </div>
           </div>
         </div>
 
-        <!-- Grid Child 2: Main Content -->
-        <div class="lscape-main-content">
+        <div class="pg-cnt">
           <div class="playlist-hero">
             ${cover ? `<img src="${cover}" alt="${state.playlist.name}" class="playlist-hero__cover">` : ''}
           </div>
@@ -47,20 +45,19 @@ export function renderConfig() {
                   `).join('')}
                   <button class="seg-control__btn" data-rounds="custom">Custom</button>
                 </div>
-                
+
                 <div id="custom-rounds-wrap" style="display:none; margin-top:1rem">
                   <input id="custom-rounds-input" class="field__input" type="number" min="1" max="${state.playlist.total}" value="7" style="max-width:120px">
                   <p class="text-muted text-xs mt-2">Max ${state.playlist.total} (tracks in playlist)</p>
                 </div>
-                
+
                 <p id="rounds-note" class="text-accent text-sm mt-4" style="display:none"></p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Grid Child 3: Buttons (Footer) -->
-        <div class="lscape-row-buttons">
+        <div class="pg-btn">
           <button id="back-btn" class="btn btn--outline">
             <span class="material-symbols-outlined">arrow_back</span>
             Back to playlists
