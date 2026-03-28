@@ -1157,11 +1157,11 @@ body {
 .summary-right { display: contents; }
 
 /* Config Hero Styling */
-.playlist-hero { display: flex; gap: 1.5rem; width: 100%; align-items: stretch; justify-content: center; overflow: hidden; }
-.playlist-hero__cover { aspect-ratio: 1/1; object-fit: cover; border-radius: 12px; border: 2px solid rgba(255,255,255,0.1); width: 100%; height: auto; flex-shrink: 0; }
-.playlist-identity { display: flex; flex-direction: column; width: 100%; margin-bottom: 0.5rem; }
-.playlist-hero__name { font-weight: 950; font-size: 2.2rem; text-transform: uppercase; margin: 0; letter-spacing: -0.02em; line-height: 1; }
-.playlist-hero__tracks { color: var(--ds-sys-color-primary); font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.15em; margin-top: 0.5rem; }
+.playlist-hero { display: flex; gap: 1.5rem; width: 100%; align-items: center; justify-content: center; overflow: hidden; min-height: 0; }
+.playlist-hero__cover { aspect-ratio: 1/1; object-fit: cover; border-radius: 12px; border: 2px solid rgba(255,255,255,0.1); width: auto; max-width: 100%; height: auto; max-height: 100%; flex-shrink: 1; }
+.playlist-identity { display: flex; flex-direction: column; width: 100%; margin-bottom: 0.25rem; }
+.playlist-hero__name { font-weight: 950; font-size: 2rem; text-transform: uppercase; margin: 0; letter-spacing: -0.02em; line-height: 1; }
+.playlist-hero__tracks { color: var(--ds-sys-color-primary); font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.15em; margin-top: 0.25rem; }
 
 /* config: view__inner already provides sizing in portrait; no override needed */
 
@@ -1204,11 +1204,11 @@ body.force-landscape .lscape-summary {
   .lscape-main-content { display: contents !important; }
 
   .lscape-playlist-container { display: grid; grid-template-rows: auto auto; height: auto; gap: 0.75rem; width: 100%; }
-  .lscape-config { display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto 1fr auto; gap: 2rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
+  .lscape-config { display: grid; grid-template-columns: 1.2fr 1fr; grid-template-rows: auto 1fr auto; gap: 1rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
   .lscape-config .lscape-row-header { grid-column: 1 / -1; margin-bottom: 0; }
-  .lscape-config .playlist-hero { grid-column: 1; grid-row: 2; height: 100%; align-items: center; justify-content: center; }
-  .lscape-config .playlist-hero__cover { width: auto; height: min(65vh, 45vw); aspect-ratio: 1/1; }
-  .lscape-config .config-options { grid-column: 2; grid-row: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 2rem; }
+  .lscape-config .playlist-hero { grid-column: 1; grid-row: 2; height: 100%; align-items: center; justify-content: center; min-height: 0; }
+  .lscape-config .playlist-hero__cover { width: auto; height: 100%; max-height: min(48vh, 45vw); aspect-ratio: 1/1; }
+  .lscape-config .config-options { grid-column: 2; grid-row: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; min-height: 0; }
   .lscape-config .lscape-row-buttons { grid-column: 1 / -1; grid-row: 3; align-self: end; display: flex !important; flex-direction: row !important; justify-content: space-between !important; align-items: flex-end; width: 100%; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
   .lscape-config #start-btn { order: 2; width: auto !important; min-width: 240px; margin-bottom: 0 !important; }
   .lscape-config #back-btn { order: 1; width: auto !important; margin-bottom: 0 !important; }
@@ -1377,12 +1377,12 @@ body.force-landscape .nav-bar { height: 44px; padding: 0 1rem; }
 body.force-landscape .nav-bar__username { display: none; }
 body.force-landscape #nav:not(:empty) ~ #app, body.force-landscape #nav:not(:empty) + #app { padding-top: 44px; }
 body.force-landscape .lscape-playlist-container { display: grid; grid-template-rows: auto auto; height: auto; gap: 0.75rem; width: 100%; }
-body.force-landscape .lscape-config { display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto 1fr auto; gap: 2.5rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
+body.force-landscape .lscape-config { display: grid; grid-template-columns: 1.2fr 1fr; grid-template-rows: auto 1fr auto; gap: 1rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
 body.force-landscape .lscape-config .lscape-row-header { grid-column: 1 / -1; margin-bottom: 0; }
-body.force-landscape .lscape-config .playlist-hero { grid-column: 1; grid-row: 2; height: 100%; align-items: center; justify-content: center; }
-body.force-landscape .lscape-config .playlist-hero__cover { width: auto; height: min(70vh, 50vw); aspect-ratio: 1/1; }
-body.force-landscape .lscape-config .config-options { grid-column: 2; grid-row: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 3rem; }
-body.force-landscape .lscape-config .lscape-row-buttons { grid-column: 1 / -1; grid-row: 3; align-self: end; display: flex !important; flex-direction: row !important; justify-content: space-between !important; align-items: flex-end; width: 100%; }
+body.force-landscape .lscape-config .playlist-hero { grid-column: 1; grid-row: 2; height: 100%; align-items: center; justify-content: center; min-height: 0; }
+body.force-landscape .lscape-config .playlist-hero__cover { width: auto; height: 100%; max-height: min(48vh, 50vw); aspect-ratio: 1/1; }
+body.force-landscape .lscape-config .config-options { grid-column: 2; grid-row: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; min-height: 0; }
+body.force-landscape .lscape-config .lscape-row-buttons { grid-column: 1 / -1; grid-row: 3; align-self: end; display: flex !important; flex-direction: row !important; justify-content: space-between !important; align-items: flex-end; width: 100%; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1); }
 body.force-landscape .lscape-config #start-btn { order: 2; width: auto !important; min-width: 240px; margin-bottom: 0 !important; }
 body.force-landscape .lscape-config #back-btn { order: 1; width: auto !important; margin-bottom: 0 !important; }
 
