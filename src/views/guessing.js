@@ -22,7 +22,7 @@ export function renderGuessing() {
 
         <div class="pg-hdr">
           <div class="pg-hdr__top">
-            <h2 class="display-heading">NAME THE TRACK</h2>
+            <h2 class="display-heading">GUESS</h2>
             <span class="badge badge--round">Round ${state.currentRound} of ${state.totalRounds}</span>
           </div>
           <div class="pg-hdr__timer">

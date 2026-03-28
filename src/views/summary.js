@@ -59,7 +59,7 @@ export function renderSummary() {
                   <div class="round-tile__overlay">
                     <p class="round-tile__track">${escHtml(r.track.name)}</p>
                     <p class="round-tile__artist">${artist}</p>
-                    <p class="round-tile__time">${(r.elapsedMs/1000).toFixed(1)}s</p>
+                    <p class="round-tile__time">${(r.elapsedMs/1000).toFixed(2)}s</p>
                     <button class="round-tile__replay btn btn--icon" data-uri="${r.track.uri}" title="Replay Song">
                       <span class="material-symbols-outlined">play_circle</span>
                     </button>

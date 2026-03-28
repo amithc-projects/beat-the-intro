@@ -15,7 +15,7 @@ export function renderRoundResult() {
   const coverUrl = track.album.images?.[0]?.url || ''
   const last = isLastRound()
   const score = correctCount()
-  const secs = (elapsedMs / 1000).toFixed(1)
+  const secs = (elapsedMs / 1000).toFixed(2)
 
   const verdictClass = isCorrect ? 'correct' : isPartial ? 'partial' : 'wrong'
   const verdictIcon  = isCorrect ? 'check_circle' : isPartial ? 'warning' : 'cancel'

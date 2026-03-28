@@ -55,7 +55,7 @@ export async function renderPlaying() {
           <div class="album-art">
             <img class="album-art__img" src="${coverUrl}" alt="Album art">
             <div class="album-art__lock">
-              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">lock</span>
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">question_mark</span>
             </div>
           </div>
 
@@ -115,8 +115,18 @@ export async function renderPlaying() {
 
   pauseBtn.addEventListener('click', async () => {
     clearInterval(timerInterval)
-    // Save elapsed so guess screen can display it and resume can restore it
+    // Capture exact elapsed at the moment of click
     state.pausedElapsedMs = Date.now() - state.startTime
+
+    // Update display to the exact paused value so the user sees the same
+    // number here and on the guess screen (avoids the ~50ms tick lag)
+    const timerEl = document.getElementById('timer')
+    if (timerEl) {
+      const secs  = Math.floor(state.pausedElapsedMs / 1000)
+      const cents = Math.floor((state.pausedElapsedMs % 1000) / 10)
+      timerEl.innerHTML = `${pad(secs)}<span class="timer__dot">.</span>${pad(cents)}`
+    }
+
     try { await pausePlayback() } catch { /* ignore */ }
     navigate('/guess')
   })
