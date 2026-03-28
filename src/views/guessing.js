@@ -21,19 +21,25 @@ export function renderGuessing() {
       <div class="lscape-guess-compact view__inner view__inner--wide">
         
         <div class="lscape-row-header">
-          <h2 class="display-heading">NAME THE <span class="accent">TRACK</span></h2>
-          <span class="badge">Round ${state.currentRound} of ${state.totalRounds}</span>
-          <span class="timer" id="paused-timer">${formatTime(elapsed)}</span>
+          <div class="lscape-row-header__top">
+            <h2 class="display-heading">NAME THE TRACK</h2>
+            <span class="badge badge--round">Round ${state.currentRound} of ${state.totalRounds}</span>
+          </div>
+          <div class="lscape-row-header__timer">
+            <span class="timer" id="paused-timer">${formatTime(elapsed)}</span>
+          </div>
         </div>
 
-        <div class="lscape-row-inputs">
-          <div class="field-group">
-            <label class="section-label">Artist Name</label>
-            <input type="text" id="artist-input" class="input" placeholder="e.g. The Beatles" autocomplete="off" spellcheck="false">
-          </div>
-          <div class="field-group">
-            <label class="section-label">Song Title</label>
-            <input type="text" id="title-input" class="input" placeholder="e.g. Come Together" autocomplete="off" spellcheck="false">
+        <div class="lscape-main-content">
+          <div class="lscape-row-inputs">
+            <div class="field-group">
+              <label class="section-label">Artist Name</label>
+              <input type="text" id="artist-input" class="input" placeholder="e.g. The Beatles" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="field-group">
+              <label class="section-label">Song Title</label>
+              <input type="text" id="title-input" class="input" placeholder="e.g. Come Together" autocomplete="off" spellcheck="false">
+            </div>
           </div>
         </div>
 

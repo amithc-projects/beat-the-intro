@@ -17,39 +17,43 @@ export function renderConfig() {
     <div class="view view--centered">
       <div class="lscape-config view__inner view__inner--wide">
         <!-- Grid Child 1: Heading -->
-        <div class="space-y-2">
-          <p class="section-label">Step 2 of 2</p>
-          <h2 class="display-heading">Configure <span class="accent">Game</span></h2>
-        </div>
-
-        <!-- Grid Child 2: Playlist Card -->
-        <div class="card playlist-hero">
-          ${cover ? `<img src="${cover}" alt="${state.playlist.name}" class="playlist-hero__cover" style="width:120px;height:120px;object-fit:cover;flex-shrink:0;display:block">` : ''}
-          <div class="playlist-hero__info">
-            <p style="font-weight:900;text-transform:uppercase;letter-spacing:-0.01em;margin:0">${state.playlist.name}</p>
-            <p class="section-label mt-2" id="track-availability">${state.playlist.total} tracks</p>
+        <div class="lscape-row-header">
+          <div class="lscape-row-header__top">
+             <div class="space-y-1">
+               <p class="section-label" style="font-size:0.75rem; color:rgba(255,255,255,0.6)">Step 2 of 2</p>
+               <h2 class="display-heading" style="font-size:1.8rem">Configure <span class="accent">Game</span></h2>
+             </div>
           </div>
         </div>
 
-        <!-- Grid Child 3: Rounds -->
-        <div class="space-y-4">
-          <p class="section-label">Number of rounds</p>
-          <div class="seg-control" id="seg-rounds">
-            ${PRESET_ROUNDS.map(n => `
-              <button class="seg-control__btn${n === 5 ? ' is-active' : ''}" data-rounds="${n}">${n}</button>
-            `).join('')}
-            <button class="seg-control__btn" data-rounds="custom">Custom</button>
+        <!-- Grid Child 2: Main Content -->
+        <div class="lscape-main-content" style="gap:2rem">
+          <div class="card playlist-hero">
+            ${cover ? `<img src="${cover}" alt="${state.playlist.name}" class="playlist-hero__cover" style="width:100px;height:100px;object-fit:cover;flex-shrink:0;display:block">` : ''}
+            <div class="playlist-hero__info">
+              <p style="font-weight:900;text-transform:uppercase;letter-spacing:-0.01em;margin:0">${state.playlist.name}</p>
+              <p class="section-label mt-2" id="track-availability">${state.playlist.total} tracks</p>
+            </div>
           </div>
-          <div id="custom-rounds-wrap" style="display:none">
-            <input id="custom-rounds-input" class="field__input" type="number" min="1" max="${state.playlist.total}" value="7" style="max-width:120px">
-            <p class="text-muted text-xs mt-2">Max ${state.playlist.total} (tracks in playlist)</p>
+
+          <div class="space-y-4" style="width:100%">
+            <p class="section-label">Number of rounds</p>
+            <div class="seg-control" id="seg-rounds">
+              ${PRESET_ROUNDS.map(n => `
+                <button class="seg-control__btn${n === 5 ? ' is-active' : ''}" data-rounds="${n}">${n}</button>
+              `).join('')}
+              <button class="seg-control__btn" data-rounds="custom">Custom</button>
+            </div>
+            <div id="custom-rounds-wrap" style="display:none">
+              <input id="custom-rounds-input" class="field__input" type="number" min="1" max="${state.playlist.total}" value="7" style="max-width:120px">
+              <p class="text-muted text-xs mt-2">Max ${state.playlist.total} (tracks in playlist)</p>
+            </div>
           </div>
-          <p id="rounds-note" class="text-muted text-xs" style="display:none"></p>
         </div>
 
-        <!-- Grid Child 4: Buttons -->
-        <div class="space-y-4">
-          <button id="start-btn" class="btn btn--primary btn--full">
+        <!-- Grid Child 3: Buttons (Footer) -->
+        <div class="lscape-row-buttons" style="flex-direction:column; padding-top:2rem">
+          <button id="start-btn" class="btn btn--primary btn--full" style="margin-bottom:0.75rem">
             <span class="material-symbols-outlined">play_arrow</span>
             Start Game
           </button>

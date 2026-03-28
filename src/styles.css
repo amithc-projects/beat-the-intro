@@ -1112,47 +1112,35 @@ body {
   color: var(--ds-sys-color-error);
 }
 
-/* ── Landscape layout wrappers — portrait defaults (single column) ── */
-/* These classes only activate the grid in landscape; in portrait they are invisible wrappers */
-.lscape-playing {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-}
-.playing-right {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: 100%;
-}
-
-/* guess and result: flex column with gap; inner left/right are transparent */
-.lscape-guess {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-.guess-left  { display: contents; }
-.guess-right { display: contents; }
-
-.lscape-result {
-  display: flex;
-  flex-direction: column;
+/* ── Landscape layout wrappers — portrait defaults (Standardized 3-Row Grid) ── */
+.lscape-playing, .lscape-guess, .lscape-guess-compact, .lscape-result, .lscape-summary, .lscape-config {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  /* Precisely calculate height to avoid scrolling the whole page */
+  height: calc(100dvh - 44px - 2rem); 
   gap: 1rem;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+  overflow: hidden; /* Footer stays pinned, middle scrolls */
 }
-.result-left  { display: contents; }
-.result-right { display: contents; }
+
+/* New scrollable middle content area */
+.lscape-main-content {
+  grid-row: 2;
+  overflow-y: auto;
+  padding-right: 4px; /* Space for scrollbar */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.playing-right { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; align-items: center; }
+.guess-left  { display: contents; }
+.guess-right { display: contents; }
+.result-left  { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
+.result-right { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
 
 .lscape-summary {
   display: flex;
@@ -1218,8 +1206,10 @@ body.force-landscape .lscape-summary {
   .lscape-guess-compact { display: grid; grid-template-rows: auto 1fr; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
   .lscape-row-header { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0.25rem; }
   .lscape-row-header .timer { font-size: 2rem; font-style: italic; font-variant-numeric: tabular-nums; width: 6rem; text-align: right; margin: 0; }
+  .lscape-row-header__top { display: contents; }
+  .lscape-row-header__timer { display: block; }
   .lscape-row-inputs { grid-row: 2; grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; }
-  .lscape-row-buttons { grid-row: 2; grid-column: 1 / -1; align-self: end; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; align-self: end; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
   .lscape-result { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr auto; gap: 1.25rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
   .lscape-result .lscape-row-header { grid-column: 1 / -1; width: 100%; }
@@ -1271,11 +1261,84 @@ body.force-landscape .lscape-summary {
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-@media (max-width: 896px) {
-  .round-tile__replay {
-    opacity: 1; /* Always visible on mobile for tap target */
-    width: 36px;
-    height: 36px;
+/* --- Specialized Header/Footer for Portrait --- */
+@media (max-width: 896px) and (orientation: portrait) {
+  .lscape-row-header {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  .lscape-row-header__top {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    margin-top: 0;
+  }
+  .lscape-row-header__timer {
+    display: flex !important;
+    justify-content: center;
+    width: 100%;
+  }
+  .lscape-row-header .timer {
+    font-size: 2.4rem !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-top: -0.25rem;
+  }
+  .lscape-row-header .round-badge { font-size: 0.85rem; padding: 0.25rem 0.5rem; }
+  .lscape-row-header .display-heading { font-size: 1.4rem; }
+
+  /* Buttons pinned to bottom */
+  .lscape-row-buttons, .lscape-summary-ctas, .result-ctas-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    width: 100%;
+    grid-row: 3;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    background: var(--ds-sys-color-surface); /* Solid bg ensures buttons aren't transparent over scroll */
+  }
+  
+  /* Result verdict refinement (shorter banner) */
+  .result-verdict {
+    padding: 1.5rem !important;
+    margin-bottom: 0.5rem;
+    height: auto !important;
+    min-height: 120px !important;
+  }
+  .result-verdict__icon { font-size: 3rem !important; }
+  .result-verdict__word { font-size: 2.5rem !important; }
+
+  /* Ensure main content takes priority and centers */
+  .lscape-main-content {
+     justify-content: center;
+     min-height: 0;
+  }
+
+  /* 2-Row Summary Footer for Portrait */
+  .lscape-summary-ctas--portrait {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    align-items: stretch !important;
+    padding: 0.75rem 0 !important;
+  }
+  .lscape-summary-ctas--portrait .footer-row-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .lscape-summary-ctas--portrait .btn { width: 100%; }
+
+  /* Specific fix for single-button rows (Next/Reveal) ensuring right alignment */
+  .lscape-row-buttons:has(#result-ctas-right:only-child),
+  .lscape-row-buttons:has(#result-ctas-right:last-child):not(:has(#hear-more-btn)) {
+    justify-content: flex-end !important;
   }
 }
 

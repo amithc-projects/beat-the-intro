@@ -26,79 +26,100 @@ export function renderSummary() {
       <div class="view__inner view__inner--wide lscape-summary">
         
         <!-- Header -->
-        <header>
-          <h2 class="display-heading">Game <span class="accent">Over</span></h2>
-          <p class="section-label">${state.playlist.name}</p>
-        </header>
-
-        <!-- Main Scrollable Content -->
-        <div class="lscape-summary-row">
-          <!-- Score -->
-          <div class="card--elevated card" style="text-align:center;display:flex;flex-direction:column;justify-content:center;height:200px">
-            <p class="section-label">Score</p>
-            <p style="font-size:2.8rem;font-weight:900;font-style:italic;letter-spacing:-0.04em;margin:0.25rem 0 0">
-              ${score}<span class="text-volt">/${state.totalRounds}</span>
-            </p>
+        <div class="lscape-row-header">
+          <div class="lscape-row-header__top">
+            <h2 class="display-heading">GAME <span class="accent">OVER</span></h2>
+            <span class="badge badge--round">${escHtml(state.playlist.name)}</span>
           </div>
+        </div>
 
-          <!-- Total Time -->
-          <div class="card--elevated card" style="text-align:center;display:flex;flex-direction:column;justify-content:center;height:200px">
-            <p class="section-label">Total time</p>
-            <p style="font-size:2.8rem;font-weight:900;font-style:italic;letter-spacing:-0.04em;margin:0.25rem 0 0">
-              ${mins > 0 ? `${mins}m ` : ''}${secs}<span class="text-volt">s</span>
-            </p>
-          </div>
+        <div class="lscape-main-content">
+          <div class="lscape-summary-row" style="display:contents">
+            <!-- Score -->
+            <div class="card--elevated card" style="text-align:center;display:flex;flex-direction:column;justify-content:center;height:200px;width:100%">
+              <p class="section-label">Score</p>
+              <p style="font-size:2.8rem;font-weight:900;font-style:italic;letter-spacing:-0.04em;margin:0.25rem 0 0">
+                ${score}<span class="text-volt">/${state.totalRounds}</span>
+              </p>
+            </div>
 
-          <!-- Round Tiles -->
-          ${state.rounds.map((r, i) => {
-            const img = r.track.album.images?.[0]?.url || ''
-            const artist = escHtml(r.track.artists.map(a=>a.name).join(', '))
-            return `
-              <div class="round-tile-wrap" style="height:200px">
-                <div class="round-tile" style="${img ? `background-image:url('${img}')` : 'background:#1f1f1f'}; height:130px">
-                  <div class="round-tile__overlay">
-                    <p class="round-tile__track">${escHtml(r.track.name)}</p>
-                    <p class="round-tile__artist">${artist}</p>
-                    <p class="round-tile__time">${(r.elapsedMs/1000).toFixed(1)}s</p>
-                    <button class="round-tile__replay btn btn--icon" data-uri="${r.track.uri}" title="Replay Song">
-                      <span class="material-symbols-outlined">play_circle</span>
-                    </button>
+            <!-- Total Time -->
+            <div class="card--elevated card" style="text-align:center;display:flex;flex-direction:column;justify-content:center;height:200px;width:100%">
+              <p class="section-label">Total time</p>
+              <p style="font-size:2.8rem;font-weight:900;font-style:italic;letter-spacing:-0.04em;margin:0.25rem 0 0">
+                ${mins > 0 ? `${mins}m ` : ''}${secs}<span class="text-volt">s</span>
+              </p>
+            </div>
+
+            <!-- Round Tiles -->
+            ${state.rounds.map((r, i) => {
+              const img = r.track.album.images?.[0]?.url || ''
+              const artist = escHtml(r.track.artists.map(a=>a.name).join(', '))
+              return `
+                <div class="round-tile-wrap" style="height:200px; width:100%">
+                  <div class="round-tile" style="${img ? `background-image:url('${img}')` : 'background:#1f1f1f'}; height:130px">
+                    <div class="round-tile__overlay">
+                      <p class="round-tile__track">${escHtml(r.track.name)}</p>
+                      <p class="round-tile__artist">${artist}</p>
+                      <p class="round-tile__time">${(r.elapsedMs/1000).toFixed(1)}s</p>
+                      <button class="round-tile__replay btn btn--icon" data-uri="${r.track.uri}" title="Replay Song">
+                        <span class="material-symbols-outlined">play_circle</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="round-tile__label round-tile__label--${r.isCorrect ? 'correct' : 'wrong'}" style="height:70px">
+                    <span class="round-tile__label-num" style="font-size:1rem">${i + 1}</span>
+                    <span class="round-tile__label-verdict" style="font-size:0.75rem">${r.isCorrect ? 'Correct' : 'Incorrect'}</span>
                   </div>
                 </div>
-                <div class="round-tile__label round-tile__label--${r.isCorrect ? 'correct' : 'wrong'}" style="height:70px">
-                  <span class="round-tile__label-num" style="font-size:1rem">${i + 1}</span>
-                  <span class="round-tile__label-verdict" style="font-size:0.75rem">${r.isCorrect ? 'Correct' : 'Incorrect'}</span>
-                </div>
-              </div>
-            `
-          }).join('')}
+              `
+            }).join('')}
+          </div>
         </div>
 
-        <!-- Horizontal Buttons -->
-        <div class="lscape-summary-ctas">
-          <button id="new-btn" class="btn btn--ghost">
-            <span class="material-symbols-outlined">first_page</span>
-            Back to Playlists
-          </button>
+        <!-- Horizontal Buttons (Footer slot) -->
+        <div class="lscape-row-buttons lscape-summary-ctas lscape-summary-ctas--portrait">
+          <div class="footer-row-top">
+            <button id="share-btn" class="btn btn--secondary">
+              <span class="material-symbols-outlined">share</span>
+              Share Result
+            </button>
+          </div>
           
-          <button id="share-btn" class="btn btn--secondary">
-            <span class="material-symbols-outlined">share</span>
-            Share Results
-          </button>
-          
-          <button id="again-btn" class="btn btn--primary">
-            <span class="material-symbols-outlined">replay</span>
-            Play Again
-          </button>
+          <div class="footer-row-bottom">
+            <button id="new-btn" class="btn btn--outline">
+              <span class="material-symbols-outlined">first_page</span>
+              Playlists
+            </button>
+            <button id="again-btn" class="btn btn--primary">
+              <span class="material-symbols-outlined">replay</span>
+              Again
+            </button>
+          </div>
         </div>
-
       </div>
     </div>
   `
 
-  document.getElementById('share-btn').addEventListener('click', () => navigate('/share'))
-  document.getElementById('again-btn').addEventListener('click', () => navigate('/config'))
-  document.getElementById('new-btn').addEventListener('click', () => navigate('/playlists'))
+  const cleanup = async () => {
+    try { 
+      const { pausePlayback } = await import('../player/playback.js')
+      await pausePlayback() 
+    } catch (e) {}
+  }
+
+  document.getElementById('share-btn').addEventListener('click', async () => {
+    await cleanup()
+    navigate('/share')
+  })
+  document.getElementById('again-btn').addEventListener('click', async () => {
+    await cleanup()
+    navigate('/config')
+  })
+  document.getElementById('new-btn').addEventListener('click', async () => {
+    await cleanup()
+    navigate('/playlists')
+  })
 
   // Replay Delegation
   app.addEventListener('click', (e) => {

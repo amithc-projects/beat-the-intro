@@ -42,29 +42,37 @@ export async function renderPlaying() {
     <div class="view view--centered">
       <div class="lscape-playing view__inner view__inner--wide">
         <div class="lscape-row-header">
-          <h2 class="display-heading">LISTEN</h2>
-          <span class="badge">Round ${state.currentRound} of ${state.totalRounds}</span>
-          <span class="timer" id="timer">00<span class="timer__dot">.</span>00</span>
-        </div>
-
-        <div class="album-art">
-          <img class="album-art__img" src="${coverUrl}" alt="Album art">
-          <div class="album-art__lock">
-            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">lock</span>
+          <div class="lscape-row-header__top">
+            <h2 class="display-heading">LISTEN</h2>
+            <span class="badge badge--round">Round ${state.currentRound} of ${state.totalRounds}</span>
+          </div>
+          <div class="lscape-row-header__timer">
+            <span class="timer" id="timer">00<span class="timer__dot">.</span>00</span>
           </div>
         </div>
 
-        <div class="playing-right" style="text-align:center">
-          <span class="section-label" id="sdk-status"></span>
-
-          <div class="waveform" id="waveform">
-            ${waveformBars()}
+        <div class="lscape-main-content">
+          <div class="album-art">
+            <img class="album-art__img" src="${coverUrl}" alt="Album art">
+            <div class="album-art__lock">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">lock</span>
+            </div>
           </div>
 
-          <div class="progress-bar" style="width:100%">
-            <div class="progress-bar__fill" id="progress-fill" style="width:0%"></div>
-          </div>
+          <div class="playing-right" style="text-align:center">
+            <span class="section-label" id="sdk-status"></span>
 
+            <div class="waveform" id="waveform">
+              ${waveformBars()}
+            </div>
+
+            <div class="progress-bar" style="width:100%">
+              <div class="progress-bar__fill" id="progress-fill" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lscape-row-buttons">
           <button id="pause-btn" class="btn btn--primary btn--full" disabled>
             <span class="material-symbols-outlined">pause</span>
             Pause &amp; Guess

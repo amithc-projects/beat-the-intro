@@ -27,13 +27,17 @@ export function renderRoundResult() {
 
         <!-- HEADER ROW -->
         <div class="lscape-row-header">
-          <h2 class="display-heading">REVEAL</h2>
-          <span class="badge">Round ${state.currentRound} of ${state.totalRounds}</span>
-          <span class="timer">${secs}s</span>
+          <div class="lscape-row-header__top">
+            <h2 class="display-heading">REVEAL</h2>
+            <span class="badge badge--round">Round ${state.currentRound} of ${state.totalRounds}</span>
+          </div>
+          <div class="lscape-row-header__timer">
+            <span class="timer">${secs}s</span>
+          </div>
         </div>
 
-        <!-- LEFT: verdict + breakdown + score -->
-        <div class="result-left">
+        <div class="lscape-main-content">
+          <!-- Banner -->
           <div class="result-verdict result-verdict--${verdictClass}">
             <span class="material-symbols-outlined result-verdict__icon" style="font-variation-settings:'FILL' 1">
               ${verdictIcon}
@@ -41,6 +45,7 @@ export function renderRoundResult() {
             <span class="result-verdict__word">${verdictWord}</span>
           </div>
 
+          <!-- Breakdown -->
           <div class="result-breakdown">
             <div class="result-breakdown__row">
               <span class="result-breakdown__label">Artist</span>
@@ -59,12 +64,10 @@ export function renderRoundResult() {
           </div>
 
           <p class="section-label">${score} correct</p>
-        </div>
 
-        <!-- RIGHT: track reveal -->
-        <div class="result-right">
+          <!-- Reveal -->
           <div id="track-reveal" ${!isCorrect ? 'style="display:none"' : ''}>
-            <div style="display:flex;gap:1.25rem;align-items:flex-start">
+            <div style="display:flex;gap:1.25rem;align-items:flex-start;width:100%;max-width:400px">
               ${coverUrl
                 ? `<img src="${coverUrl}" alt="Album art" style="width:88px;height:88px;object-fit:cover;flex-shrink:0;border:2px solid #fff">`
                 : ''}
@@ -77,38 +80,35 @@ export function renderRoundResult() {
           </div>
         </div>
 
-        <!-- BOTTOM CTAs -->
-        <div class="result-ctas-left">
-          ${!isCorrect ? `
-            <div id="hear-more-wrap">
-              <button id="hear-more-btn" class="btn btn--secondary">
-                <span class="material-symbols-outlined">hearing</span>
-                Hear More
-              </button>
-            </div>
+        <!-- BOTTOM CTAs (3rd Grid Row) -->
+        <div class="lscape-row-buttons">
+          ${(!isCorrect && !last) ? `
+            <button id="hear-more-btn" class="btn btn--outline">
+              <span class="material-symbols-outlined">hearing</span>
+              Hear More
+            </button>
           ` : ''}
-        </div>
-
-        <div class="result-ctas-right">
-          ${isCorrect ? `
-            <button id="next-btn" class="btn btn--primary">
-              ${last
-                ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
-                : '<span class="material-symbols-outlined">skip_next</span> Next Round'
-              }
-            </button>
-          ` : `
-            <button id="reveal-btn" class="btn btn--primary">
-              <span class="material-symbols-outlined">visibility</span>
-              Reveal Answer
-            </button>
-            <button id="next-btn" class="btn btn--primary" style="display:none">
-              ${last
-                ? '<span class="material-symbols-outlined">bar_chart</span> See Summary'
-                : '<span class="material-symbols-outlined">skip_next</span> Next Round'
-              }
-            </button>
-          `}
+          <div id="result-ctas-right" style="display:flex; gap:0.75rem; margin-left: auto">
+            ${isCorrect ? `
+              <button id="next-btn" class="btn btn--primary">
+                ${last
+                  ? '<span class="material-symbols-outlined">bar_chart</span> Summary'
+                  : '<span class="material-symbols-outlined">skip_next</span> Next'
+                }
+              </button>
+            ` : `
+              <button id="reveal-btn" class="btn btn--primary">
+                <span class="material-symbols-outlined">visibility</span>
+                Reveal Answer
+              </button>
+              <button id="next-btn" class="btn btn--primary" style="display:none">
+                ${last
+                  ? '<span class="material-symbols-outlined">bar_chart</span> Summary'
+                  : '<span class="material-symbols-outlined">skip_next</span> Next'
+                }
+              </button>
+            `}
+          </div>
         </div>
 
       </div>
