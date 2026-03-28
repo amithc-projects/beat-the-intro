@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/test-flow", "destination": "/test-flow/index.html" },
+    { "source": "/test-flow/(.*)", "destination": "/test-flow/$1" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }
