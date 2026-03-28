@@ -33,8 +33,8 @@ export function renderSummary() {
           </div>
         </div>
 
-        <div class="lscape-main-content">
-          <div class="lscape-summary-row" style="display:contents">
+        <div class="lscape-main-content" style="max-width:none">
+          <div class="lscape-summary-row">
             <!-- Score -->
             <div class="card--elevated card" style="text-align:center;display:flex;flex-direction:column;justify-content:center;height:200px;width:100%">
               <p class="section-label">Score</p>

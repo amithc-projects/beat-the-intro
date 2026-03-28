@@ -27,37 +27,48 @@ export function renderConfig() {
         </div>
 
         <!-- Grid Child 2: Main Content -->
-        <div class="lscape-main-content" style="gap:2rem">
-          <div class="card playlist-hero">
-            ${cover ? `<img src="${cover}" alt="${state.playlist.name}" class="playlist-hero__cover" style="width:100px;height:100px;object-fit:cover;flex-shrink:0;display:block">` : ''}
-            <div class="playlist-hero__info">
-              <p style="font-weight:900;text-transform:uppercase;letter-spacing:-0.01em;margin:0">${state.playlist.name}</p>
-              <p class="section-label mt-2" id="track-availability">${state.playlist.total} tracks</p>
-            </div>
+        <div class="lscape-main-content">
+          <div class="playlist-hero">
+            ${cover ? `<img src="${cover}" alt="${state.playlist.name}" class="playlist-hero__cover">` : ''}
           </div>
 
-          <div class="space-y-4" style="width:100%">
-            <p class="section-label">Number of rounds</p>
-            <div class="seg-control" id="seg-rounds">
-              ${PRESET_ROUNDS.map(n => `
-                <button class="seg-control__btn${n === 5 ? ' is-active' : ''}" data-rounds="${n}">${n}</button>
-              `).join('')}
-              <button class="seg-control__btn" data-rounds="custom">Custom</button>
-            </div>
-            <div id="custom-rounds-wrap" style="display:none">
-              <input id="custom-rounds-input" class="field__input" type="number" min="1" max="${state.playlist.total}" value="7" style="max-width:120px">
-              <p class="text-muted text-xs mt-2">Max ${state.playlist.total} (tracks in playlist)</p>
+          <div class="config-options">
+            <div class="space-y-6">
+              <div class="playlist-identity">
+                <h1 class="playlist-hero__name">${state.playlist.name}</h1>
+                <p class="playlist-hero__tracks">${state.playlist.total} tracks</p>
+              </div>
+
+              <div>
+                <p class="section-label">Number of rounds</p>
+                <div class="seg-control" id="seg-rounds">
+                  ${PRESET_ROUNDS.map(n => `
+                    <button class="seg-control__btn${n === 5 ? ' is-active' : ''}" data-rounds="${n}">${n}</button>
+                  `).join('')}
+                  <button class="seg-control__btn" data-rounds="custom">Custom</button>
+                </div>
+                
+                <div id="custom-rounds-wrap" style="display:none; margin-top:1rem">
+                  <input id="custom-rounds-input" class="field__input" type="number" min="1" max="${state.playlist.total}" value="7" style="max-width:120px">
+                  <p class="text-muted text-xs mt-2">Max ${state.playlist.total} (tracks in playlist)</p>
+                </div>
+                
+                <p id="rounds-note" class="text-accent text-sm mt-4" style="display:none"></p>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Grid Child 3: Buttons (Footer) -->
-        <div class="lscape-row-buttons" style="flex-direction:column; padding-top:2rem">
-          <button id="start-btn" class="btn btn--primary btn--full" style="margin-bottom:0.75rem">
+        <div class="lscape-row-buttons">
+          <button id="back-btn" class="btn btn--outline">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back to playlists
+          </button>
+          <button id="start-btn" class="btn btn--primary">
             <span class="material-symbols-outlined">play_arrow</span>
             Start Game
           </button>
-          <button id="back-btn" class="btn btn--ghost btn--full">Back to Playlists</button>
         </div>
       </div>
     </div>

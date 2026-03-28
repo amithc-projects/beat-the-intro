@@ -37,44 +37,47 @@ export function renderRoundResult() {
         </div>
 
         <div class="lscape-main-content">
-          <!-- Banner -->
-          <div class="result-verdict result-verdict--${verdictClass}">
-            <span class="material-symbols-outlined result-verdict__icon" style="font-variation-settings:'FILL' 1">
-              ${verdictIcon}
-            </span>
-            <span class="result-verdict__word">${verdictWord}</span>
+          <!-- LEFT: verdict + breakdown + score -->
+          <div class="result-left">
+            <div class="result-verdict result-verdict--${verdictClass}">
+              <span class="material-symbols-outlined result-verdict__icon" style="font-variation-settings:'FILL' 1">
+                ${verdictIcon}
+              </span>
+              <span class="result-verdict__word">${verdictWord}</span>
+            </div>
+
+            <div class="result-breakdown">
+              <div class="result-breakdown__row">
+                <span class="result-breakdown__label">Artist</span>
+                <span class="result-breakdown__status result-breakdown__status--${artistMatch ? 'correct' : 'wrong'}">
+                  <span class="material-symbols-outlined" style="font-size:1rem;font-variation-settings:'FILL' 1">${artistMatch ? 'check_circle' : 'cancel'}</span>
+                  ${escHtml(guess.artist || '—')}
+                </span>
+              </div>
+              <div class="result-breakdown__row">
+                <span class="result-breakdown__label">Title</span>
+                <span class="result-breakdown__status result-breakdown__status--${titleMatch ? 'correct' : 'wrong'}">
+                  <span class="material-symbols-outlined" style="font-size:1rem;font-variation-settings:'FILL' 1">${titleMatch ? 'check_circle' : 'cancel'}</span>
+                  ${escHtml(guess.title || '—')}
+                </span>
+              </div>
+            </div>
+
+            <p class="section-label">${score} correct</p>
           </div>
 
-          <!-- Breakdown -->
-          <div class="result-breakdown">
-            <div class="result-breakdown__row">
-              <span class="result-breakdown__label">Artist</span>
-              <span class="result-breakdown__status result-breakdown__status--${artistMatch ? 'correct' : 'wrong'}">
-                <span class="material-symbols-outlined" style="font-size:1rem;font-variation-settings:'FILL' 1">${artistMatch ? 'check_circle' : 'cancel'}</span>
-                ${escHtml(guess.artist || '—')}
-              </span>
-            </div>
-            <div class="result-breakdown__row">
-              <span class="result-breakdown__label">Title</span>
-              <span class="result-breakdown__status result-breakdown__status--${titleMatch ? 'correct' : 'wrong'}">
-                <span class="material-symbols-outlined" style="font-size:1rem;font-variation-settings:'FILL' 1">${titleMatch ? 'check_circle' : 'cancel'}</span>
-                ${escHtml(guess.title || '—')}
-              </span>
-            </div>
-          </div>
-
-          <p class="section-label">${score} correct</p>
-
-          <!-- Reveal -->
-          <div id="track-reveal" ${!isCorrect ? 'style="display:none"' : ''}>
-            <div style="display:flex;gap:1.25rem;align-items:flex-start;width:100%;max-width:400px">
-              ${coverUrl
-                ? `<img src="${coverUrl}" alt="Album art" style="width:88px;height:88px;object-fit:cover;flex-shrink:0;border:2px solid #fff">`
-                : ''}
-              <div style="min-width:0">
-                <p style="font-weight:900;font-size:1.1rem;text-transform:uppercase;letter-spacing:-0.02em;margin:0;word-break:break-word">${escHtml(track.name)}</p>
-                <p class="text-volt font-bold tracking-wide uppercase text-sm mt-2">${escHtml(correctArtist)}</p>
-                <p class="text-muted text-xs tracking-wide uppercase mt-2">${escHtml(track.album.name)}</p>
+          <!-- RIGHT: track reveal -->
+          <div class="result-right">
+            <div id="track-reveal" ${!isCorrect ? 'style="display:none"' : ''}>
+              <div style="display:flex;gap:1.25rem;align-items:flex-start;width:100%;max-width:400px">
+                ${coverUrl
+                  ? `<img src="${coverUrl}" alt="Album art" style="width:120px;height:120px;object-fit:cover;flex-shrink:0;border:2px solid #fff">`
+                  : ''}
+                <div style="min-width:0">
+                  <p style="font-weight:900;font-size:1.3rem;text-transform:uppercase;letter-spacing:-0.02em;margin:0;word-break:break-word">${escHtml(track.name)}</p>
+                  <p class="text-volt font-bold tracking-wide uppercase text-sm mt-2">${escHtml(correctArtist)}</p>
+                  <p class="text-muted text-xs tracking-wide uppercase mt-2">${escHtml(track.album.name)}</p>
+                </div>
               </div>
             </div>
           </div>

@@ -33,11 +33,17 @@ export function renderGuessing() {
         <div class="lscape-main-content">
           <div class="lscape-row-inputs">
             <div class="field-group">
-              <label class="section-label">Artist Name</label>
+              <label class="section-label" style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
+                <span class="material-symbols-outlined" style="font-size:1.1rem">person_search</span>
+                Artist Name
+              </label>
               <input type="text" id="artist-input" class="input" placeholder="e.g. The Beatles" autocomplete="off" spellcheck="false">
             </div>
             <div class="field-group">
-              <label class="section-label">Song Title</label>
+              <label class="section-label" style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
+                <span class="material-symbols-outlined" style="font-size:1.1rem">music_note</span>
+                Song Title
+              </label>
               <input type="text" id="title-input" class="input" placeholder="e.g. Come Together" autocomplete="off" spellcheck="false">
             </div>
           </div>

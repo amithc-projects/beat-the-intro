@@ -1125,6 +1125,9 @@ body {
   overflow: hidden; /* Footer stays pinned, middle scrolls */
 }
 
+/* Ensure these newly added wrappers don't create layout boxes in portrait */
+.lscape-result .result-left, .lscape-result .result-right { display: contents !important; }
+
 /* New scrollable middle content area */
 .lscape-main-content {
   grid-row: 2;
@@ -1152,6 +1155,13 @@ body {
 }
 .summary-left  { display: contents; }
 .summary-right { display: contents; }
+
+/* Config Hero Styling */
+.playlist-hero { display: flex; gap: 1.5rem; width: 100%; align-items: stretch; justify-content: center; overflow: hidden; }
+.playlist-hero__cover { aspect-ratio: 1/1; object-fit: cover; border-radius: 12px; border: 2px solid rgba(255,255,255,0.1); width: 100%; height: auto; flex-shrink: 0; }
+.playlist-identity { display: flex; flex-direction: column; width: 100%; margin-bottom: 0.5rem; }
+.playlist-hero__name { font-weight: 950; font-size: 2.2rem; text-transform: uppercase; margin: 0; letter-spacing: -0.02em; line-height: 1; }
+.playlist-hero__tracks { color: var(--ds-sys-color-primary); font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.15em; margin-top: 0.5rem; }
 
 /* config: view__inner already provides sizing in portrait; no override needed */
 
@@ -1191,39 +1201,46 @@ body.force-landscape .lscape-summary {
   .field__input { padding: 0.5rem 0.75rem; font-size: 0.9375rem; }
   .field__label { font-size: 0.625rem; margin-bottom: 0.25rem; }
 
+  .lscape-main-content { display: contents !important; }
+
   .lscape-playlist-container { display: grid; grid-template-rows: auto auto; height: auto; gap: 0.75rem; width: 100%; }
-  .lscape-config { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr; gap: 1.5rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
-  .lscape-config > :nth-child(1) { grid-column: 1 / -1; margin-bottom: 0; }
-  .lscape-config > :nth-child(2) { grid-column: 1; grid-row: 2; }
-  .lscape-config > :nth-child(3) { grid-column: 2; grid-row: 2; }
-  .lscape-config > :nth-child(4) { grid-column: 2; grid-row: 2; align-self: end; }
+  .lscape-config { display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto 1fr auto; gap: 2rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
+  .lscape-config .lscape-row-header { grid-column: 1 / -1; margin-bottom: 0; }
+  .lscape-config .playlist-hero { grid-column: 1; grid-row: 2; height: 100%; align-items: center; justify-content: center; }
+  .lscape-config .playlist-hero__cover { width: auto; height: min(65vh, 45vw); aspect-ratio: 1/1; }
+  .lscape-config .config-options { grid-column: 2; grid-row: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 2rem; }
+  .lscape-config .lscape-row-buttons { grid-column: 1 / -1; grid-row: 3; align-self: end; display: flex !important; flex-direction: row !important; justify-content: space-between !important; align-items: flex-end; width: 100%; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
+  .lscape-config #start-btn { order: 2; width: auto !important; min-width: 240px; margin-bottom: 0 !important; }
+  .lscape-config #back-btn { order: 1; width: auto !important; margin-bottom: 0 !important; }
 
-  .lscape-playing { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 1.25rem; height: calc(100dvh - 44px - 1.5rem); align-items: center; }
+  .lscape-playing { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto 1fr auto; gap: 2rem; height: calc(100dvh - 44px - 1.5rem); align-items: center; }
   .lscape-playing .lscape-row-header { grid-column: 1 / -1; width: 100%; margin-bottom: 0.5rem; }
-  .lscape-playing .album-art { grid-row: 2; grid-column: 1; width: min(35vh, 32vw); height: min(35vh, 32vw); }
-  .lscape-playing .playing-right { grid-row: 2; grid-column: 2; display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; height: 100%; }
+  .lscape-playing .album-art { grid-row: 2; grid-column: 1; width: min(40vh, 35vw); height: min(40vh, 35vw); }
+  .lscape-playing .playing-right { grid-row: 2; grid-column: 2; display: flex; flex-direction: column; gap: 1.5rem; justify-content: center; height: 100%; align-items: stretch; width: 100%; }
+  .lscape-playing .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; display: flex !important; justify-content: flex-end; width: 100%; align-self: end; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
+  .lscape-playing .btn--full { width: auto !important; min-width: 240px; }
 
-  .lscape-guess-compact { display: grid; grid-template-rows: auto 1fr; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
+  .lscape-guess-compact { display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
   .lscape-row-header { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0.25rem; }
-  .lscape-row-header .timer { font-size: 2rem; font-style: italic; font-variant-numeric: tabular-nums; width: 6rem; text-align: right; margin: 0; }
+  .lscape-row-header .timer { font-size: 2rem; font-style: italic; font-variant-numeric: tabular-nums; width: 10rem; text-align: right; margin: 0; }
   .lscape-row-header__top { display: contents; }
   .lscape-row-header__timer { display: block; }
-  .lscape-row-inputs { grid-row: 2; grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; }
-  .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; align-self: end; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .lscape-row-inputs { grid-row: 2; grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: flex-start; height: 100%; }
+  .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; align-self: end; display: flex !important; justify-content: space-between; align-items: center; width: 100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; }
+  .lscape-row-buttons #result-ctas-right { margin-left: auto; }
 
   .lscape-result { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr auto; gap: 1.25rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
   .lscape-result .lscape-row-header { grid-column: 1 / -1; width: 100%; }
-  .lscape-result .result-left { grid-column: 1; grid-row: 2; display: flex; flex-direction: column; gap: 0.5rem; }
-  .lscape-result .result-right { grid-column: 2; grid-row: 2; display: flex; flex-direction: column; gap: 0.5rem; }
-  .lscape-result .result-ctas-left  { grid-column: 1; grid-row: 3; align-self: end; }
-  .lscape-result .result-ctas-right { grid-column: 2; grid-row: 3; align-self: end; display: flex; justify-content: flex-end; }
+  .lscape-result .result-left { grid-column: 1; grid-row: 2; display: flex !important; flex-direction: column !important; gap: 0.5rem !important; }
+  .lscape-result .result-right { grid-column: 2; grid-row: 2; display: flex !important; flex-direction: column !important; gap: 0.5rem !important; }
+  .lscape-result .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; align-self: end; display: flex !important; justify-content: space-between; align-items: center; width: 100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; }
+  .lscape-result #result-ctas-right { margin-left: auto; }
 
-  .lscape-summary { display: flex; flex-direction: column; justify-content: space-between; height: calc(100dvh - 44px - 1.5rem); width: 100%; gap: 1rem; overflow: hidden; }
-  .lscape-summary-row { display: flex; gap: 0.75rem; overflow-x: auto; padding-bottom: 0.5rem; flex: 1; min-height: 0; align-items: start; }
-  .lscape-summary-row > * { flex: 0 0 200px; height: auto; max-height: 100%; }
+  .lscape-summary { display: flex; flex-direction: column; justify-content: space-between; height: calc(100dvh - 44px - 1.5rem); width: 100% !important; max-width: none !important; gap: 1rem; overflow: hidden; }
+  .lscape-summary .lscape-main-content { display: block !important; flex: 1; min-height: 0; }
+  .lscape-summary .lscape-summary-row { display: flex !important; gap: 0.75rem !important; overflow-x: auto !important; padding-bottom: 0.5rem; height: 100%; align-items: stretch; }
+  .lscape-summary .lscape-summary-row > * { flex: 0 0 240px !important; height: auto; max-height: 100%; }
   .lscape-summary-ctas { display: flex; justify-content: space-between; gap: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); }
-  .lscape-summary .card--elevated, .lscape-summary .round-tile-wrap { width: 200px; height: 100%; }
-  .lscape-summary .round-tile { aspect-ratio: 1; }
   .lscape-summary .display-heading { font-size: 2rem; margin: 0; }
   .lscape-summary .section-label { font-size: 0.65rem; }
 }
@@ -1318,7 +1335,11 @@ body.force-landscape .lscape-summary {
   .lscape-main-content {
      justify-content: center;
      min-height: 0;
+     width: 100%;
+     align-items: stretch; /* Ensure children fill width */
   }
+  .playing-right, .lscape-playing .playing-right { width: 100% !important; align-items: stretch !important; }
+  #waveform-container { width: 100% !important; flex-grow: 1; }
 
   /* 2-Row Summary Footer for Portrait */
   .lscape-summary-ctas--portrait {
@@ -1340,40 +1361,56 @@ body.force-landscape .lscape-summary {
   .lscape-row-buttons:has(#result-ctas-right:last-child):not(:has(#hear-more-btn)) {
     justify-content: flex-end !important;
   }
+
+  /* Portrait Config Hero Fix */
+  .playlist-hero { flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
+  .playlist-hero__cover { width: min(80vw, 40vh); height: auto; aspect-ratio: 1/1; }
+  .playlist-hero__name { font-size: 2.2rem; margin-top: 0; }
+  .lscape-main-content .config-options { width: 100%; text-align: center; }
+  .seg-control { justify-content: center; }
 }
 
 /* Duplicated logic for TV Mode Override (via body class) */
+body.force-landscape .lscape-main-content { display: contents !important; }
 body.force-landscape .view { min-height: calc(100dvh - 44px); padding: 0.75rem 1rem; }
 body.force-landscape .nav-bar { height: 44px; padding: 0 1rem; }
 body.force-landscape .nav-bar__username { display: none; }
 body.force-landscape #nav:not(:empty) ~ #app, body.force-landscape #nav:not(:empty) + #app { padding-top: 44px; }
 body.force-landscape .lscape-playlist-container { display: grid; grid-template-rows: auto auto; height: auto; gap: 0.75rem; width: 100%; }
-body.force-landscape .lscape-config { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr; gap: 1.5rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
-body.force-landscape .lscape-config > :nth-child(1) { grid-column: 1 / -1; margin-bottom: 0; }
-body.force-landscape .lscape-config > :nth-child(2) { grid-column: 1; grid-row: 2; }
-body.force-landscape .lscape-config > :nth-child(3) { grid-column: 2; grid-row: 2; }
-body.force-landscape .lscape-config > :nth-child(4) { grid-column: 2; grid-row: 2; align-self: end; }
-body.force-landscape .lscape-playing { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 1.25rem; height: calc(100dvh - 44px - 1.5rem); align-items: center; }
+body.force-landscape .lscape-config { display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto 1fr auto; gap: 2.5rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
+body.force-landscape .lscape-config .lscape-row-header { grid-column: 1 / -1; margin-bottom: 0; }
+body.force-landscape .lscape-config .playlist-hero { grid-column: 1; grid-row: 2; height: 100%; align-items: center; justify-content: center; }
+body.force-landscape .lscape-config .playlist-hero__cover { width: auto; height: min(70vh, 50vw); aspect-ratio: 1/1; }
+body.force-landscape .lscape-config .config-options { grid-column: 2; grid-row: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 3rem; }
+body.force-landscape .lscape-config .lscape-row-buttons { grid-column: 1 / -1; grid-row: 3; align-self: end; display: flex !important; flex-direction: row !important; justify-content: space-between !important; align-items: flex-end; width: 100%; }
+body.force-landscape .lscape-config #start-btn { order: 2; width: auto !important; min-width: 240px; margin-bottom: 0 !important; }
+body.force-landscape .lscape-config #back-btn { order: 1; width: auto !important; margin-bottom: 0 !important; }
+
+body.force-landscape .lscape-playing { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto 1fr auto; gap: 2rem; height: calc(100dvh - 44px - 1.5rem); align-items: center; }
 body.force-landscape .lscape-playing .lscape-row-header { grid-column: 1 / -1; width: 100%; margin-bottom: 0.5rem; }
-body.force-landscape .lscape-playing .album-art { grid-row: 2; grid-column: 1; width: min(35vh, 32vw); height: min(35vh, 32vw); }
-body.force-landscape .lscape-playing .playing-right { grid-row: 2; grid-column: 2; display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; height: 100%; }
-body.force-landscape .lscape-guess-compact { display: grid; grid-template-rows: auto 1fr; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
+body.force-landscape .lscape-playing .album-art { grid-row: 2; grid-column: 1; width: min(40vh, 35vw); height: min(40vh, 35vw); }
+body.force-landscape .lscape-playing .playing-right { grid-row: 2; grid-column: 2; display: flex; flex-direction: column; gap: 1.5rem; justify-content: center; height: 100%; align-items: stretch; width: 100%; }
+body.force-landscape .lscape-playing .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; display: flex !important; justify-content: flex-end; width: 100%; align-self: end; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
+body.force-landscape .lscape-playing .btn--full { width: auto !important; min-width: 240px; }
+
+body.force-landscape .lscape-guess-compact { display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
 body.force-landscape .lscape-row-header { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0.25rem; }
 body.force-landscape .lscape-row-header .timer { font-size: 2rem; font-style: italic; font-variant-numeric: tabular-nums; width: 6rem; text-align: right; margin: 0; }
-body.force-landscape .lscape-row-inputs { grid-row: 2; grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; }
-body.force-landscape .lscape-row-buttons { grid-row: 2; grid-column: 1 / -1; align-self: end; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+body.force-landscape .lscape-row-inputs { grid-row: 2; grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; height: 100%; }
+body.force-landscape .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; align-self: end; display: flex !important; justify-content: space-between; align-items: center; width: 100%; }
+
 body.force-landscape .lscape-result { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr auto; gap: 1.25rem; height: calc(100dvh - 44px - 1.5rem); align-items: start; }
 body.force-landscape .lscape-result .lscape-row-header { grid-column: 1 / -1; width: 100%; }
-body.force-landscape .lscape-result .result-left { grid-column: 1; grid-row: 2; display: flex; flex-direction: column; gap: 0.5rem; }
-body.force-landscape .lscape-result .result-right { grid-column: 2; grid-row: 2; display: flex; flex-direction: column; gap: 0.5rem; }
-body.force-landscape .lscape-result .result-ctas-left  { grid-column: 1; grid-row: 3; align-self: end; }
-body.force-landscape .lscape-result .result-ctas-right { grid-column: 2; grid-row: 3; align-self: end; display: flex; justify-content: flex-end; }
-body.force-landscape .lscape-summary { display: flex; flex-direction: column; justify-content: space-between; height: calc(100dvh - 44px - 1.5rem); width: 100%; gap: 1rem; overflow: hidden; }
-body.force-landscape .lscape-summary-row { display: flex; gap: 0.75rem; overflow-x: auto; padding-bottom: 0.5rem; flex: 1; min-height: 0; align-items: start; }
-body.force-landscape .lscape-summary-row > * { flex: 0 0 200px; height: auto; max-height: 100%; }
+body.force-landscape .lscape-result .result-left { grid-column: 1; grid-row: 2; display: flex !important; flex-direction: column !important; gap: 0.5rem !important; }
+body.force-landscape .lscape-result .result-right { grid-column: 2; grid-row: 2; display: flex !important; flex-direction: column !important; gap: 0.5rem !important; }
+body.force-landscape .lscape-result .lscape-row-buttons { grid-row: 3; grid-column: 1 / -1; align-self: end; display: flex !important; justify-content: space-between; align-items: center; width: 100%; }
+body.force-landscape .lscape-result #result-ctas-right { margin-left: auto; }
+
+body.force-landscape .lscape-summary { display: flex !important; flex-direction: column; justify-content: space-between; height: calc(100dvh - 44px - 1.5rem); width: 100% !important; max-width: none !important; gap: 1rem; overflow: hidden; }
+body.force-landscape .lscape-summary .lscape-main-content { display: block !important; flex: 1; min-height: 0; }
+body.force-landscape .lscape-summary .lscape-summary-row { display: flex !important; gap: 0.75rem !important; overflow-x: auto !important; padding-bottom: 0.5rem; height: 100%; align-items: stretch; }
+body.force-landscape .lscape-summary .lscape-summary-row > * { flex: 0 0 240px !important; height: auto; max-height: 100%; }
 body.force-landscape .lscape-summary-ctas { display: flex; justify-content: space-between; gap: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); }
-body.force-landscape .lscape-summary .card--elevated, body.force-landscape .lscape-summary .round-tile-wrap { width: 200px; height: 100%; }
-body.force-landscape .lscape-summary .round-tile { aspect-ratio: 1; }
 body.force-landscape .lscape-summary .display-heading { font-size: 2rem; margin: 0; }
 body.force-landscape .lscape-summary .section-label { font-size: 0.65rem; }
 
