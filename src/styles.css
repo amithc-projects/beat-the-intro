@@ -1167,196 +1167,196 @@ body {
 
 /* config: view__inner already provides sizing in portrait; no override needed */
 
-/* ---------- Responsive: landscape mobile (TV mode) ---------- */
-@media (max-width: 896px) and (orientation: landscape) {
+/* ---------- TV Mode / Landscape Layouts (Global Overrides) ---------- */
 
-  /* ── Nav ── */
-  .nav-bar { height: 44px; padding: 0 1rem; }
-  .nav-bar__username { display: none; }
-  #nav:not(:empty) ~ #app,
-  #nav:not(:empty) + #app { padding-top: 44px; }
-
-  /* ── Global: tighter view padding & spacing ── */
-  .view { min-height: calc(100dvh - 44px); padding: 0.75rem 1rem; }
-  .space-y-8 > * + * { margin-top: 0.75rem; }
-  .space-y-6 > * + * { margin-top: 0.5rem; }
-  .space-y-4 > * + * { margin-top: 0.35rem; }
-
-  /* ── Global: shrink display heading ── */
-  .display-heading { font-size: 1.6rem; }
-
-  /* ── Global: compact buttons & inputs ── */
-  .btn { padding: 0.5rem 1rem; font-size: 0.875rem; }
-  .field__input { padding: 0.5rem 0.75rem; font-size: 0.9375rem; }
-  .field__label { font-size: 0.625rem; margin-bottom: 0.25rem; }
-
-  /* ── Playlists: grid header + natural scroll ── */
-  .lscape-playlist-container {
-    display: grid;
-    grid-template-rows: auto auto;
-    height: auto;
-    gap: 0.75rem;
-    width: 100%;
-  }
-  .playlist-grid { 
-    overflow: visible; 
-    min-height: 0; 
-    display: grid; 
-    align-content: start;
-  }
-  .playlist-card__image {
-    min-height: 120px; /* Safety net for aspect-ratio collapse */
-  }
-
-  /* ── Config: Heading full width, columns below ── */
-  .lscape-config {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: auto 1fr;
-    gap: 1.5rem;
-    height: calc(100dvh - 44px - 1.5rem);
-    align-items: start;
-  }
-  .lscape-config > :nth-child(1) { grid-column: 1 / -1; margin-bottom: 0; }
-  .lscape-config > :nth-child(2) { grid-column: 1; grid-row: 2; } /* Playlist card */
-  .lscape-config > :nth-child(3) { grid-column: 2; grid-row: 2; } /* Number of rounds */
-  .lscape-config > :nth-child(4) { grid-column: 2; grid-row: 2; align-self: end; } /* Buttons */
-
-  /* ── Playing: album-art left, controls right ── */
-  .lscape-playing {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
-    gap: 1.25rem;
-    height: calc(100dvh - 44px - 1.5rem);
-    align-items: center;
-  }
-  .lscape-playing .lscape-row-header {
-    grid-column: 1 / -1;
-    width: 100%;
-    margin-bottom: 0.5rem;
-  }
-  .lscape-playing .album-art {
-    grid-row: 2;
-    grid-column: 1;
-    width: min(35vh, 32vw);
-    height: min(35vh, 32vw);
-  }
-  .playing-right {
-    grid-row: 2;
-    grid-column: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    justify-content: center;
-    height: 100%;
-  }
-
-  /* ── Guessing: Standardized 2-row grid matching Playing ── */
-  .lscape-guess-compact {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    width: 100%;
-    height: calc(100dvh - 44px - 1.5rem);
-    align-items: start;
-  }
-  .lscape-row-header { 
-    grid-column: 1 / -1;
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    gap: 1rem;
-    margin-bottom: 0.25rem;
-  }
-  .lscape-row-header .timer { 
-    font-size: 2rem; 
-    font-style: italic; 
-    font-variant-numeric: tabular-nums; /* Fixed width digits */
-    width: 6rem; /* Fixed parking spot */
-    text-align: right;
-    margin: 0; 
-  }
-  .lscape-row-inputs { 
-    grid-row: 2;
-    grid-column: 1 / -1;
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 1rem; 
-    align-items: end; 
-  }
-  .lscape-row-buttons { 
-    grid-row: 2;
-    grid-column: 1 / -1;
-    align-self: end;
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 1rem; 
-  }
-  .lscape-guess-compact .display-heading { font-size: 1.5rem; margin: 0; }
-
-  /* ── Round result: explicit top-middle-bottom rows ── */
-  .lscape-result {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: auto 1fr auto;
-    gap: 1.25rem;
-    height: calc(100dvh - 44px - 1.5rem);
-    align-items: start;
-  }
-  .lscape-result .lscape-row-header { grid-column: 1 / -1; width: 100%; }
-  .result-left { grid-column: 1; grid-row: 2; display: flex; flex-direction: column; gap: 0.5rem; }
-  .result-right { grid-column: 2; grid-row: 2; display: flex; flex-direction: column; gap: 0.5rem; }
-  
-  .result-ctas-left  { grid-column: 1; grid-row: 3; align-self: end; }
-  .result-ctas-right { grid-column: 2; grid-row: 3; align-self: end; display: flex; justify-content: flex-end; }
-  .result-verdict { padding: 0.75rem 1rem; }
-  .result-verdict__word { font-size: 1.4rem; }
-  .result-verdict__icon { font-size: 1.8rem; }
- 
-  /* ── Summary: left = score/time, right = round tiles ── */
-  /* ── Summary: horizontal scroll + bottom CTAs ── */
-  .lscape-summary {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: calc(100dvh - 44px - 1.5rem);
-    width: 100%;
-    gap: 1rem;
-    overflow: hidden;
-  }
-  .lscape-summary-row {
-    display: flex;
-    gap: 0.75rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-    flex: 1;
-    min-height: 0;
-    align-items: start;
-  }
-  .lscape-summary-row > * {
-    flex: 0 0 200px; /* Fixed width for horizontal scrolling tiles */
-    height: auto;
-    max-height: 100%;
-  }
-  .lscape-summary-ctas {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-  }
-  /* Same size for context cards and round tiles */
-  .lscape-summary .card--elevated,
-  .lscape-summary .round-tile-wrap {
-    width: 200px;
-    height: 100%;
-  }
-  .lscape-summary .round-tile { aspect-ratio: 1; }
-  .lscape-summary .display-heading { font-size: 2rem; margin: 0; }
-  .lscape-summary .section-label { font-size: 0.65rem; }
+/* Force containers to expand beyond portrait limits when TV Mode is active */
+body.force-landscape .view__inner,
+body.force-landscape .view__inner--wide {
+  max-width: 900px !important;
+  width: 100% !important;
 }
+
+body.force-landscape .lscape-config,
+body.force-landscape .lscape-playing,
+body.force-landscape .lscape-guess,
+body.force-landscape .lscape-result,
+body.force-landscape .lscape-summary {
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+/* ---------- Responsive: landscape mobile (TV mode) ---------- */
+/* ---------- TV Mode / Landscape Layouts (Global) ---------- */
+/* These rules apply if the device is naturally landscape OR if TV mode is forced via class */
+
+.view, body.force-landscape .view { 
+  min-height: calc(100dvh - 44px); 
+  padding: 0.75rem 1rem; 
+}
+.nav-bar, body.force-landscape .nav-bar { height: 44px; padding: 0 1rem; }
+.nav-bar__username, body.force-landscape .nav-bar__username { display: none; }
+#nav:not(:empty) ~ #app,
+#nav:not(:empty) + #app,
+body.force-landscape #nav:not(:empty) ~ #app,
+body.force-landscape #nav:not(:empty) + #app { padding-top: 44px; }
+
+.space-y-8 > * + *, body.force-landscape .space-y-8 > * + * { margin-top: 0.75rem; }
+.space-y-6 > * + *, body.force-landscape .space-y-6 > * + * { margin-top: 0.5rem; }
+.space-y-4 > * + *, body.force-landscape .space-y-4 > * + * { margin-top: 0.35rem; }
+
+.display-heading, body.force-landscape .display-heading { font-size: 1.6rem; }
+.btn, body.force-landscape .btn { padding: 0.5rem 1rem; font-size: 0.875rem; }
+.field__input, body.force-landscape .field__input { padding: 0.5rem 0.75rem; font-size: 0.9375rem; }
+.field__label, body.force-landscape .field__label { font-size: 0.625rem; margin-bottom: 0.25rem; }
+
+/* Grids */
+.lscape-playlist-container, body.force-landscape .lscape-playlist-container {
+  display: grid;
+  grid-template-rows: auto auto;
+  height: auto;
+  gap: 0.75rem;
+  width: 100%;
+}
+.lscape-config, body.force-landscape .lscape-config {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto 1fr;
+  gap: 1.5rem;
+  height: calc(100dvh - 44px - 1.5rem);
+  align-items: start;
+}
+.lscape-playing, body.force-landscape .lscape-playing {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  gap: 1.25rem;
+  height: calc(100dvh - 44px - 1.5rem);
+  align-items: center;
+}
+.lscape-guess-compact, body.force-landscape .lscape-guess-compact {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  width: 100%;
+  height: calc(100dvh - 44px - 1.5rem);
+  align-items: start;
+}
+.lscape-result, body.force-landscape .lscape-result {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto 1fr auto;
+  gap: 1.25rem;
+  height: calc(100dvh - 44px - 1.5rem);
+  align-items: start;
+}
+.lscape-summary, body.force-landscape .lscape-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100dvh - 44px - 1.5rem);
+  width: 100%;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+/* Specific elements within grids (only applied in these modes) */
+.lscape-config > :nth-child(1), body.force-landscape .lscape-config > :nth-child(1) { grid-column: 1 / -1; margin-bottom: 0; }
+.lscape-config > :nth-child(2), body.force-landscape .lscape-config > :nth-child(2) { grid-column: 1; grid-row: 2; }
+.lscape-config > :nth-child(3), body.force-landscape .lscape-config > :nth-child(3) { grid-column: 2; grid-row: 2; }
+.lscape-config > :nth-child(4), body.force-landscape .lscape-config > :nth-child(4) { grid-column: 2; grid-row: 2; align-self: end; }
+
+.lscape-playing .lscape-row-header, body.force-landscape .lscape-playing .lscape-row-header {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.lscape-playing .album-art, body.force-landscape .lscape-playing .album-art {
+  grid-row: 2;
+  grid-column: 1;
+  width: min(35vh, 32vw);
+  height: min(35vh, 32vw);
+}
+.lscape-playing .playing-right, body.force-landscape .lscape-playing .playing-right {
+  grid-row: 2;
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  height: 100%;
+}
+
+.lscape-row-header, body.force-landscape .lscape-row-header { 
+  grid-column: 1 / -1;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+}
+.lscape-row-header .timer, body.force-landscape .lscape-row-header .timer { 
+  font-size: 2rem; 
+  font-style: italic; 
+  font-variant-numeric: tabular-nums;
+  width: 6rem;
+  text-align: right;
+  margin: 0; 
+}
+.lscape-row-inputs, body.force-landscape .lscape-row-inputs { 
+  grid-row: 2;
+  grid-column: 1 / -1;
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 1rem; 
+  align-items: end; 
+}
+.lscape-row-buttons, body.force-landscape .lscape-row-buttons { 
+  grid-row: 2;
+  grid-column: 1 / -1;
+  align-self: end;
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 1rem; 
+}
+
+.lscape-result .lscape-row-header, body.force-landscape .lscape-result .lscape-row-header { grid-column: 1 / -1; width: 100%; }
+.lscape-result .result-left, body.force-landscape .lscape-result .result-left { grid-column: 1; grid-row: 2; display: flex; flex-direction: column; gap: 0.5rem; }
+.lscape-result .result-right, body.force-landscape .lscape-result .result-right { grid-column: 2; grid-row: 2; display: flex; flex-direction: column; gap: 0.5rem; }
+.lscape-result .result-ctas-left, body.force-landscape .lscape-result .result-ctas-left { grid-column: 1; grid-row: 3; align-self: end; }
+.lscape-result .result-ctas-right, body.force-landscape .lscape-result .result-ctas-right { grid-column: 2; grid-row: 3; align-self: end; display: flex; justify-content: flex-end; }
+
+.lscape-summary-row, body.force-landscape .lscape-summary-row {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  flex: 1;
+  min-height: 0;
+  align-items: start;
+}
+.lscape-summary-row > *, body.force-landscape .lscape-summary-row > * {
+  flex: 0 0 200px;
+  height: auto;
+  max-height: 100%;
+}
+.lscape-summary-ctas, body.force-landscape .lscape-summary-ctas {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Same size for context cards and round tiles */
+.lscape-summary .card--elevated, body.force-landscape .lscape-summary .card--elevated,
+.lscape-summary .round-tile-wrap, body.force-landscape .lscape-summary .round-tile-wrap {
+  width: 200px;
+  height: 100%;
+}
+.lscape-summary .round-tile, body.force-landscape .lscape-summary .round-tile { aspect-ratio: 1; }
+.lscape-summary .display-heading, body.force-landscape .lscape-summary .display-heading { font-size: 2rem; margin: 0; }
+.lscape-summary .section-label, body.force-landscape .lscape-summary .section-label { font-size: 0.65rem; }
  
  /* ---------- Responsive: portrait mobile ---------- */
 @media (max-width: 480px) {

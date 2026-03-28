@@ -22,6 +22,11 @@ import { renderPrivacyPolicy } from './views/privacy-policy.js'
 import { renderHowToPlay } from './views/how-to-play.js'
 import { renderDevices } from './views/devices.js'
 
+// ── Boot: Apply UI overrides ──────────────────────────────────────────────────
+if (state.isForcedLandscape) {
+  document.body.classList.add('force-landscape')
+}
+
 // ── Preserve share route before OAuth wipes the hash ──────────────────────────
 const initialHash = window.location.hash
 if (initialHash.startsWith('#/play?tracks=')) {

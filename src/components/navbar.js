@@ -12,8 +12,14 @@ export function renderNav(user) {
     <nav class="nav-bar" aria-label="Main navigation">
       <a href="#/playlists" class="nav-bar__brand">Beat the Intro</a>
 
-      <div class="nav-bar__right">
-        <div class="nav-bar__user">
+        <div class="nav-bar__right">
+          <button id="tv-toggle-btn" class="btn btn--icon" aria-label="Toggle TV Mode" 
+                  title="${state.isForcedLandscape ? 'Exit TV Mode' : 'Enter TV Mode'}"
+                  style="color: ${state.isForcedLandscape ? '#fff' : '#888'}; margin-right: 0.5rem;">
+            <span class="material-symbols-outlined">monitor</span>
+          </button>
+
+          <div class="nav-bar__user">
           ${avatarUrl
             ? `<img src="${avatarUrl}" alt="${user.display_name}" class="nav-bar__avatar">`
             : `<div class="nav-bar__avatar" style="display:flex;align-items:center;justify-content:center">
@@ -67,6 +73,7 @@ export function renderNav(user) {
   `
 
   const burgerBtn = document.getElementById('burger-btn')
+  const tvBtn     = document.getElementById('tv-toggle-btn')
   const drawer    = document.getElementById('nav-drawer')
   const overlay   = document.getElementById('drawer-overlay')
   const closeBtn  = document.getElementById('drawer-close')
@@ -84,6 +91,24 @@ export function renderNav(user) {
     burgerBtn.setAttribute('aria-expanded', 'false')
     setTimeout(() => { drawer.hidden = true }, 250)
   }
+
+  tvBtn.addEventListener('click', () => {
+    state.isForcedLandscape = !state.isForcedLandscape
+    localStorage.setItem('bti_force_landscape', state.isForcedLandscape)
+    
+    if (state.isForcedLandscape) {
+      document.body.classList.add('force-landscape')
+      tvBtn.style.color = '#fff'
+      tvBtn.title = 'Exit TV Mode'
+    } else {
+      document.body.classList.remove('force-landscape')
+      tvBtn.style.color = '#888'
+      tvBtn.title = 'Enter TV Mode'
+    }
+
+    // Refresh current view to apply landscape logic if needed
+    window.dispatchEvent(new HashChangeEvent('hashchange'))
+  })
 
   burgerBtn.addEventListener('click', openDrawer)
   closeBtn.addEventListener('click', closeDrawer)
