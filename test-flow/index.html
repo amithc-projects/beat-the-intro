@@ -13,6 +13,22 @@
             VITE_SPOTIFY_CLIENT_ID: "aec280afedc14dbcb5f99bc29047df8e",
             VITE_REDIRECT_URI: "https://beat-the-intro.netlify.app/callback"
         };
+
+        // iOS AudioContext keepalive — intercept constructor before SDK loads so we
+        // can call resume() on any AudioContext the SDK creates.
+        (function() {
+            const OrigAC = window.AudioContext || window.webkitAudioContext;
+            if (!OrigAC) return;
+            window.__audioContexts = [];
+            const PatchedAC = class extends OrigAC {
+                constructor(...args) {
+                    super(...args);
+                    window.__audioContexts.push(this);
+                }
+            };
+            window.AudioContext = PatchedAC;
+            if (window.webkitAudioContext) window.webkitAudioContext = PatchedAC;
+        })();
     </script>
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </head>

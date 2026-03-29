@@ -1,7 +1,7 @@
 // main.js - Main logic for the standalone test page
 import { redirectToSpotify, getToken, getAccessToken } from './auth.js';
 import { getUserPlaylists, getPlaylistTracks } from './api.js';
-import { initPlayer, playTrack, setLogCallback } from './player.js';
+import { initPlayer, playTrack, resumeAudio, setLogCallback } from './player.js';
 
 // ── Diagnostic log ────────────────────────────────────────────────────────────
 const diagLog = document.getElementById('diag-log');
@@ -183,7 +183,7 @@ function renderPlaylists(playlists) {
             <div class="name">${playlist.name}</div>
             <div class="tracks">${playlist.tracks.total} TRACKS</div>
         `;
-        card.onclick = () => selectPlaylist(playlist.id);
+        card.onclick = () => { resumeAudio(); selectPlaylist(playlist.id); };
         playlistList.appendChild(card);
     });
 }
@@ -250,7 +250,7 @@ async function playRandomTrack() {
 
 // Event Listeners
 document.getElementById('login-btn').onclick = redirectToSpotify;
-document.getElementById('play-random-btn').onclick = playRandomTrack;
+document.getElementById('play-random-btn').onclick = () => { resumeAudio(); playRandomTrack(); };
 document.getElementById('back-to-playlists-btn').onclick = showPlaylists;
 
 init();

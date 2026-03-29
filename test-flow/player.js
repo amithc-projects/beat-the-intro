@@ -42,6 +42,16 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         _log('success', `SDK ready — device_id: ${device_id}`);
         deviceId = device_id;
         if (resolvePlayerReady) resolvePlayerReady(device_id);
+
+        // iOS: poll every 250ms to re-resume any AudioContext that iOS auto-suspends
+        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+            _log('info', 'iOS detected — starting AudioContext resume heartbeat');
+            setInterval(() => {
+                for (const ctx of (window.__audioContexts || [])) {
+                    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+                }
+            }, 250);
+        }
     });
 
     player.addListener('not_ready', ({ device_id }) => {
@@ -97,9 +107,22 @@ export async function initPlayer(onStateChange) {
     return playerReadyPromise;
 }
 
+// Resume any AudioContexts the SDK created (iOS suspends them automatically)
+export function resumeAudio() {
+    const contexts = window.__audioContexts || [];
+    for (const ctx of contexts) {
+        if (ctx.state === 'suspended') {
+            ctx.resume().catch(() => {});
+        }
+    }
+    const states = contexts.map(c => c.state).join(', ');
+    if (contexts.length) _log('info', `AudioContext states: [${states}]`);
+}
+
 export async function playTrack(uri) {
     if (!deviceId) throw new Error('Player not ready — no device_id');
 
+    resumeAudio();
     _log('info', `playTrack: ${uri}`);
     const token = getAccessToken();
 
