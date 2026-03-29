@@ -14,21 +14,6 @@
             VITE_REDIRECT_URI: "https://beat-the-intro.netlify.app/callback"
         };
 
-        // iOS AudioContext keepalive — intercept constructor before SDK loads so we
-        // can call resume() on any AudioContext the SDK creates.
-        (function() {
-            const OrigAC = window.AudioContext || window.webkitAudioContext;
-            if (!OrigAC) return;
-            window.__audioContexts = [];
-            const PatchedAC = class extends OrigAC {
-                constructor(...args) {
-                    super(...args);
-                    window.__audioContexts.push(this);
-                }
-            };
-            window.AudioContext = PatchedAC;
-            if (window.webkitAudioContext) window.webkitAudioContext = PatchedAC;
-        })();
     </script>
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </head>
@@ -50,6 +35,10 @@
             <div id="playlist-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Playlists will be injected here -->
             </div>
+        </div>
+
+        <div id="ios-hint" class="hidden w-full max-w-2xl p-4 border-2 border-yellow-400 text-yellow-400 text-sm font-bold uppercase tracking-widest text-center">
+            iOS: audio plays through the Spotify app — make sure it's open
         </div>
 
         <div id="player-view" class="w-full max-w-2xl space-y-8 hidden text-center">

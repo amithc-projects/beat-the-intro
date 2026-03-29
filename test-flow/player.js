@@ -42,16 +42,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         _log('success', `SDK ready — device_id: ${device_id}`);
         deviceId = device_id;
         if (resolvePlayerReady) resolvePlayerReady(device_id);
-
-        // iOS: poll every 250ms to re-resume any AudioContext that iOS auto-suspends
-        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-            _log('info', 'iOS detected — starting AudioContext resume heartbeat');
-            setInterval(() => {
-                for (const ctx of (window.__audioContexts || [])) {
-                    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
-                }
-            }, 250);
-        }
     });
 
     player.addListener('not_ready', ({ device_id }) => {
@@ -107,26 +97,32 @@ export async function initPlayer(onStateChange) {
     return playerReadyPromise;
 }
 
-// Resume any AudioContexts the SDK created (iOS suspends them automatically)
-export function resumeAudio() {
-    const contexts = window.__audioContexts || [];
-    for (const ctx of contexts) {
-        if (ctx.state === 'suspended') {
-            ctx.resume().catch(() => {});
-        }
-    }
-    const states = contexts.map(c => c.state).join(', ');
-    if (contexts.length) _log('info', `AudioContext states: [${states}]`);
+const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+
+// On iOS the SDK can't output audio — find the Spotify app device via Connect instead
+async function getIOSPlaybackDevice() {
+    const token = getAccessToken();
+    const res = await fetch('https://api.spotify.com/v1/me/player/devices', {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) throw new Error(`Devices API failed: ${res.status}`);
+    const data = await res.json();
+    const devices = data.devices || [];
+    _log('info', `Connect devices: ${devices.map(d => `"${d.name}" (${d.type})`).join(', ') || 'none'}`);
+    const appDevice = devices.find(d => d.id !== deviceId);
+    if (!appDevice) throw new Error('NO_SPOTIFY_APP — open Spotify on this device and try again');
+    _log('success', `iOS: routing to Spotify app — "${appDevice.name}" (${appDevice.type})`);
+    return appDevice.id;
 }
 
 export async function playTrack(uri) {
     if (!deviceId) throw new Error('Player not ready — no device_id');
 
-    resumeAudio();
+    const targetDeviceId = isIOS ? await getIOSPlaybackDevice() : deviceId;
     _log('info', `playTrack: ${uri}`);
     const token = getAccessToken();
 
-    const res = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+    const res = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${targetDeviceId}`, {
         method: 'PUT',
         body: JSON.stringify({ uris: [uri] }),
         headers: {

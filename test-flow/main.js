@@ -1,7 +1,7 @@
 // main.js - Main logic for the standalone test page
 import { redirectToSpotify, getToken, getAccessToken } from './auth.js';
 import { getUserPlaylists, getPlaylistTracks } from './api.js';
-import { initPlayer, playTrack, resumeAudio, setLogCallback } from './player.js';
+import { initPlayer, playTrack, setLogCallback } from './player.js';
 
 // ── Diagnostic log ────────────────────────────────────────────────────────────
 const diagLog = document.getElementById('diag-log');
@@ -183,7 +183,7 @@ function renderPlaylists(playlists) {
             <div class="name">${playlist.name}</div>
             <div class="tracks">${playlist.tracks.total} TRACKS</div>
         `;
-        card.onclick = () => { resumeAudio(); selectPlaylist(playlist.id); };
+        card.onclick = () => selectPlaylist(playlist.id);
         playlistList.appendChild(card);
     });
 }
@@ -229,6 +229,9 @@ async function playRandomTrack() {
     setStatus('PLAYING...');
     playlistView.classList.add('hidden');
     playerView.classList.remove('hidden');
+    if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        document.getElementById('ios-hint').classList.remove('hidden');
+    }
 
     const randomIndex = Math.floor(Math.random() * currentTracks.length);
     const track = currentTracks[randomIndex];
@@ -243,14 +246,19 @@ async function playRandomTrack() {
         await playTrack(track.uri);
         setStatus('ENJOY!');
     } catch (error) {
-        setStatus('PLAYBACK ERROR — SEE LOG');
-        log('error', `playTrack failed: ${error.message}`);
+        if (error.message.startsWith('NO_SPOTIFY_APP')) {
+            setStatus('OPEN SPOTIFY APP');
+            log('warn', 'iOS: no Spotify app device found — open the Spotify app on this device so it appears as a Connect target, then try again');
+        } else {
+            setStatus('PLAYBACK ERROR — SEE LOG');
+            log('error', `playTrack failed: ${error.message}`);
+        }
     }
 }
 
 // Event Listeners
 document.getElementById('login-btn').onclick = redirectToSpotify;
-document.getElementById('play-random-btn').onclick = () => { resumeAudio(); playRandomTrack(); };
+document.getElementById('play-random-btn').onclick = playRandomTrack;
 document.getElementById('back-to-playlists-btn').onclick = showPlaylists;
 
 init();
