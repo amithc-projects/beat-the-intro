@@ -21,6 +21,13 @@ import { renderCookiePolicy } from './views/cookie-policy.js'
 import { renderPrivacyPolicy } from './views/privacy-policy.js'
 import { renderHowToPlay } from './views/how-to-play.js'
 import { renderDevices } from './views/devices.js'
+import { renderAudioSetup } from './views/audio-setup.js'
+
+// ── Platform detection ────────────────────────────────────────────────────────
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+}
 
 // ── Boot: Apply UI overrides ──────────────────────────────────────────────────
 if (state.isForcedLandscape) {
@@ -87,6 +94,7 @@ register('/cookies',    () => authRequired(renderCookiePolicy))
 register('/privacy',    () => authRequired(renderPrivacyPolicy))
 register('/how-to-play',() => authRequired(renderHowToPlay))
 register('/devices',    () => authRequired(renderDevices))
+register('/audio-setup',() => authRequired(renderAudioSetup))
 
 // ── Bootstrap ─────────────────────────────────────────────────────────────────
 async function init() {
@@ -104,6 +112,8 @@ async function init() {
       if (pending) {
         localStorage.removeItem('pendingShareRoute')
         window.location.hash = pending
+      } else if (isIOS()) {
+        window.location.hash = '#/audio-setup'
       } else {
         window.location.hash = '#/playlists'
       }

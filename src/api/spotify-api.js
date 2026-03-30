@@ -51,3 +51,32 @@ export async function getPlaylistTracks(playlistId, market) {
 export async function getDevices() {
   return apiFetch('https://api.spotify.com/v1/me/player/devices')
 }
+
+export async function stopOnDevice(deviceId) {
+  if (isTokenExpired()) await refreshToken()
+  const token = getAccessToken()
+  const res = await fetch(`https://api.spotify.com/v1/me/player/pause?device_id=${encodeURIComponent(deviceId)}`, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  // 403 = not playing, 404 = no active device — both are fine to ignore
+  if (!res.ok && res.status !== 204 && res.status !== 403 && res.status !== 404) {
+    console.warn(`stopOnDevice got ${res.status}`)
+  }
+}
+
+export async function playOnDevice(deviceId, trackUri) {
+  if (isTokenExpired()) await refreshToken()
+  const token = getAccessToken()
+  const res = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${encodeURIComponent(deviceId)}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ uris: [trackUri] }),
+  })
+  if (!res.ok && res.status !== 204) {
+    throw new Error(`Spotify playOnDevice failed: ${res.status}`)
+  }
+}

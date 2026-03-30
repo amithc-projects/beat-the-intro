@@ -55,6 +55,10 @@ export function renderNav(user) {
           <span class="material-symbols-outlined">settings</span>
           Settings
         </button>
+        <button class="nav-drawer__item" data-nav="audio-setup">
+          <span class="material-symbols-outlined">speaker_notes</span>
+          Audio Problems?
+        </button>
         <button class="nav-drawer__item" data-nav="cookies">
           <span class="material-symbols-outlined">cookie</span>
           Cookie Policy
